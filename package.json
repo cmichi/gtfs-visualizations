@@ -1,0 +1,13 @@
+{
+  "author": "Michael Müller <mich@elmueller.net>",
+  "homepage": "https://github.com/cmichi/gtfs-heatmap",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cmichi/gtfs-heatmap.git"
+  },
+  "name": "gtfs-heatmap",
+  "description": "Visualizing GTFS data as a heatmap.",
+  "keywords": ["gtfs", "heatmap"],
+  "license": "MIT",
+  "version": "0.0.1",
+}

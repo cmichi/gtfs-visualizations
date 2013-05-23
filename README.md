@@ -4,6 +4,9 @@ The idea of this project is to generate fancy, nice looking heatmaps from
 publicly available GTFS datasets.
 
 
+__Project status:__ Just starting out. Nothing is done yet.
+
+
 # License
 
 	Copyright (c) 2013

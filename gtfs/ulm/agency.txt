@@ -1,0 +1,2 @@
+"agency_id","agency_name","agency_url","agency_timezone","agency_lang","agency_phone","agency_fare_url"
+"SWU","Stadtwerke Ulm/Neu-Ulm","http://www.swu.de","Europe/Berlin","de","+49 731 166-2124","http://www.swu.de/privatkunden/swu-nahverkehr/fahrkarten/tarife.html"
