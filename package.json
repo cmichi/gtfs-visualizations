@@ -10,4 +10,8 @@
   "keywords": ["gtfs", "heatmap"],
   "license": "MIT",
   "version": "0.0.1",
+  "dependencies": {
+	"path": "0.4.x",
+	"express": "3.0.x"
+  }
 }
