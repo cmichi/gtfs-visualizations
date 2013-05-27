@@ -1,12 +1,32 @@
 var express = require('express');
 var http = require('http');
+//var parser = require('parser');
+var path = require('path');
+var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
+
+var dir = "./gtfs/ulm/";
+var stops;
+var gtfs = Gtfs(dir, function(data) {
+	console.log(data);
+	//console.log(data.getStops());
+	//console.log(data.getShapes());
+	stops = data.getStops();
+
+	server.listen(process.env.PORT || 3000, function() {
+		console.log('Listening on port ' + server.address().port);
+	});
+});
 
 var app = express();
 app.use(express.static(__dirname + '/static'));
 app.use(express.bodyParser());
 
 var server = require('http').createServer(app);
-server.listen(process.env.PORT || 3000, function() {
-	console.log('Listening on port ' + server.address().port);
+
+
+
+app.get('/stops/', function(req, res){
+	res.send(stops);
+	//res.send("foo\n");
 });
 

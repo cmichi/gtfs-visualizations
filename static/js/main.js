@@ -85,11 +85,12 @@ function coord2px(lat, lon) {
 }
 
 
-var paper = Raphael("canvas", 600, 600, function() {
-	var circle = this.circle(50, 40, 10);
-	circle.attr("fill", "#f00");
-	circle.attr("stroke", "#fff");
-
-
+$(function (){
+	$.getJSON("/stops/", function(data) {
+		var paper = Raphael("canvas", 600, 600, function() {
+			var circle = this.circle(50, 40, 10);
+			circle.attr("fill", "#f00");
+			circle.attr("stroke", "#fff");
+		});
+	});
 });
-
