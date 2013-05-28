@@ -7,12 +7,14 @@ var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 var dir = "./gtfs/ulm/";
 var stops;
 var shapes;
+var trips;
 var gtfs = Gtfs(dir, function(data) {
 	console.log(data);
 	//console.log(data.getStops());
 	//console.log(data.getShapes());
 	stops = data.getStops();
 	shapes = data.getShapes();
+	trips = data.getTrips();
 
 	server.listen(process.env.PORT || 3000, function() {
 		console.log('Listening on port ' + server.address().port);
@@ -35,6 +37,10 @@ app.get('/stops/', function(req, res){
 
 app.get('/shapes/', function(req, res){
 	res.send(shapes);
+});
+
+app.get('/trips/', function(req, res){
+	res.send(trips);
 });
 
 

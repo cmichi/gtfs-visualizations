@@ -6,5 +6,5 @@ var gtfs = Gtfs(dir, function(data) {
 	console.log(data);
 	//console.log(data.getTrips());
 	//console.log(data.getStops());
-	console.log(data.getShapes());
+	//console.log(data.getShapes());
 });

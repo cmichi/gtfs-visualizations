@@ -1,20 +1,24 @@
-var imgWidth = 800;
-var imgHeight = 800;
+var imgWidth = 1400;
+var imgHeight = 1400;
 
 function coord2px(lat, lng) {
 	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
 	var coord2px_factor = 3400;
 
+	var offsetX = 0;
+	var offsetY = -300;
+
 	return {
-		  x: center_px.x + ((lat - center_coord.lat) * coord2px_factor)
-		, y: center_px.y + ((lng - center_coord.lng) * coord2px_factor)
+		  x: center_px.x + ((lat - center_coord.lat) * coord2px_factor) + offsetX
+		, y: center_px.y + ((lng - center_coord.lng) * coord2px_factor) + offsetY
 	};
 }
 
 var stops = [];
 var paper;
 var foo;
+var trips = [];
 
 $(function (){
 	paper = Raphael("canvas", imgWidth, imgHeight);
@@ -37,6 +41,23 @@ $(function (){
 	});
 	*/
 
+	$.getJSON("/trips/", function(data) {
+		for (var i in data) {
+			var trip = data[i];
+			if (trips[ trip.shape_id ] == undefined)
+				trips[ trip.shape_id ] = 1;
+			else
+				trips[ trip.shape_id ]++;
+			
+			if (trips[ trip.shape_id ] > max || max == undefined)
+				max = trips [ trip.shape_id ];
+
+			if (trips[ trip.shape_id ] < min || min == undefined)
+				min = trips [ trip.shape_id ];
+		}
+		//console.log(trips)
+	});
+
 	$.getJSON("/shapes/", function(data) {
 		var j = 0;
 		var paths = [];
@@ -56,21 +77,38 @@ $(function (){
 			}
 
 			//if (j === 30) break;
-			++j;
+			//++j;
 		}
 
+		//var factor = 100 / max;
+		console.log("max " + max)
+		console.log("min " + min)
+		//console.log(factor)
+		rainbow.setNumberRange(min, max);
+		rainbow.setSpectrum('blue', 'green', 'yellow', 'red', 'white');
 		for (var i in paths) {
 			var path = paths[i].join() 
 			//path += " Z";
 			//console.log(path);
 
+			if (trips[i] > 200) break;
 			foo = paper.path(path);
 			//var path = paper.path(path);
 			//foo.attr("fill", "#f00");
-			foo.attr("stroke", "#fff");
+			//var color =  (1 - t) * c0 + t * c1
+
+			//console.log("i " + i + ", " + trips[i]);
+			var color = rainbow.colourAt(trips[i]);
+			console.log(trips[i])
+			foo.attr("stroke", "#" + color);
+			//foo.attr("stroke", "#fff");
 		}
 	});
 });
+
+var rainbow = new Rainbow();
+var max;
+var min;
 
 
 function drawCenter() {
