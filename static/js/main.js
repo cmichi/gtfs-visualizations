@@ -57,12 +57,16 @@ $(function() {
 
 */
 
+var imgWidth = 500;
+var imgHeight = 500;
+
+/*
 function coord2px(lat, lon) {
-	/*
+	//
 		48.42677
 	9.94224		 9.96477
 		48.41809
-	*/
+	//
 	var bbLeft = 9.94224;
 	var bbRight = 9.96477;
 	var bbTop = 48.42677;
@@ -70,9 +74,6 @@ function coord2px(lat, lon) {
 
 	var bbHeight = bbTop - bbBottom;
 	var bbWidth = bbRight - bbLeft;
-
-	var imgWidth = 3074;
-	var imgHeight = 1782;
 
 	var shiftX = -1537;
 	var shiftY = -891;
@@ -84,13 +85,48 @@ function coord2px(lat, lon) {
 	return {x: coordX, y: coordY};
 }
 
+function coord2px(lat, lon) {
+	// center: 48.399976 9.995399 
+	var bbLeft = 9.94;
+	var bbRight = 9.99;
+	var bbTop = 48.42;
+	var bbBottom = 48.30;
+
+	var bbHeight = bbTop - bbBottom;
+	var bbWidth = bbRight - bbLeft;
+
+	var shiftX = 0;
+	var shiftY = 0;
+
+	var coordX = ((imgWidth / bbWidth) * (lon - bbLeft)) + shiftX;
+	var coordY = ((imgHeight / bbHeight) * (bbTop - lat)) + shiftY;
+	coordY *= -1;
+
+	return {x: coordX, y: coordY};
+}
+*/
+
+function coord2px(lat, lng) {
+	var center_coord = {lat: 48.399976, lng: 9.995399};
+	var center_px = {x: 300, y: 300};
+	var coord2px_factor = 2;
+
+	var coordX = center_px.x + ((lat - center_coord.lat) * coord2px_factor);
+	var coordY = center_px.y + ((lng - center_coord.lng) * coord2px_factor);
+
+	return {x: coordX, y: coordY};
+}
 
 $(function (){
 	$.getJSON("/stops/", function(data) {
-		var paper = Raphael("canvas", 600, 600, function() {
-			var circle = this.circle(50, 40, 10);
+		var paper = Raphael("canvas", imgWidth, imgHeight, function() {
+			//var circle = this.circle(50, 40, 5);
+			var obj = coord2px(48.40783887047417, 9.987516403198242);
+			var circle = this.circle(obj.x, obj.y, 5);
 			circle.attr("fill", "#f00");
 			circle.attr("stroke", "#fff");
+
+			console.log(obj);
 		});
 	});
 });

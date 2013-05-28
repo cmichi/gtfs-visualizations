@@ -26,6 +26,7 @@ var server = require('http').createServer(app);
 
 
 app.get('/stops/', function(req, res){
+	console.log(stops);
 	res.send(stops);
 	//res.send("foo\n");
 });
