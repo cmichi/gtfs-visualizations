@@ -17,8 +17,9 @@ function coord2px(lat, lng) {
 
 var stops = [];
 var paper;
-var foo;
+var foo = [];
 var trips = [];
+var paths = [];
 
 $(function (){
 	paper = Raphael("canvas", imgWidth, imgHeight);
@@ -56,53 +57,79 @@ $(function (){
 				min = trips [ trip.shape_id ];
 		}
 		//console.log(trips)
-	});
 
-	$.getJSON("/shapes/", function(data) {
-		var j = 0;
-		var paths = [];
+		$.getJSON("/shapes/", function(data) {
+			var j = 0;
 
-		// preprocess 
-		for (var i in data) {
-			var shape = data[i];
-			var obj = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
+			// preprocess 
+			for (var i in data) {
+				var shape = data[i];
+				var obj = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 
-			if (paths[shape.shape_id] == undefined) {
-				paths[shape.shape_id] = []
-				paths[shape.shape_id][shape.shape_pt_sequence] = "M" + obj.x + " " + obj.y
-				//paths[shape.shape_id] = "M" + obj.x + " " + obj.y
-			} else {
-				paths[shape.shape_id][shape.shape_pt_sequence] = 
-					" L" + obj.x + " " + obj.y;
+				if (paths[shape.shape_id] == undefined) {
+					paths[shape.shape_id] = []
+					paths[shape.shape_id][shape.shape_pt_sequence] = "M" + obj.x + " " + obj.y
+					//paths[shape.shape_id] = "M" + obj.x + " " + obj.y
+				} else {
+					paths[shape.shape_id][shape.shape_pt_sequence] += 
+						" L" + obj.x + " " + obj.y;
+				}
+
+				//if (j === 30) break;
+				//++j;
 			}
 
-			//if (j === 30) break;
-			//++j;
-		}
+			// are there paths who are exactly identical?
+			var identical = 0;
+			for (var i in paths) {
+				for (var n in paths) {
+					if (paths[i] === paths[n] && i != n)
+						//console.log(paths[i])
+						//console.log(trips[i])
+						//console.log("")
+						identical++;
+				}
+			}
+			console.log("identical: " + identical)
 
-		//var factor = 100 / max;
-		console.log("max " + max)
-		console.log("min " + min)
-		//console.log(factor)
-		rainbow.setNumberRange(min, max);
-		rainbow.setSpectrum('blue', 'green', 'yellow', 'red', 'white');
-		for (var i in paths) {
-			var path = paths[i].join() 
-			//path += " Z";
-			//console.log(path);
+			//var factor = 100 / max;
+			console.log("max " + max)
+			console.log("min " + min)
+			//console.log(factor)
+			rainbow.setNumberRange(min, max);
+			rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 
-			if (trips[i] > 200) break;
-			foo = paper.path(path);
-			//var path = paper.path(path);
-			//foo.attr("fill", "#f00");
-			//var color =  (1 - t) * c0 + t * c1
+			// gewichten! erst die mit geringsten trips zeichnen
+			for (var i in trips) {
+				//console.log("i : " + i)
+			}
 
-			//console.log("i " + i + ", " + trips[i]);
-			var color = rainbow.colourAt(trips[i]);
-			console.log(trips[i])
-			foo.attr("stroke", "#" + color);
-			//foo.attr("stroke", "#fff");
-		}
+			trips = trips.sort(Numsort)
+			console.log(trips)
+			for (var i in trips) {
+				//console.log("pathi : " + i)
+				console.log(trips[i] + " " + i)
+				if (!paths[i]) continue;
+				var path = paths[i].join() 
+				//path += " Z";
+
+				//console.log(trips[i] + " " + i)
+
+				//if (trips[i] < 80) continue;
+
+				foo[i] = paper.path(path);
+				//console.log(path);
+				//var path = paper.path(path);
+				//foo.attr("fill", "#f00");
+				//var color =  (1 - t) * c0 + t * c1
+
+				//console.log("i " + i + ", " + trips[i]);
+				var color = rainbow.colourAt(trips[i]);
+				//console.log(trips[i])
+				foo[i].attr("stroke", "#" + color);
+				//foo.attr("stroke", "#fff");
+			}
+		});
 	});
 });
 
@@ -120,4 +147,8 @@ function drawCenter() {
 	console.log(obj);
 	*/
 
+}
+
+function Numsort (a, b) {
+  return 1*a - 1*b;
 }
