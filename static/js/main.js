@@ -23,24 +23,36 @@ var paths = [];
 
 $(function (){
 	paper = Raphael("canvas", imgWidth, imgHeight);
-	//paper = Raphael("canvas", imgWidth, imgHeight, function() {})
-	/*
-	$.getJSON("/stops/", function(data) {
-			var j = 0;
-			for (var i in data) {
-				var stop = data[i];
-				var obj = coord2px(stop.stop_lat, stop.stop_lon);
 
-				var circle = paper.circle(obj.x, obj.y, 3);
-				circle.attr("fill", "#f00");
-				console.log(obj)
+	//paper = Raphael("canvas", imgWidth, imgHeight, function() {})
+	$.getJSON("/lines/", function(lines) {
+			rainbow.setNumberRange(1, 518);
+			rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
+
+			var j = 0;
+			for (var i in lines) {
+				var line = lines[i];
+				//var obj = coord2px(stop.stop_lat, stop.stop_lon);
+				var path = "M" + line.from.x + " " + line.to.y
+				+" L" + line.to.x + " " + line.to.y;
+
+				foo[i] = paper.path(path);
+				var color = rainbow.colourAt(line.trips);
+				foo[i].attr("stroke", "#" + color);
+
+				//console.log(path)
+
+				//var circle = paper.circle(line.from.x, line.from.y, 3);
+				//var circle = paper.circle(line.from.x, line.from.y, 3);
+				//circle.attr("fill", "#f00");
+				//console.log(obj)
 				//circle.attr("stroke", "#fff");
-				//if (j === 5) break;
+				//if (j === 50) break;
 				++j;
 			}
 		//});
 	});
-	*/
+	return;
 
 	$.getJSON("/trips/", function(data) {
 		for (var i in data) {
@@ -207,6 +219,7 @@ $(function (){
 				//var color =  (1 - t) * c0 + t * c1
 
 				//console.log("i " + i + ", " + trips[i]);
+				//foo[i] = paper.path(path);
 				var color = rainbow.colourAt(trips[i]);
 				//console.log(trips[i])
 				foo[i].attr("stroke", "#" + color);

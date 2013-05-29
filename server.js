@@ -32,6 +32,10 @@ app.use(express.bodyParser());
 var server = require('http').createServer(app);
 
 
+var lines = []
+app.get('/lines/', function(req, res){
+	res.send(lines);
+});
 
 app.get('/stops/', function(req, res){
 	console.log(stops);
@@ -179,6 +183,8 @@ function foobar() {
 					min = segments[foo].trips;
 			}
 
+			A = B;
+
 			/*
 			if (a == 10) {
 				console.log("tada")
@@ -196,7 +202,6 @@ function foobar() {
 
 	// now generate svg paths from segments array!
 	var a = 0;
-	var lines = []
 	/*
 		lines = [ {from: [x, y], to: [x, y], trips: 0} , ... ]
 	*/
