@@ -24,207 +24,88 @@ var paths = [];
 $(function (){
 	paper = Raphael("canvas", imgWidth, imgHeight);
 
+
 	//paper = Raphael("canvas", imgWidth, imgHeight, function() {})
 	$.getJSON("/lines/", function(lines) {
-			rainbow.setNumberRange(1, 518);
-			rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
+		rainbow.setNumberRange(1, 518);
+		rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 
-			var j = 0;
-			for (var i in lines) {
-				var line = lines[i];
-				//var obj = coord2px(stop.stop_lat, stop.stop_lon);
-				var path = "M" + line.from.x + " " + line.to.y
-				+" L" + line.to.x + " " + line.to.y;
+		var j = 0;
+		var path = "";
+		var lasttrips = 0;
+		var u = 0
+		for (var i in lines) {
+			var line = lines[i];
+			//var obj = coord2px(stop.stop_lat, stop.stop_lon);
+			if (line.trips != lasttrips)
+				path = "M" + line.from.x + " " + line.from.y
 
+			path += " L" + line.to.x + " " + line.to.y;
+
+			if (line.trips != lasttrips && u > 0) {
 				foo[i] = paper.path(path);
 				var color = rainbow.colourAt(line.trips);
 				foo[i].attr("stroke", "#" + color);
-
 				//console.log(path)
-
-				//var circle = paper.circle(line.from.x, line.from.y, 3);
-				//var circle = paper.circle(line.from.x, line.from.y, 3);
-				//circle.attr("fill", "#f00");
-				//console.log(obj)
-				//circle.attr("stroke", "#fff");
-				//if (j === 50) break;
-				++j;
+				//console.log(line.trips)
+				u = 0
 			}
-		//});
-	});
-	return;
+			u++
 
-	$.getJSON("/trips/", function(data) {
-		for (var i in data) {
-			var trip = data[i];
-			if (trips[ trip.shape_id ] == undefined)
-				trips[ trip.shape_id ] = 1;
-			else
-				trips[ trip.shape_id ]++;
-			
-			if (trips[ trip.shape_id ] > max || max == undefined)
-				max = trips [ trip.shape_id ];
+			lasttrips = line.trips
 
-			if (trips[ trip.shape_id ] < min || min == undefined)
-				min = trips [ trip.shape_id ];
+			//var circle = paper.circle(line.from.x, line.from.y, 3);
+			//var circle = paper.circle(line.from.x, line.from.y, 3);
+			//circle.attr("fill", "#f00");
+			//console.log(obj)
+			//circle.attr("stroke", "#fff");
+			//if (j === 200) break;
+			++j;
 		}
-		//console.log(trips)
+		return;
 
 		$.getJSON("/shapes/", function(data) {
 			var j = 0;
+			var paths = [];
 
-			/*
-			we have to break the shapes in chunks of predecessor/successor,
-			cause there might be overlapping segments of different shapes.
-			[
-				{ {x:.., y:..}, {x:.., y:..} }: {
-					trips: 3 	// 3 trips along this segment
-					, shape_ids: []
-				}
-			]
-			*/
-
-			// preprocess 
-			var segments = []
-			var predecessor = undefined;
-			var predecessor_shape_id = undefined;
-
-			var sequences = []
+			// preprocess, because the data might not be in
+			// correct order
 			for (var i in data) {
 				var shape = data[i];
-				if (sequences[shape.shape_id] == undefined)
-					sequences[shape.shape_id] = []
+				var obj = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 
-				sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
-			}
-			//console.log(sequences);
-
-			var A = undefined;
-			var B = undefined;
-			var a = 0
-			for (var i in sequences) {
-			for (var n in sequences[i]) {
-			a++
-			console.log(sequences[i])
-				var shape = sequences[i][n];
-				var shape_id = shape.shape_id
-				console.log(shape_id)
-				console.log(shape)
-				/*
-				shape.shape_pt_lat = shape.shape_pt_lat;
-				shape.shape_pt_lon = parseInt(shape.shape_pt_lon);
-				console.log(shape.shape_pt_lon)
-				console.log(parseInt(shape.shape_pt_lon))
-				break;
-				return;
-				*/
-
-				if (A == undefined) {
-					A = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-					continue;
-				} else {
-					B = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-
-					var foo = {from: A, to: B}
-					console.log(JSON.stringify(foo))
-					//var foo = A.toString(), to: B}
-					//foo = $.md5(JSON.stringify(foo))
-					foo = CryptoJS.MD5(JSON.stringify(foo))
-					foo = foo.toString()
-					//foo = JSON.stringify(foo).hashCode()
-					//console.log(foo)
-
-					if (segments[foo] == undefined) {
-						segments[foo] = {
-							"trips": 0
-							, "shape_ids": [shape_id]
-						}
-					} else {
-						if ($.inArray(shape_id, segments[foo].shape_ids) === -1) {
-							segments[foo].shape_ids.push(shape_id)
-						}
-					}
-					segments[foo].trips += trips[shape_id];
-
-				}
-
-				if (a == 5) {
-					console.log("tada")
-					console.log(segments);
-					return;
-				}
-
-			}
-			}
-			//console.log(segments);
-
-/*
-				if (segments[obj] == undefined) {
-					//paths[shape.shape_id] = []
-					segments[obj] = [];
-					segments[obj][   ]
+				if (paths[shape.shape_id] == undefined) {
+					paths[shape.shape_id] = []
 					paths[shape.shape_id][shape.shape_pt_sequence] = "M" + obj.x + " " + obj.y
 					//paths[shape.shape_id] = "M" + obj.x + " " + obj.y
 				} else {
-					paths[shape.shape_id][shape.shape_pt_sequence] += 
+					paths[shape.shape_id][shape.shape_pt_sequence] = 
 						" L" + obj.x + " " + obj.y;
 				}
 
 				//if (j === 30) break;
-			*/
-				//++j;
+				++j;
+			}
 
-			// are there paths who are exactly identical?
-			var identical = 0;
+/*
 			for (var i in paths) {
-				for (var n in paths) {
-					if (paths[i] === paths[n] && i != n)
-						//console.log(paths[i])
-						//console.log(trips[i])
-						//console.log("")
-						identical++;
+				// draw until color changes
+				var path = ""
+				var lastColor = ""
+				for (var n in paths[i]) {
+					path += paths[i][n]
+					if (
 				}
-			}
-			//console.log("identical: " + identical)
-
-			//var factor = 100 / max;
-			//console.log("max " + max)
-			//console.log("min " + min)
-			//console.log(factor)
-			rainbow.setNumberRange(min, max);
-			rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
-
-			// gewichten! erst die mit geringsten trips zeichnen
-			for (var i in trips) {
-				//console.log("i : " + i)
-			}
-
-			trips = trips.sort(Numsort)
-			//console.log(trips)
-			for (var i in trips) {
-				//console.log("pathi : " + i)
-				//console.log(trips[i] + " " + i)
-				if (!paths[i]) continue;
-				var path = paths[i].join() 
+				//var path = paths[i].join()
 				//path += " Z";
-
-				//console.log(trips[i] + " " + i)
-
-				//if (trips[i] < 80) continue;
-
-				foo[i] = paper.path(path);
 				//console.log(path);
+
+				foo = paper.path(path);
 				//var path = paper.path(path);
 				//foo.attr("fill", "#f00");
-				//var color =  (1 - t) * c0 + t * c1
-
-				//console.log("i " + i + ", " + trips[i]);
-				//foo[i] = paper.path(path);
-				var color = rainbow.colourAt(trips[i]);
-				//console.log(trips[i])
-				foo[i].attr("stroke", "#" + color);
-				//foo.attr("stroke", "#fff");
+				foo.attr("stroke", "#fff");
 			}
+*/
 		});
 	});
 });

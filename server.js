@@ -81,7 +81,6 @@ function foobar() {
 		}
 	]
 	*/
-
 	// preprocess 
 	var segments = []
 	var predecessor = undefined;
@@ -181,9 +180,10 @@ function foobar() {
 
 				if (segments[foo].trips < min || min == undefined)
 					min = segments[foo].trips;
+
+				A = B;
 			}
 
-			A = B;
 
 			/*
 			if (a == 10) {
@@ -212,6 +212,7 @@ function foobar() {
 		var obj = { "from": {"x": px_from.x, "y": px_from.y}
 			    , "to":   {"x": px_to.x, "y": px_to.y}
 			    , "trips": segments[i].trips
+			    , 
 		};
 		lines.push(obj);
 		//console.log(segments[i])
@@ -226,6 +227,7 @@ var imgHeight = 1400;
 function coord2px(lat, lng) {
 	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
+	//var coord2px_factor = 11000;
 	var coord2px_factor = 3400;
 
 	var offsetX = 0;
