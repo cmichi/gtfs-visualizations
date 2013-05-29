@@ -65,11 +65,8 @@ $(function (){
 			we have to break the shapes in chunks of predecessor/successor,
 			cause there might be overlapping segments of different shapes.
 			[
-				{x:.., y:..}: {
-					successors: [
-						{x:.., y:..}
-					]
-					, trips: 3 	// 3 trips along this segment
+				{ {x:.., y:..}, {x:.., y:..} }: {
+					trips: 3 	// 3 trips along this segment
 					, shape_ids: []
 				}
 			]
@@ -79,41 +76,50 @@ $(function (){
 			var segments = []
 			var predecessor = undefined;
 			var predecessor_shape_id = undefined;
+
+			var sequences = []
 			for (var i in data) {
 				var shape = data[i];
-				var obj = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
+				if (sequences[shape.shape_id] == undefined)
+					sequences[shape.shape_id] = []
 
-				if (predecessor == undefined) {
-					predecessor_shape_id = shape.shape_id;
-					predecessor = obj;
-					console.log("continue")
+				sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
+			}
+			console.log(sequences);
+
+			var A = undefined;
+			var B = undefined;
+			for (var shape_id in sequences) {
+				//console.log(shape_id)
+				var shape = sequences[shape_id];
+
+				if (A == undefined) {
+					A = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 					continue;
 				} else {
-					// do we belong to the same shape?
-					if (predecessor_shape_id === shape.shape_id) {
-						if (!segments[predecessor]) {
-							segments[predecessor] = 
-								{successors: [], trips: 0, shape_ids: []};
-						}
-						//console.log(shape.shape_id)
+					B = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 
-						// if the shape_id is not
-						// already in the array, we
-						// can add the trips[shape_id]
-						// number to the trips number
-						console.log($.inArray(shape.shape_id, segments[predecessor].shape_ids)) 
-						if ($.inArray(shape.shape_id, segments[predecessor].shape_ids) === -1) {
-							console.log("pushing");
-							segments[predecessor].shape_ids.push(shape.shape_id);
-							segments[predecessor].trips += trips[shape.shape_id];
-						}
+					var foo = {from: A, to: B}
+					//var foo = A.toString(), to: B}
+					//foo = $.md5(JSON.stringify(foo))
+					foo = CryptoJS.MD5(JSON.stringify(foo)).toString()
+					//foo = JSON.stringify(foo).hashCode()
+					console.log(foo)
 
-						segments[predecessor].successors.push(obj);
-						predecessor = obj;
-						//predecessor = undefined;
+					if (segments[foo] == undefined) {
+						segments[foo] = {
+							"trips": 0
+							, "shape_ids": [shape_id]
+						}
+					} else {
+						if ($.inArray(shape_id, segments[foo].shape_ids) === -1) {
+							segments[foo].shape_ids.push(shape_id)
+						}
 					}
-						
+					segments[foo].trips += trips[shape_id];
+
 				}
+
 			}
 			console.log(segments);
 
@@ -207,3 +213,16 @@ function Numsort (a, b) {
   return 1*a - 1*b;
 }
 
+
+// http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+String.prototype.hashCode = function(){
+	var hash = 0, i, char;
+	if (this.length == 0) return hash;
+
+	for (i = 0; i < this.length; i++) {
+		char = this.charCodeAt(i);
+		hash = ((hash<<5)-hash)+char;
+		hash = hash & hash; // Convert to 32bit integer
+	}
+	return hash;
+};
