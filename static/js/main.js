@@ -85,13 +85,27 @@ $(function (){
 
 				sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 			}
-			console.log(sequences);
+			//console.log(sequences);
 
 			var A = undefined;
 			var B = undefined;
-			for (var shape_id in sequences) {
-				//console.log(shape_id)
-				var shape = sequences[shape_id];
+			var a = 0
+			for (var i in sequences) {
+			for (var n in sequences[i]) {
+			a++
+			console.log(sequences[i])
+				var shape = sequences[i][n];
+				var shape_id = shape.shape_id
+				console.log(shape_id)
+				console.log(shape)
+				/*
+				shape.shape_pt_lat = shape.shape_pt_lat;
+				shape.shape_pt_lon = parseInt(shape.shape_pt_lon);
+				console.log(shape.shape_pt_lon)
+				console.log(parseInt(shape.shape_pt_lon))
+				break;
+				return;
+				*/
 
 				if (A == undefined) {
 					A = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
@@ -100,11 +114,13 @@ $(function (){
 					B = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 
 					var foo = {from: A, to: B}
+					console.log(JSON.stringify(foo))
 					//var foo = A.toString(), to: B}
 					//foo = $.md5(JSON.stringify(foo))
-					foo = CryptoJS.MD5(JSON.stringify(foo)).toString()
+					foo = CryptoJS.MD5(JSON.stringify(foo))
+					foo = foo.toString()
 					//foo = JSON.stringify(foo).hashCode()
-					console.log(foo)
+					//console.log(foo)
 
 					if (segments[foo] == undefined) {
 						segments[foo] = {
@@ -120,8 +136,15 @@ $(function (){
 
 				}
 
+				if (a == 5) {
+					console.log("tada")
+					console.log(segments);
+					return;
+				}
+
 			}
-			console.log(segments);
+			}
+			//console.log(segments);
 
 /*
 				if (segments[obj] == undefined) {
