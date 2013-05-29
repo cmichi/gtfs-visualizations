@@ -61,13 +61,67 @@ $(function (){
 		$.getJSON("/shapes/", function(data) {
 			var j = 0;
 
+			/*
+			we have to break the shapes in chunks of predecessor/successor,
+			cause there might be overlapping segments of different shapes.
+			[
+				{x:.., y:..}: {
+					successors: [
+						{x:.., y:..}
+					]
+					, trips: 3 	// 3 trips along this segment
+					, shape_ids: []
+				}
+			]
+			*/
+
 			// preprocess 
+			var segments = []
+			var predecessor = undefined;
+			var predecessor_shape_id = undefined;
 			for (var i in data) {
 				var shape = data[i];
 				var obj = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 
-				if (paths[shape.shape_id] == undefined) {
-					paths[shape.shape_id] = []
+				if (predecessor == undefined) {
+					predecessor_shape_id = shape.shape_id;
+					predecessor = obj;
+					console.log("continue")
+					continue;
+				} else {
+					// do we belong to the same shape?
+					if (predecessor_shape_id === shape.shape_id) {
+						if (!segments[predecessor]) {
+							segments[predecessor] = 
+								{successors: [], trips: 0, shape_ids: []};
+						}
+						//console.log(shape.shape_id)
+
+						// if the shape_id is not
+						// already in the array, we
+						// can add the trips[shape_id]
+						// number to the trips number
+						console.log($.inArray(shape.shape_id, segments[predecessor].shape_ids)) 
+						if ($.inArray(shape.shape_id, segments[predecessor].shape_ids) === -1) {
+							console.log("pushing");
+							segments[predecessor].shape_ids.push(shape.shape_id);
+							segments[predecessor].trips += trips[shape.shape_id];
+						}
+
+						segments[predecessor].successors.push(obj);
+						predecessor = obj;
+						//predecessor = undefined;
+					}
+						
+				}
+			}
+			console.log(segments);
+
+/*
+				if (segments[obj] == undefined) {
+					//paths[shape.shape_id] = []
+					segments[obj] = [];
+					segments[obj][   ]
 					paths[shape.shape_id][shape.shape_pt_sequence] = "M" + obj.x + " " + obj.y
 					//paths[shape.shape_id] = "M" + obj.x + " " + obj.y
 				} else {
@@ -76,8 +130,8 @@ $(function (){
 				}
 
 				//if (j === 30) break;
+			*/
 				//++j;
-			}
 
 			// are there paths who are exactly identical?
 			var identical = 0;
@@ -90,11 +144,11 @@ $(function (){
 						identical++;
 				}
 			}
-			console.log("identical: " + identical)
+			//console.log("identical: " + identical)
 
 			//var factor = 100 / max;
-			console.log("max " + max)
-			console.log("min " + min)
+			//console.log("max " + max)
+			//console.log("min " + min)
 			//console.log(factor)
 			rainbow.setNumberRange(min, max);
 			rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
@@ -105,10 +159,10 @@ $(function (){
 			}
 
 			trips = trips.sort(Numsort)
-			console.log(trips)
+			//console.log(trips)
 			for (var i in trips) {
 				//console.log("pathi : " + i)
-				console.log(trips[i] + " " + i)
+				//console.log(trips[i] + " " + i)
 				if (!paths[i]) continue;
 				var path = paths[i].join() 
 				//path += " Z";
@@ -152,3 +206,4 @@ function drawCenter() {
 function Numsort (a, b) {
   return 1*a - 1*b;
 }
+
