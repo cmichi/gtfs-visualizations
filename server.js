@@ -6,6 +6,8 @@ var crypto = require('crypto');
 var jquery = require('jquery');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 
+var dead = 491;
+
 var dir = "./gtfs/ulm/";
 var stops;
 var shapes;
@@ -74,7 +76,8 @@ function foobar() {
 		}
 	]
 	*/
-	// preprocess 
+
+	// ensure that the points are in the correct order!
 	var segments = []
 	var sequences = []
 	for (var i in shapes) {
@@ -84,19 +87,17 @@ function foobar() {
 
 		sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 	}
-	//console.log(sequences);
+	//console.log(sequences["87007R0-0712"][0]);
 
 	var a = 0
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
+
 		for (var n in sequences[i]) {
 			a++;
 			var shape = sequences[i][n];
 			var shape_id = shape.shape_id
-
-			//console.log(n)
-			//if (a === 50) break;
 
 			if (A == undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
@@ -104,29 +105,10 @@ function foobar() {
 			} else {
 				B = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
 
-				var foo = {from: A, to: B}
-				var md5 = crypto.createHash('md5');
-				md5.update(JSON.stringify(foo), "ascii")
-				foo = md5.digest("hex")
+				var foo = hash([A, B])
 
-				// maybe shape from different direction,
-				// but on this segment
-				var foo2 = {from: B, to: A}
-				var md5_ = crypto.createHash('md5');
-				md5_.update(JSON.stringify(foo2), "ascii")
-				foo2 = md5_.digest("hex")
-
-/*
-				if (foo != foo2 && segments[foo2] != undefined && segments[foo] != undefined) {
-					console.log("something went terribly wrong..")
-					console.log(foo2);
-					console.log(foo);
-					console.log(JSON.stringify({from: A, to: B}));
-					console.log(JSON.stringify({from: B, to: A}));
-					return;
-				}
-				*/
-
+				// maybe shape from different direction, but on this segment
+				var foo2 = hash([B, A])
 
 				if (segments[foo] == undefined) {
 					segments[foo] = {
@@ -136,16 +118,15 @@ function foobar() {
 						, "to": B
 					}
 				} else {
-					if (jquery.inArray(shape_id, segments[foo].shape_ids) === -1) {
+					if (jquery.inArray(shape_id, segments[foo].shape_ids) === -1) 
 						segments[foo].shape_ids.push(shape_id)
-					}
 				}
 				segments[foo].trips += trips_count[shape_id];
 
 				// check if {B, A} in arr
 				if (foo != foo2 && segments[foo2] != undefined) {
-					//foo = foo2;
 					segments[foo2].trips = segments[foo].trips
+					// ggf shape_ids.push(shape_id)
 				}
 
 				if (segments[foo].trips > max || max == undefined)
@@ -154,24 +135,34 @@ function foobar() {
 				if (segments[foo].trips < min || min == undefined)
 					min = segments[foo].trips;
 
-				A = B;
+				//A = B;
+				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
 			}
 
+			
+			if (a == dead-1) {
+				console.log("")
+				console.log(segments[foo])
+				console.log(foo)
+			}
 
-			/*
-			if (a == 10) {
+			if (a == dead) {
+				console.log("")
+				console.log(segments[foo])
+				console.log(foo)
 				console.log("tada")
-				console.log(segments);
-				return;
+				//console.log(segments);
+				break;
 			}
-			*/
+		
 		}
+
+		if (a == dead) break;
 	}
 	console.log(segments.length);
 	console.log(a);
 	console.log("max " + max);
 	console.log("min " + min);
-
 
 	// now generate svg paths from segments array!
 	var a = 0;
@@ -186,12 +177,16 @@ function foobar() {
 			    , "to":   {"x": px_to.x, "y": px_to.y}
 			    , "trips": segments[i].trips
 		};
+		//console.log(obj)
+		//console.log(typeof(parseInt(segments[i].to.lat)))
+		//break
 		lines.push(obj);
 		//console.log(segments[i])
 		//console.log(segments[i])
 		//console.log(segments[i].trips)
-		//if (++a == 400) break;
+		//if (++a == 10) break;
 	}
+	//console.log(lines)
 	console.log(lines.length + " lines");
 }
 
@@ -201,14 +196,29 @@ var imgHeight = 1400;
 function coord2px(lat, lng) {
 	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
-	var coord2px_factor = 11000;
+	//var coord2px_factor = 11000;
+	//var coord2px_factor = 8400;
+	var coord2px_factor = -10000;
 	//var coord2px_factor = 3400;
 
 	var offsetX = 0;
-	var offsetY = -300;
+	var offsetY = 0;
+	//var offsetY = -300;
+
+	var _lat = (lat)*1
+	var _lng = (lng)*1
+	//console.log(_lat)
 
 	return {
-		  x: center_px.x + ((lat - center_coord.lat) * coord2px_factor) + offsetX
-		, y: center_px.y + ((lng - center_coord.lng) * coord2px_factor) + offsetY
+		  x: center_px.x + ((_lat - center_coord.lat) * coord2px_factor) + offsetX
+		, y: center_px.y + ((_lng - center_coord.lng) * coord2px_factor) + offsetY
 	};
 }
+
+function hash(foo) {
+	var md5 = crypto.createHash('sha1');
+	md5.update(JSON.stringify(foo), "ascii")
+
+	return md5.digest("hex")
+}
+
