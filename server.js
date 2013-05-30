@@ -54,7 +54,6 @@ app.get('/trips/', function(req, res){
 var max;
 var min;
 
-
 function foobar() {
 	var trips_count = []
 	for (var i in trips) {
@@ -63,12 +62,6 @@ function foobar() {
 			trips_count[ trip.shape_id ] = 1;
 		else
 			trips_count[ trip.shape_id ]++;
-		
-		if (trips_count[ trip.shape_id ] > max || max == undefined)
-			max = trips_count[ trip.shape_id ];
-
-		if (trips_count[ trip.shape_id ] < min || min == undefined)
-			min = trips_count[ trip.shape_id ];
 	}
 
 	/*
@@ -83,9 +76,6 @@ function foobar() {
 	*/
 	// preprocess 
 	var segments = []
-	var predecessor = undefined;
-	var predecessor_shape_id = undefined;
-
 	var sequences = []
 	for (var i in shapes) {
 		var shape = shapes[i];
@@ -101,34 +91,18 @@ function foobar() {
 		var A = undefined;
 		var B = undefined;
 		for (var n in sequences[i]) {
-			a++
-			//console.log(sequences[i])
+			a++;
 			var shape = sequences[i][n];
 			var shape_id = shape.shape_id
-			//console.log(shape_id)
-			//console.log(shape)
-			/*
-			shape.shape_pt_lat = shape.shape_pt_lat;
-			shape.shape_pt_lon = parseInt(shape.shape_pt_lon);
-			//console.log(shape.shape_pt_lon)
-			//console.log(parseInt(shape.shape_pt_lon))
-			break;
-			return;
-			*/
+
+			//console.log(n)
+			//if (a === 50) break;
 
 			if (A == undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
-				//A = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 				continue;
 			} else {
-				//B = [shape.shape_pt_lat, shape.shape_pt_lon];
 				B = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
-				//B = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-
-				//console.log(JSON.stringify(foo))
-				//var foo = A.toString(), to: B}
-				//foo = $.md5(JSON.stringify(foo))
-				//foo = CryptoJS.MD5(JSON.stringify(foo))
 
 				var foo = {from: A, to: B}
 				var md5 = crypto.createHash('md5');
@@ -142,10 +116,7 @@ function foobar() {
 				md5_.update(JSON.stringify(foo2), "ascii")
 				foo2 = md5_.digest("hex")
 
-				//foo = md5.digest("base64")
-				//foo = JSON.stringify(foo).hashCode()
-				//console.log(foo)
-
+/*
 				if (foo != foo2 && segments[foo2] != undefined && segments[foo] != undefined) {
 					console.log("something went terribly wrong..")
 					console.log(foo2);
@@ -154,10 +125,8 @@ function foobar() {
 					console.log(JSON.stringify({from: B, to: A}));
 					return;
 				}
+				*/
 
-				// missing: check if {B, A} in arr
-				if (foo != foo2 && segments[foo2] != undefined) 
-					foo = foo2;
 
 				if (segments[foo] == undefined) {
 					segments[foo] = {
@@ -171,9 +140,13 @@ function foobar() {
 						segments[foo].shape_ids.push(shape_id)
 					}
 				}
-				//console.log(shape_id);
-				//console.log(trips_count[shape_id]);
 				segments[foo].trips += trips_count[shape_id];
+
+				// check if {B, A} in arr
+				if (foo != foo2 && segments[foo2] != undefined) {
+					//foo = foo2;
+					segments[foo2].trips = segments[foo].trips
+				}
 
 				if (segments[foo].trips > max || max == undefined)
 					max = segments[foo].trips;
@@ -212,23 +185,24 @@ function foobar() {
 		var obj = { "from": {"x": px_from.x, "y": px_from.y}
 			    , "to":   {"x": px_to.x, "y": px_to.y}
 			    , "trips": segments[i].trips
-			    , 
 		};
 		lines.push(obj);
 		//console.log(segments[i])
 		//console.log(segments[i])
-		//if (++a == 10) break;
+		//console.log(segments[i].trips)
+		//if (++a == 400) break;
 	}
 	console.log(lines.length + " lines");
 }
 
 var imgWidth = 1400;
 var imgHeight = 1400;
+
 function coord2px(lat, lng) {
 	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
-	//var coord2px_factor = 11000;
-	var coord2px_factor = 3400;
+	var coord2px_factor = 11000;
+	//var coord2px_factor = 3400;
 
 	var offsetX = 0;
 	var offsetY = -300;
