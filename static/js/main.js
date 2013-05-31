@@ -19,24 +19,31 @@ $(function (){
 
 		for (var i in lines) {
 			var line = lines[i];
-			if (line.trips != lasttrips)
+			if (line.trips != lasttrips) {
+				var tada = paper.path(path);
+				var color = rainbow.colourAt(line.trips);
+				//color = "ff0000"
+				tada.attr("stroke", "#" + color);
+				foo.push(tada)
+
 				path = "M" + line.from.x + " " + line.from.y;
+			} else {
+				path += " L" + line.from.x + " " + line.from.y;
+			}
 
 			path += " L" + line.to.x + " " + line.to.y;
 
 			// if different trips: different color || last for call
 			if (line.trips != lasttrips || u == lines.length-1) {
-			//if (line.trips != lasttrips && u > 0) {
-				foo[i] = paper.path(path);
+				var tada = paper.path(path);
 				var color = rainbow.colourAt(line.trips);
-				color = "ff0000"
-				foo[i].attr("stroke", "#" + color);
-				console.log(path)
-				//console.log(line)
+				//color = "ff0000"
+				tada.attr("stroke", "#" + color);
+				foo.push(tada)
 				u = 0;
 			}
 			u++;
-			//console.log(u)
+			//console.log(u + " " + path)
 
 			lasttrips = line.trips;
 			//if (u == 50) return;

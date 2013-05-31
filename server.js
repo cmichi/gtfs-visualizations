@@ -6,7 +6,8 @@ var crypto = require('crypto');
 var jquery = require('jquery');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 
-var dead = 491;
+var dead = 306;
+//var dead = 49100;
 
 var dir = "./gtfs/ulm/";
 var stops;
@@ -104,11 +105,10 @@ function foobar() {
 				continue;
 			} else {
 				B = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
-
-				var foo = hash([A, B])
+				var foo = hash([A, B]);
 
 				// maybe shape from different direction, but on this segment
-				var foo2 = hash([B, A])
+				var foo2 = hash([B, A]);
 
 				if (segments[foo] == undefined) {
 					segments[foo] = {
@@ -181,6 +181,12 @@ function foobar() {
 		//console.log(typeof(parseInt(segments[i].to.lat)))
 		//break
 		lines.push(obj);
+
+		//console.log(i)
+		//console.log(obj)
+		//if (i == segments.length - 1)
+			//console.log(segments[i])
+
 		//console.log(segments[i])
 		//console.log(segments[i])
 		//console.log(segments[i].trips)
@@ -198,12 +204,14 @@ function coord2px(lat, lng) {
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
 	//var coord2px_factor = 11000;
 	//var coord2px_factor = 8400;
-	var coord2px_factor = -10000;
+	var coord2px_factor = -19000;
+	//var coord2px_factor = -8000;
 	//var coord2px_factor = 3400;
 
 	var offsetX = 0;
 	var offsetY = 0;
-	//var offsetY = -300;
+	var offsetY = -500;
+	var offsetX = -500;
 
 	var _lat = (lat)*1
 	var _lng = (lng)*1
