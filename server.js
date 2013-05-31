@@ -7,7 +7,8 @@ var jquery = require('jquery');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 
 var dead = 306;
-//var dead = 49100;
+dead = 49100;
+console.log("dead: " + dead)
 
 var dir = "./gtfs/ulm/";
 var stops;
@@ -50,6 +51,10 @@ app.get('/shapes/', function(req, res){
 	res.send(shapes);
 });
 
+app.get('/paths/', function(req, res){
+	res.send(paths);
+});
+
 app.get('/trips/', function(req, res){
 	res.send(trips);
 });
@@ -57,6 +62,7 @@ app.get('/trips/', function(req, res){
 var max;
 var min;
 
+var sequences = []
 function foobar() {
 	var trips_count = []
 	for (var i in trips) {
@@ -80,7 +86,7 @@ function foobar() {
 
 	// ensure that the points are in the correct order!
 	var segments = []
-	var sequences = []
+	var segments_length = 0;
 	for (var i in shapes) {
 		var shape = shapes[i];
 		if (sequences[shape.shape_id] == undefined)
@@ -94,16 +100,30 @@ function foobar() {
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
+		var last_undef = 0
+
+		// evtl. wurde ein segment uebersprugen
 
 		for (var n in sequences[i]) {
 			a++;
 			var shape = sequences[i][n];
 			var shape_id = shape.shape_id
 
+			if(last_undef == 1 && A == undefined)
+				console.log("shit")
+
+			// checken, ob das hier ggf der letzte punkt war
+			if (n == sequences[i].length-1 && A == undefined)
+				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
+
 			if (A == undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
+					
+
+				last_undef = 1;
 				continue;
 			} else {
+				last_undef = 0;
 				B = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
 				var foo = hash([A, B]);
 
@@ -117,6 +137,7 @@ function foobar() {
 						, "from": A
 						, "to": B
 					}
+					segments_length++;
 				} else {
 					if (jquery.inArray(shape_id, segments[foo].shape_ids) === -1) 
 						segments[foo].shape_ids.push(shape_id)
@@ -159,8 +180,8 @@ function foobar() {
 
 		if (a == dead) break;
 	}
-	console.log(segments.length);
-	console.log(a);
+	console.log(segments_length + " segments");
+	console.log("a: " + a);
 	console.log("max " + max);
 	console.log("min " + min);
 
@@ -194,6 +215,8 @@ function foobar() {
 	}
 	//console.log(lines)
 	console.log(lines.length + " lines");
+
+	drawShapes();
 }
 
 var imgWidth = 1400;
@@ -204,14 +227,14 @@ function coord2px(lat, lng) {
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
 	//var coord2px_factor = 11000;
 	//var coord2px_factor = 8400;
-	var coord2px_factor = -19000;
-	//var coord2px_factor = -8000;
-	//var coord2px_factor = 3400;
+	//var coord2px_factor = -19000;
+	var coord2px_factor = -3500;
+	coord2px_factor = -10000;
 
 	var offsetX = 0;
 	var offsetY = 0;
-	var offsetY = -500;
-	var offsetX = -500;
+	var offsetY = -370;
+	//var offsetX = -500;
 
 	var _lat = (lat)*1
 	var _lng = (lng)*1
@@ -228,5 +251,27 @@ function hash(foo) {
 	md5.update(JSON.stringify(foo), "ascii")
 
 	return md5.digest("hex")
+}
+
+// creates svg etc.
+var paths = []
+function drawShapes() {
+	//sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
+	for (var i in sequences) {
+		var A = undefined;
+		var B = undefined;
+
+		var path = "";
+		for (var n in sequences[i]) {
+			var shape = sequences[i][n];
+			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
+			if (path == "")
+				path = "M" + px.x + " " + px.y;
+			else 
+				path += " L" + px.x + " " + px.y;
+		}
+		paths.push(path);
+	}
+	console.log(paths.length + " paths available")
 }
 

@@ -11,6 +11,22 @@ var paths = [];
 $(function (){
 	paper = Raphael("canvas", imgWidth, imgHeight);
 
+	// hier ganz normal alle shapes zeichnen, fuer jedes teilstueck
+	// checken, ob es fuer dieses teilstueck einen entsprechenden trips
+	// eintrag gibt
+	$.getJSON("/paths/", function(paths) {
+		for (var i in paths) {
+			var path = paths[i];
+
+			var tada = paper.path(path);
+			//var color = rainbow.colourAt(line.trips);
+			color = "ff0000"
+			tada.attr("stroke", "#" + color);
+			foo.push(tada)
+		}
+	});
+
+/*
 	$.getJSON("/lines/", function(lines) {
 		var path = "";
 		var lasttrips = 0;
@@ -49,6 +65,7 @@ $(function (){
 			//if (u == 50) return;
 		}
 	});
+	*/
 });
 
 
