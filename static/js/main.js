@@ -18,8 +18,8 @@ $(function (){
 		for (var i in paths) {
 			var path = paths[i];
 
-			var tada = paper.path(path);
-			//var color = rainbow.colourAt(line.trips);
+			var tada = paper.path(path.path);
+			var color = rainbow.colourAt(path.trips);
 			color = "ff0000"
 			tada.attr("stroke", "#" + color);
 			foo.push(tada)

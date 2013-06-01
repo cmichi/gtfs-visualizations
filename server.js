@@ -7,7 +7,7 @@ var jquery = require('jquery');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 
 var dead = 306;
-dead = 49100;
+dead = 1000000;
 console.log("dead: " + dead)
 
 var dir = "./gtfs/ulm/";
@@ -255,6 +255,9 @@ function hash(foo) {
 
 // creates svg etc.
 var paths = []
+//var rainbow = new Rainbow();
+//rainbow.setNumberRange(1, 2093);
+//rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 function drawShapes() {
 	//sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 	for (var i in sequences) {
@@ -262,15 +265,22 @@ function drawShapes() {
 		var B = undefined;
 
 		var path = "";
+		var last_px;
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-			if (path == "")
+			if (path == "") 
 				path = "M" + px.x + " " + px.y;
 			else 
 				path += " L" + px.x + " " + px.y;
+
+			if (segments[last_px, px] != undefined)
+				// trips uebernehmen und hier einfuegen
+
+			last_px = px;
 		}
-		paths.push(path);
+		var col = "#ff0000";
+		paths.push({"path": path, "color": col, "trips": trips});
 	}
 	console.log(paths.length + " paths available")
 }
