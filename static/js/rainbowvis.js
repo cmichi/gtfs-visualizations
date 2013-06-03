@@ -3,7 +3,7 @@ RainbowVis-JS
 Released under MIT License
 */
 
-function Rainbow()
+exports.Rainbow = function()
 {
 	var gradients = null;
 	var minNum = 0;

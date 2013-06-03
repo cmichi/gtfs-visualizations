@@ -1,6 +1,7 @@
-var rainbow = new Rainbow();
+/*var rainbow = new Rainbow();
 rainbow.setNumberRange(1, 2093);
 rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
+*/
 
 var stops = [];
 var paper;
@@ -19,10 +20,11 @@ $(function (){
 			var path = paths[i];
 
 			var tada = paper.path(path.path);
-			var color = rainbow.colourAt(path.trips);
-			color = "ff0000"
+			//var color = rainbow.colourAt(path.trips);
+			var color = path.color;
+			//color = "ff0000"
 			tada.attr("stroke", "#" + color);
-			foo.push(tada)
+			//foo.push(tada)
 		}
 	});
 
@@ -37,8 +39,8 @@ $(function (){
 			var line = lines[i];
 			if (line.trips != lasttrips) {
 				var tada = paper.path(path);
-				var color = rainbow.colourAt(line.trips);
-				//color = "ff0000"
+				//var color = rainbow.colourAt(line.trips);
+				var color = "ff0000"
 				tada.attr("stroke", "#" + color);
 				foo.push(tada)
 
@@ -52,8 +54,8 @@ $(function (){
 			// if different trips: different color || last for call
 			if (line.trips != lasttrips || u == lines.length-1) {
 				var tada = paper.path(path);
-				var color = rainbow.colourAt(line.trips);
-				//color = "ff0000"
+				//var color = rainbow.colourAt(line.trips);
+				var color = "ff0000"
 				tada.attr("stroke", "#" + color);
 				foo.push(tada)
 				u = 0;

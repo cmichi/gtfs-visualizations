@@ -4,7 +4,24 @@ var http = require('http');
 var path = require('path');
 var crypto = require('crypto');
 var jquery = require('jquery');
+var fs = require('fs');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
+//var toxi = require('toxiclibsjs');
+
+//var raphael = require('./node-raphael/node-raphael');
+//var raphael = require('raphael');
+//var d3 = require('d3');
+//var div = document.createElement('div');
+//paper = Raphael(div, imgWidth, imgHeight);
+//var Raphael = require('./static/js/raphael-node');
+//console.log(raphael)
+//var svg = raphael.generate(200, 200, function draw(paper) { 
+//});
+
+var Rainbow = require(path.join(__dirname, "static", "js", "rainbowvis"));
+//console.log(Rainbow.Rainbow);
+//console.log(path.join(__dirname, "static", "js", "rainbowvis"));
+var rainbow = new Rainbow.Rainbow();
 
 var dead = 306;
 dead = 1000000;
@@ -14,6 +31,9 @@ var dir = "./gtfs/ulm/";
 var stops;
 var shapes;
 var trips;
+var segments = []
+var segments_length = 0;
+
 var gtfs = Gtfs(dir, function(data) {
 	//console.log(data);
 	//console.log(data.getStops());
@@ -85,8 +105,6 @@ function foobar() {
 	*/
 
 	// ensure that the points are in the correct order!
-	var segments = []
-	var segments_length = 0;
 	for (var i in shapes) {
 		var shape = shapes[i];
 		if (sequences[shape.shape_id] == undefined)
@@ -94,7 +112,6 @@ function foobar() {
 
 		sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 	}
-	//console.log(sequences["87007R0-0712"][0]);
 
 	var a = 0
 	for (var i in sequences) {
@@ -185,6 +202,10 @@ function foobar() {
 	console.log("max " + max);
 	console.log("min " + min);
 
+	// rainbow
+	rainbow.setNumberRange(min, max);
+	rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
+
 	// now generate svg paths from segments array!
 	var a = 0;
 	/*
@@ -259,6 +280,7 @@ var paths = []
 //rainbow.setNumberRange(1, 2093);
 //rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 function drawShapes() {
+var tot = 0;
 	//sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 	for (var i in sequences) {
 		var A = undefined;
@@ -266,6 +288,8 @@ function drawShapes() {
 
 		var path = "";
 		var last_px;
+		var last_shape;
+		var last_trips = 0;
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
@@ -274,14 +298,57 @@ function drawShapes() {
 			else 
 				path += " L" + px.x + " " + px.y;
 
-			//if (segments[last_px, px] != undefined)
-				// trips uebernehmen und hier einfuegen
+
+			if (last_shape != undefined) {
+				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
+				B = {"lat": last_shape.shape_pt_lat, "lng": last_shape.shape_pt_lon};
+				var foo = hash([A, B]);
+
+				if (segments[foo] != undefined) {
+					// sind die anzahl an trips unterschiedlich
+					// wie auf dem bisher ge-pathten teilstueck?
+					trips = segments[foo].trips;
+					//console.log(trips + " ..")
+					if (trips != last_trips) {
+						//var col = "#ff0000";
+						var col = rainbow.colourAt(trips);
+						paths.push({"path": path, "color": col, "trips": trips});
+						last_trips = trips;
+
+						//paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
+					}
+				}
+			}
 
 			last_px = px;
+			last_shape = shape;
 		}
-		var col = "#ff0000";
 		paths.push({"path": path, "color": col, "trips": trips});
+		last_trips = trips;
+
+		if (tot == 90) break;
+		tot++
 	}
 	console.log(paths.length + " paths available")
+
+	// output svg
+	//fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
+
+	// create svg
+	/*
+	var svg = raphael.generate(imgWidth, imgHeight, function draw(paper) {
+		var foo = [];
+		for (var i in paths) {
+			var path = paths[i];
+
+			var tada = paper.path(path.path);
+			//var color = rainbow.colourAt(path.trips);
+			var color = path.color;
+			//color = "ff0000"
+			tada.attr("stroke", "#" + color);
+			foo.push(tada)
+		}
+	});
+	*/
 }
 
