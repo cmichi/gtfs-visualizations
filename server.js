@@ -274,7 +274,7 @@ function drawShapes() {
 			else 
 				path += " L" + px.x + " " + px.y;
 
-			if (segments[last_px, px] != undefined)
+			//if (segments[last_px, px] != undefined)
 				// trips uebernehmen und hier einfuegen
 
 			last_px = px;
