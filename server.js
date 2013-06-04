@@ -8,6 +8,8 @@ var fs = require('fs');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 //var toxi = require('toxiclibsjs');
 
+//var processing = require('processing');
+
 //var raphael = require('./node-raphael/node-raphael');
 //var raphael = require('raphael');
 //var d3 = require('d3');
@@ -73,6 +75,10 @@ app.get('/shapes/', function(req, res){
 
 app.get('/paths/', function(req, res){
 	res.send(paths);
+});
+
+app.get('/paths_processing/', function(req, res){
+	res.send(paths_processing);
 });
 
 app.get('/trips/', function(req, res){
@@ -276,6 +282,8 @@ function hash(foo) {
 
 // creates svg etc.
 var paths = []
+var paths_processing = []
+var paths_file = []
 //var rainbow = new Rainbow();
 //rainbow.setNumberRange(1, 2093);
 //rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
@@ -314,7 +322,25 @@ var tot = 0;
 						var col = rainbow.colourAt(trips);
 						paths.push({"path": path, "color": col, "trips": trips});
 						last_trips = trips;
+	var ptest = path.replace(/L/g,"").replace(/M/g,"").split(" ");
+	var ptest2 = []
+	var ptest3 = ""
+	var x, y;
+	for (var u in ptest) {
+		if (x == undefined) {
+			x = ptest[u]
+		} else {
+			y = ptest[u]
+			ptest2.push([x, y])
+			ptest3 += x + " " + y + ","
+			x = y= undefined;
+		}
+			
+	}
+						paths_processing.push({"path":ptest2 , "color": col});
+						paths_file.push(col + "\t" + ptest3);
 
+						//paths_processing.push({"path": path.replace(/L/g,"").replace(/M/g,"").split(" "), "color": col});
 						//paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
 					}
 				}
@@ -326,13 +352,16 @@ var tot = 0;
 		paths.push({"path": path, "color": col, "trips": trips});
 		last_trips = trips;
 
-		if (tot == 90) break;
+		if (tot == 40) break;
 		tot++
 	}
 	console.log(paths.length + " paths available")
 
 	// output svg
 	//fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
+	fs.writeFileSync("test.processing", paths_file.join('\n'), "utf8");
+
+
 
 	// create svg
 	/*
