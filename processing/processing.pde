@@ -1,15 +1,15 @@
 void setup() {
- size(600, 600);
+  size(800, 800);
  
  stroke(255, 0, 0);
- strokeWeight(2);
+ strokeWeight(1);
  background(255);
 String lines[] = loadStrings("test.processing");
 System.out.println(lines.length);
 smooth();
 noFill();
 int u = 0;
-float f = 0.4;
+float f = 0.34;
 
 //translate(width/2, height/2);
 //rotate(radians(90));
@@ -18,7 +18,8 @@ pushMatrix();
 
 for (int i = 0; i < lines.length; i++) {
  String[] line = lines[i].split("\t");
- String col = "FF" +  line[0];
+ String col =   line[0];
+// String col = "FF" +  line[0];
  String[] points = line[1].split(",");
 
                 String[] pre = new String[2];
@@ -36,10 +37,11 @@ for (int i = 0; i < lines.length; i++) {
                         if (coords.length != 2 || pre.length != 2) continue;
                          // System.out.println(pre[0] + ", " + pre[1] + ", " + coords[0] + ", " + coords[1]);
                        //  System.out.println("#" + col);
-                         color col1 = color(unhex(col));
+                      //   color col1 = color(unhex(col));
                        //  col1 = color(255, 0, 0);
 
-stroke(col1);
+//stroke(col1);
+stroke(255, 0,0, (2093.0f/float(col)) * 255.0f);
                        line(float(pre[0]) * f, float(pre[1]) * f,  float(coords[0]) * f, float(coords[1]) * f);
 
                       

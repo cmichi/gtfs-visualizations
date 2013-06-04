@@ -1,33 +1,14 @@
 var express = require('express');
 var http = require('http');
-//var parser = require('parser');
 var path = require('path');
 var crypto = require('crypto');
 var jquery = require('jquery');
 var fs = require('fs');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
-//var toxi = require('toxiclibsjs');
-
-//var processing = require('processing');
-
-//var raphael = require('./node-raphael/node-raphael');
-//var raphael = require('raphael');
-//var d3 = require('d3');
-//var div = document.createElement('div');
-//paper = Raphael(div, imgWidth, imgHeight);
-//var Raphael = require('./static/js/raphael-node');
-//console.log(raphael)
-//var svg = raphael.generate(200, 200, function draw(paper) { 
-//});
 
 var Rainbow = require(path.join(__dirname, "static", "js", "rainbowvis"));
-//console.log(Rainbow.Rainbow);
-//console.log(path.join(__dirname, "static", "js", "rainbowvis"));
 var rainbow = new Rainbow.Rainbow();
-
-var dead = 306;
-dead = 1000000;
-//console.log("dead: " + dead)
+var debug = false;
 
 var dir = "./gtfs/ulm/";
 var stops;
@@ -37,16 +18,13 @@ var segments = []
 var segments_length = 0;
 
 var gtfs = Gtfs(dir, function(data) {
-	//console.log(data);
-	//console.log(data.getStops());
-	//console.log(data.getShapes());
 	stops = data.getStops();
 	shapes = data.getShapes();
 	trips = data.getTrips();
 
 	foobar();
 
-/*
+	/*
 	server.listen(process.env.PORT || 3000, function() {
 		console.log('Listening on port ' + server.address().port);
 	});
@@ -184,31 +162,12 @@ function foobar() {
 				//A = B;
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
 			}
-
-			
-			if (a == dead-1) {
-				console.log("")
-				console.log(segments[foo])
-				console.log(foo)
-			}
-
-			if (a == dead) {
-				console.log("")
-				console.log(segments[foo])
-				console.log(foo)
-				console.log("tada")
-				//console.log(segments);
-				break;
-			}
-		
 		}
-
-		if (a == dead) break;
 	}
 	//console.log(segments_length + " segments");
 	//console.log("a: " + a);
-	//console.log("max " + max);
-	//console.log("min " + min);
+	console.log("max " + max);
+	console.log("min " + min);
 
 	// rainbow
 	rainbow.setNumberRange(min, max);
@@ -254,24 +213,19 @@ var imgHeight = 1400;
 function coord2px(lat, lng) {
 	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
-	//var coord2px_factor = 11000;
-	//var coord2px_factor = 8400;
-	//var coord2px_factor = -19000;
-	var coord2px_factor = -3500;
-	coord2px_factor = -10000;
+	var coord2px_factor = 10000;
 
 	var offsetX = 0;
 	var offsetY = 0;
-	var offsetY = -370;
-	//var offsetX = -500;
+	var offsetY = 200;
+	var offsetX = 50;
 
 	var _lat = (lat)*1
 	var _lng = (lng)*1
-	//console.log(_lat)
 
 	return {
-		  x: center_px.x + ((_lat - center_coord.lat) * coord2px_factor) + offsetX
-		, y: center_px.y + ((_lng - center_coord.lng) * coord2px_factor) + offsetY
+		  x: center_px.x + ((center_coord.lat - _lat) * coord2px_factor) + offsetX
+		, y: center_px.y + ((center_coord.lng - _lng) * coord2px_factor) + offsetY
 	};
 }
 
@@ -340,7 +294,8 @@ var tot = 0;
 			
 	}
 						paths_processing.push({"path":ptest2 , "color": col});
-						paths_file.push(col + "\t" + ptest3);
+						paths_file.push(trips + "\t" + ptest3);
+						//paths_file.push(col + "\t" + ptest3);
 
 						//paths_processing.push({"path": path.replace(/L/g,"").replace(/M/g,"").split(" "), "color": col});
 						//paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
@@ -354,7 +309,7 @@ var tot = 0;
 		paths.push({"path": path, "color": col, "trips": trips});
 		last_trips = trips;
 
-		if (tot == 40) break;
+		//if (tot == 40) break;
 		tot++
 	}
 	//console.log(paths.length + " paths available")
