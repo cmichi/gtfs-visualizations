@@ -27,7 +27,7 @@ var rainbow = new Rainbow.Rainbow();
 
 var dead = 306;
 dead = 1000000;
-console.log("dead: " + dead)
+//console.log("dead: " + dead)
 
 var dir = "./gtfs/ulm/";
 var stops;
@@ -46,9 +46,11 @@ var gtfs = Gtfs(dir, function(data) {
 
 	foobar();
 
+/*
 	server.listen(process.env.PORT || 3000, function() {
 		console.log('Listening on port ' + server.address().port);
 	});
+	*/
 });
 
 var app = express();
@@ -64,7 +66,7 @@ app.get('/lines/', function(req, res){
 });
 
 app.get('/stops/', function(req, res){
-	console.log(stops);
+	//console.log(stops);
 	res.send(stops);
 	//res.send("foo\n");
 });
@@ -203,10 +205,10 @@ function foobar() {
 
 		if (a == dead) break;
 	}
-	console.log(segments_length + " segments");
-	console.log("a: " + a);
-	console.log("max " + max);
-	console.log("min " + min);
+	//console.log(segments_length + " segments");
+	//console.log("a: " + a);
+	//console.log("max " + max);
+	//console.log("min " + min);
 
 	// rainbow
 	rainbow.setNumberRange(min, max);
@@ -241,7 +243,7 @@ function foobar() {
 		//if (++a == 10) break;
 	}
 	//console.log(lines)
-	console.log(lines.length + " lines");
+	//console.log(lines.length + " lines");
 
 	drawShapes();
 }
@@ -355,11 +357,12 @@ var tot = 0;
 		if (tot == 40) break;
 		tot++
 	}
-	console.log(paths.length + " paths available")
+	//console.log(paths.length + " paths available")
 
 	// output svg
 	//fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
-	fs.writeFileSync("test.processing", paths_file.join('\n'), "utf8");
+	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
+	//fs.writeFileSync("processing/test.processing", paths_processing.join('\n'), "utf8");
 
 
 
