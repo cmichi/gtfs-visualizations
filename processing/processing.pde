@@ -10,7 +10,8 @@ smooth();
 noFill();
 int u = 0;
 float f = 0.34;
-f = 1.0f;
+f = 1.7f;
+int h = 1050;
 
 //translate(width/2, height/2);
 //rotate(radians(90));
@@ -41,15 +42,18 @@ for (int i = 0; i < lines.length; i++) {
                       //   color col1 = color(unhex(col));
                        //  col1 = color(255, 0, 0);
 
+
 //stroke(col1);
 stroke(255, 0, 0, (2093.0f/float(col)) * 20.0f);
-strokeWeight(float(col) * 0.001f);
+strokeWeight(float(col) * 0.002f);
 //line(float(pre[0]) * f, float(pre[1]) * f,  float(coords[0]) * f, float(coords[1]) * f);
-line(float(pre[0]), float(pre[1]),  float(coords[0]), float(coords[1]));
+//line(float(pre[0]), float(pre[1]),  float(coords[0]),  float(coords[1]));
+line(float(pre[0]) * f,h -  float(pre[1])*f,  float(coords[0])*f,h -  float(coords[1])*f);
 //System.out.println(pre[0] + " " + pre[1] + ", " + coords[0] + " " + coords[1]);
 strokeWeight(1);
 stroke(255, 0,0, (2093.0f/float(col)) * 255.0f);
-                       line(float(pre[0]) * f, float(pre[1]) * f,  float(coords[0]) * f, float(coords[1]) * f);
+                       line(float(pre[0]) * f, h - float(pre[1]) * f,  float(coords[0]) * f, h - float(coords[1]) * f);
+                       //line(float(pre[0]) * f, float(pre[1]) * f,  float(coords[0]) * f, float(coords[1]) * f);
 //stroke(0, 255, 0, (2093.0f/float(col)) * 100.0f);
   //                     line(float(pre[0]) * f + 1, float(pre[1]) * f,  1+ float(coords[0]) * f, float(coords[1]) * f);
 //stroke(0, 255, 0, (2093.0f/float(col)) * 100.0f);
