@@ -14,7 +14,6 @@ var shapes;
 var trips;
 var segments = []
 var segments_length = 0;
-var lines = []
 var max;
 var min;
 var sequences = []
@@ -132,24 +131,8 @@ function foobar() {
 	rainbow.setNumberRange(min, max);
 	rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 
-	// now generate svg paths from segments array!
-	var a = 0;
-	/*
-		lines = [ {from: [x, y], to: [x, y], trips: 0} , ... ]
-	*/
-	for (var i in segments) {
-		// draw a line for each segment
-		var px_from = coord2px(segments[i].from.lat, segments[i].from.lng);
-		var px_to = coord2px(segments[i].to.lat, segments[i].to.lng);
-		var obj = { "from": {"x": px_from.x, "y": px_from.y}
-			    , "to":   {"x": px_to.x, "y": px_to.y}
-			    , "trips": segments[i].trips
-		};
-		lines.push(obj);
-	}
-
-	//createSVGfromLines(lines);
-	createLineFile(lines);
+	//createSVGfromLines();
+	createLineFile();
 }
 
 
@@ -196,7 +179,7 @@ function hash(val) {
 }
 
 
-function createSVGfromLines(lines) {
+function createSVGfromLines() {
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
@@ -282,6 +265,70 @@ function createSVGfromLines(lines) {
 }
 
 function createLineFile() {
+	for (var i in sequences) {
+		var A = undefined;
+		var B = undefined;
+
+		var path = "";
+		var last_px;
+		var last_shape;
+		var last_trips = 0;
+		var pts = []
+		for (var n in sequences[i]) {
+			var shape = sequences[i][n];
+			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
+			if (path == "") 
+				path = "M" + px.x + " " + (-1 * px.y);
+			else 
+				path += " L" + px.x + " " + (-1 * px.y);
+			pts.push([px.x, -1 * px.y])
+			//console.log(path)
+
+			if (last_shape != undefined) {
+				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
+				B = {"lat": last_shape.shape_pt_lat, "lng": last_shape.shape_pt_lon};
+				var foo = hash([A, B]);
+
+				if (segments[foo] != undefined) {
+					// sind die anzahl an trips unterschiedlich
+					// wie auf dem bisher ge-pathten teilstueck?
+					trips = segments[foo].trips;
+					if (trips != last_trips) {
+						var col = rainbow.colourAt(trips);
+						last_trips = trips;
+						var ptest = path.replace(/L/g,"").replace(/M/g,"").split(" ");
+						var ptest3 = ""
+						var ptest4 = [];
+						var ptest2 = [];
+						var x, y;
+						for (var u in pts) {
+							x = pts[u][0]
+							y = pts[u][1]
+							ptest3 += x + " " + y + ","
+							ptest2.push([x, y])
+							ptest4.push({x: new Number(x), y: new Number(y)})
+							x = y = undefined;
+						}
+						ptest3 = ""
+						var newp = simplify(ptest4, 3.5, true);
+						for (var un in newp) {
+							ptest3 += newp[un].x + " " + newp[un].y + ","
+						}
+						paths_file.push(trips + "\t" + ptest3);
+					}
+				}
+			}
+
+			last_px = px;
+			last_shape = shape;
+		}
+		last_trips = trips;
+	}
+
+	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
+}
+
+function createLineFile2() {
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
