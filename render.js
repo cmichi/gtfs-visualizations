@@ -15,7 +15,8 @@ var all_coords = [];
 
 var dir = "./gtfs/ulm/";
 var center = {lat: 48.40783887047417, lng: 9.987516403198242};
-var render_area = {width: 500, height: 500};
+var render_area = {width: 600, height: 600};
+var bbox;
 
 var gtfs = Gtfs(dir, function(data) {
 	shapes = data.getShapes();
@@ -146,7 +147,6 @@ function coord2px(lat, lng) {
 	return obj;
 }
 
-var bbox;
 function createBBox(coords) {
 	bbox = {
 		left: center.lng
@@ -195,39 +195,7 @@ function createBBox(coords) {
 	else if (top_left.y > render_area.height)
 		bbox.shift_y = -1 * top_left.y// + (1*render_area.height);
 
-	var top_left = coord2px(bbox.left, bbox.top);
 	//return bbox;
-}
-function _coord2px(lat, lng) {
-	var imgWidth = 100000;
-	var imgHeight = 100000;
-	var center_px = {x: imgWidth/2, y: imgHeight/2};
-	var coord2px_factor = 1000;
-
-	var offsetX = 0;
-	var offsetY = 0;
-
-	var _lat = (lat)*1
-	var _lng = (lng)*1
-
-	var obj = {
-		x: (_lng*imgWidth) / 360
-		, y: (_lat*imgHeight) / 180
-	}
-
-	obj.x -= 2000;
-	obj.y -= 26600;
-	obj.y = 1000 - obj.y;
-
-	var f = 5.0
-	obj.x *= f
-	obj.y *= f
-	obj.x -= 3600;
-	obj.y -= 4000;
-	obj.y *= -1;
-
-	//console.log(obj)
-	return obj;
 }
 
 function hash(val) {
