@@ -6,8 +6,9 @@ void setup() {
   stroke(255, 0, 0);
   strokeWeight(1);
   background(25);
-  String lines[] = loadStrings("data.asc");
-
+  String lines[] = loadStrings("data.lines");
+  String maxmin[] = loadStrings("maxmin.lines");
+  
   translate(50, 50);
   pushMatrix();
 
@@ -30,12 +31,13 @@ void setup() {
 
       if (coords.length != 2 || pre.length != 2) continue;
 
-      stroke(255, 0, 0, (2093.0f/float(col)) * 20.0f);
+      /* underlying stroke */
+      stroke(255, 0, 0, (float(maxmin[0])/float(col)) * 20.0f);
       strokeWeight(float(col) * 0.002f);
       line(float(pre[0]),float(pre[1]),  float(coords[0]),float(coords[1]));
 
       strokeWeight(1);
-      stroke(255, 0,0, (2093.0f/float(col)) * 255.0f);
+      stroke(255, 0,0, (float(maxmin[0])/float(col)) * 255.0f);
       line(float(pre[0]), float(pre[1]),  float(coords[0]), float(coords[1]) );
 
       pre = coords;

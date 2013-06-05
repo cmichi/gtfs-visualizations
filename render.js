@@ -12,9 +12,11 @@ var trips;
 var segments = []
 var sequences = []
 var all_coords = [];
+var max;
+var min;
 
+//var dir = "./gtfs/bart-sf/";
 var dir = "./gtfs/ulm/";
-var center = {lat: 48.40783887047417, lng: 9.987516403198242};
 var render_area = {width: 600, height: 600};
 var bbox;
 
@@ -25,11 +27,7 @@ var gtfs = Gtfs(dir, function(data) {
 	foobar();
 });
 
-
 function foobar() {
-	var max;
-	var min;
-
 	/* count the trips on a certain id */
 	var trips_count = []
 	for (var i in trips) {
@@ -122,8 +120,8 @@ function foobar() {
 			}
 		}
 	}
-	//console.log("max " + max);
-	//console.log("min " + min);
+	console.log("max " + max);
+	console.log("min " + min);
 
 	rainbow.setNumberRange(min, max);
 	rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
@@ -140,10 +138,10 @@ function coord2px(lat, lng) {
 
 function createBBox(coords) {
 	bbox = {
-		left: center.lng
-		, right: center.lng
-		, top: center.lat
-		, bottom: center.lat
+		left: coords[0][1]
+		, right: coords[0][1]
+		, top:  coords[0][0]
+		, bottom:  coords[0][0]
 		, width: 0
 		, height: 0
 
@@ -247,7 +245,8 @@ function createFile() {
 		last_trips = trips;
 	}
 
-	fs.writeFileSync("./processing/data.asc", paths_file.join('\n'), "utf8");
+	fs.writeFileSync("./processing/data.lines", paths_file.join('\n'), "utf8");
+	fs.writeFileSync("./processing/maxmin.lines", max + "\n" + min, "utf8");
 
 	var svgContent = '<?xml version="1.0" encoding="UTF-8"?>'
 	+ '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
