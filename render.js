@@ -21,6 +21,8 @@ var gtfs = Gtfs(dir, function(data) {
 	foobar();
 });
 
+var render_area = {width: 800, height: 800};
+
 function foobar() {
 	var max;
 	var min;
@@ -124,7 +126,6 @@ function foobar() {
 	createFile();
 }
 
-
 function coord2px(lat, lng) {
 	var imgWidth = 100000;
 	var imgHeight = 100000;
@@ -152,6 +153,7 @@ function coord2px(lat, lng) {
 	obj.y *= f
 	obj.x -= 3600;
 	obj.y -= 4000;
+	obj.y *= -1;
 
 	//console.log(obj)
 	return obj;
@@ -182,10 +184,10 @@ function createFile() {
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 			//return;
 			if (path == "") 
-				path = "M" + px.x + " " + (-1 * px.y);
+				path = "M" + px.x + " " + (px.y);
 			else 
-				path += " L" + px.x + " " + (-1 * px.y);
-			pts.push({x: new Number(px.x), y: new Number(-1 * px.y)});
+				path += " L" + px.x + " " + (px.y);
+			pts.push({x: new Number(px.x), y: new Number(px.y)});
 
 			if (last_shape != undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
