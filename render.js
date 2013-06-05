@@ -11,8 +11,11 @@ var shapes;
 var trips;
 var segments = []
 var sequences = []
+var all_coords = [];
 
 var dir = "./gtfs/ulm/";
+var center = {lat: 48.40783887047417, lng: 9.987516403198242};
+var render_area = {width: 500, height: 500};
 
 var gtfs = Gtfs(dir, function(data) {
 	shapes = data.getShapes();
@@ -21,7 +24,6 @@ var gtfs = Gtfs(dir, function(data) {
 	foobar();
 });
 
-var render_area = {width: 800, height: 800};
 
 function foobar() {
 	var max;
@@ -67,6 +69,8 @@ function foobar() {
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
 			var shape_id = shape.shape_id
+			all_coords.push([new Number(shape.shape_pt_lat), 
+					new Number(shape.shape_pt_lon)]);
 
 			if(last_undef == 1 && A == undefined)
 				console.log("shit")
@@ -127,9 +131,76 @@ function foobar() {
 }
 
 function coord2px(lat, lng) {
+	//console.log(bbox.width_f * (lng - bbox.left)) 
+	var coordX = (bbox.width_f * (lng - bbox.left))// + bbox.shift_x;
+	var coordY = (bbox.height_f * (bbox.top - lat))// + bbox.shift_y;
+	//coordY *= -1; /* coordinate system */
+
+	var obj = {x: coordX, y: coordY};
+
+	//obj.x += 55;
+	//obj.y += 55;
+
+	//console.log(lat, lng)
+	//console.log(obj)
+	return obj;
+}
+
+var bbox;
+function createBBox(coords) {
+	bbox = {
+		left: center.lng
+		, right: center.lng
+		, top: center.lat
+		, bottom: center.lat
+		, width: 0
+		, height: 0
+
+		, shift_x: 0
+		, shift_y: 0
+	};
+
+	for (var i in coords) {
+		if (coords[i][1] < bbox.left)
+			bbox.left = coords[i][1];
+
+		if (coords[i][1] > bbox.right)
+			bbox.right = coords[i][1];
+
+		if (coords[i][0] > bbox.top)
+			bbox.top = coords[i][0];
+
+		if (coords[i][0] < bbox.bottom)
+			bbox.bottom = coords[i][0];
+	}
+
+	bbox.height = bbox.top - bbox.bottom;
+	bbox.width = bbox.right - bbox.left;
+
+	bbox.width_f = render_area.width / bbox.width;
+	bbox.height_f = render_area.height / bbox.height;
+
+	/* how much do we need to shift for the points to be in the visible area? */
+	var top_left = coord2px(bbox.left, bbox.top);
+	console.log("top_left: " + JSON.stringify(top_left))
+	console.log( JSON.stringify(bbox))
+	if (top_left.x < 0)
+		// so much, that the outermost point is on 0
+		bbox.shift_x = -1 * top_left.x;
+	else if (top_left.x > render_area.width)
+		bbox.shift_x = -1 * top_left.x// + (1*render_area.width);
+
+	if (top_left.y < 0)
+		bbox.shift_y = -1 * top_left.y;
+	else if (top_left.y > render_area.height)
+		bbox.shift_y = -1 * top_left.y// + (1*render_area.height);
+
+	var top_left = coord2px(bbox.left, bbox.top);
+	//return bbox;
+}
+function _coord2px(lat, lng) {
 	var imgWidth = 100000;
 	var imgHeight = 100000;
-	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
 	var coord2px_factor = 1000;
 
@@ -169,6 +240,9 @@ function hash(val) {
 function createFile() {
 	var paths_file = [];
 	var paths = []
+
+	console.log(all_coords.length)
+	createBBox(all_coords)
 
 	for (var i in sequences) {
 		var A = undefined;

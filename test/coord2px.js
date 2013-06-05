@@ -48,33 +48,8 @@ function createBBox(coords) {
 	bbox.height = bbox.top - bbox.bottom;
 	bbox.width = bbox.right - bbox.left;
 
-	/* fuer den am weitest rechten punkt muss bbox.width_f auf die
-	rechte seite der render_area mappen */
-bbox.width_f = bbox.width / render_area.width;
-bbox.height_f = bbox.height / render_area.height;
-
-	bbox.width_f = render_area.width / bbox.width;
-
-	//bbox.width_f = 0.000001 / bbox.right;
-	//bbox.height_f = 0.000001 / bbox.top;
-
-
-		bbox.width_f = render_area.width;
-		bbox.height_f = render_area.height;
-//bbox.width_f = bbox.width / render_area.width;
-//bbox.height_f = bbox.height / render_area.height;
-
 	bbox.width_f = render_area.width / bbox.width;
 	bbox.height_f = render_area.height / bbox.height;
-
-console.log("width_f " +bbox.width_f)
-	//while ((bbox.right - bbox.left) * bbox.width_f < render_area.width)
-		//bbox.width_f += 1;
-console.log("width_f " +bbox.width_f)
-
-	//bbox.width_f += 350;
-	//bbox.height_f += 350;
-
 
 	/* how much do we need to shift for the points to be in the visible area? */
 	console.log("top_left")
@@ -91,26 +66,23 @@ console.log("width_f " +bbox.width_f)
 		bbox.shift_y = -1 * top_left.y// + (1*render_area.height);
 
 	var top_left = coord2px(bbox.left, bbox.top);
-	console.log(bbox);
-	console.log(JSON.stringify(bbox));
-	console.log(JSON.stringify(top_left))
-	console.log("")
 	return bbox;
 }
 
-	var coords = [
-		  [center.lat, center.lng]
-		, [48.423533,9.955459]
-		, [48.383447, 10.006399] /* dietrich */
-		, [48.419233, 9.90675] /* blaustein */
-		, [48.321104, 9.890442] /* erbach */
-		, [48.437857, 10.093002] /* elchingen */
-	];
+var coords = [
+	  [center.lat, center.lng]
+	, [48.423533,9.955459]
+	, [48.383447, 10.006399] /* dietrich */
+	, [48.419233, 9.90675] /* blaustein */
+	, [48.321104, 9.890442] /* erbach */
+	, [48.437857, 10.093002] /* elchingen */
+];
+
 $(function() {
 
 	var ra = 4;
-	var paper = Raphael("canvas", render_area.width + 100, render_area.height
-	+ 100)
+	var paper = Raphael("canvas", render_area.width + 100, 
+		render_area.height + 100)
 	createBBox(coords);
 
 	console.log("center:")

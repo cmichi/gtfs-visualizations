@@ -8,8 +8,9 @@ void setup() {
   System.out.println(lines.length);
   smooth();
   noFill();
-  float f = 1.7f;
-  int h = 1050;
+  int u = 0;
+//  float f = 1.7f;
+//  int h = 1050;
 
   pushMatrix();
 
@@ -36,11 +37,13 @@ void setup() {
 
       stroke(255, 0, 0, (2093.0f/float(col)) * 20.0f);
       strokeWeight(float(col) * 0.002f);
-      line(float(pre[0]) * f,h -  float(pre[1])*f,  float(coords[0])*f,h -  float(coords[1])*f);
+      line(float(pre[0]),float(pre[1]),  float(coords[0]),float(coords[1]));
+//      line(float(pre[0]) * f,h -  float(pre[1])*f,  float(coords[0])*f,h -  float(coords[1])*f);
 
       strokeWeight(1);
       stroke(255, 0,0, (2093.0f/float(col)) * 255.0f);
-      line(float(pre[0]) * f, h - float(pre[1]) * f,  float(coords[0]) * f, h - float(coords[1]) * f);
+//      line(float(pre[0]) * f, h - float(pre[1]) * f,  float(coords[0]) * f, h - float(coords[1]) * f);
+    line(float(pre[0]), float(pre[1]),  float(coords[0]), float(coords[1]) );
 
       pre = coords;
     }
