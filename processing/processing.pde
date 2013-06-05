@@ -1,13 +1,12 @@
 void setup() {
   size(700, 700);
+  smooth();
+  noFill();
  
   stroke(255, 0, 0);
   strokeWeight(1);
   background(25);
-  String lines[] = loadStrings("test.processing");
-  System.out.println(lines.length);
-  smooth();
-  noFill();
+  String lines[] = loadStrings("data.asc");
 
   translate(50, 50);
   pushMatrix();
@@ -23,15 +22,13 @@ void setup() {
 
       String[] coords = new String[2];
       coords = points[n].split(" ");
-      // System.out.println(points[n]);
+
       if (pre[0] == null) {
         pre = coords;
         continue;
       }
 
       if (coords.length != 2 || pre.length != 2) continue;
-
-      // System.out.println(pre[0] + " " + pre[1] + ", " + coords[0] + " " + coords[1]);
 
       stroke(255, 0, 0, (2093.0f/float(col)) * 20.0f);
       strokeWeight(float(col) * 0.002f);

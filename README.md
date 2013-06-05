@@ -14,6 +14,11 @@ Download [Processing 2.0](https://processing.org/download/). Then  open
 the sketch `./processing/processing.pde` within Processing.
 
 
+# SVG Output
+
+Works. Shapes are not simplified. SVGs might get big.
+
+
 # License
 
 	Copyright (c) 2013
