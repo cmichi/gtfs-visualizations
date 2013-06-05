@@ -35,6 +35,7 @@ var gtfs = Gtfs(dir, function(data) {
 
 
 function foobar() {
+	/* count the trips on a certain id */
 	var trips_count = []
 	for (var i in trips) {
 		var trip = trips[i];
@@ -55,7 +56,7 @@ function foobar() {
 	]
 	*/
 
-	// ensure that the points are in the correct order!
+	/* ensure that the shape points are in the correct order */
 	for (var i in shapes) {
 		var shape = shapes[i];
 		if (sequences[shape.shape_id] == undefined)
@@ -64,7 +65,6 @@ function foobar() {
 		sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 	}
 
-	var a = 0
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
@@ -73,14 +73,13 @@ function foobar() {
 		// evtl. wurde ein segment uebersprugen
 
 		for (var n in sequences[i]) {
-			a++;
 			var shape = sequences[i][n];
 			var shape_id = shape.shape_id
 
 			if(last_undef == 1 && A == undefined)
 				console.log("shit")
 
-			// checken, ob das hier ggf der letzte punkt war
+			/* was this the last point in a sequence? */
 			if (n == sequences[i].length-1 && A == undefined)
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
 
@@ -92,13 +91,13 @@ function foobar() {
 			} else {
 				last_undef = 0;
 				B = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
-				var foo = hash([A, B]);
+				var segment_index = hash([A, B]);
 
 				// maybe shape from different direction, but on this segment
-				var foo2 = hash([B, A]);
+				var segment_index2 = hash([B, A]);
 
-				if (segments[foo] == undefined) {
-					segments[foo] = {
+				if (segments[segment_index] == undefined) {
+					segments[segment_index] = {
 						"trips": 0
 						, "shape_ids": [shape_id]
 						, "from": A
@@ -106,34 +105,30 @@ function foobar() {
 					}
 					segments_length++;
 				} else {
-					if (jquery.inArray(shape_id, segments[foo].shape_ids) === -1) 
-						segments[foo].shape_ids.push(shape_id)
+					if (jquery.inArray(shape_id, segments[segment_index].shape_ids) === -1) 
+						segments[segment_index].shape_ids.push(shape_id)
 				}
-				segments[foo].trips += trips_count[shape_id];
+				segments[segment_index].trips += trips_count[shape_id];
 
-				// check if {B, A} in arr
-				if (foo != foo2 && segments[foo2] != undefined) {
-					segments[foo2].trips = segments[foo].trips
+				/* check if {B, A} in arr */
+				if (segment_index != segment_index2 && segments[segment_index2] != undefined) {
+					segments[segment_index].trips = segments[segment_index].trips
 					// ggf shape_ids.push(shape_id)
 				}
 
-				if (segments[foo].trips > max || max == undefined)
-					max = segments[foo].trips;
+				if (segments[segment_index].trips > max || max == undefined)
+					max = segments[segment_index].trips;
 
-				if (segments[foo].trips < min || min == undefined)
-					min = segments[foo].trips;
+				if (segments[segment_index].trips < min || min == undefined)
+					min = segments[segment_index].trips;
 
-				//A = B;
-				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
+				A = B;
 			}
 		}
 	}
-	//console.log(segments_length + " segments");
-	//console.log("a: " + a);
 	//console.log("max " + max);
 	//console.log("min " + min);
 
-	// rainbow
 	rainbow.setNumberRange(min, max);
 	rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 
@@ -153,9 +148,9 @@ function foobar() {
 		lines.push(obj);
 	}
 
-	drawShapes();
+	//createSVGfromLines(lines);
+	createLineFile(lines);
 }
-
 
 
 function coord2px(lat, lng) {
@@ -193,16 +188,15 @@ function coord2px(lat, lng) {
 	return obj;
 }
 
-function hash(foo) {
+function hash(val) {
 	var md5 = crypto.createHash('sha1');
-	md5.update(JSON.stringify(foo), "ascii")
+	md5.update(JSON.stringify(val), "ascii")
 
 	return md5.digest("hex")
 }
 
-// creates svg etc.
-function drawShapes() {
-	//sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
+
+function createSVGfromLines(lines) {
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
@@ -252,25 +246,25 @@ function drawShapes() {
 		}
 			
 	}
-ptest3 = ""
-						//console.log(ptest4.length)
-						var newp = simplify(ptest4, 3.5, true);
-						//var newp = simplify(ptest4, 1.5, true);
-						//console.log(newp)
-						if (newp != undefined) {
-							//console.log(ptest4.length - newp.length)
-							//newp = ptest4
-						}
-						for (var un in newp) {
-							ptest3 += newp[un].x + " " + newp[un].y + ","
-						}
-						paths_processing.push({"path":ptest2 , "color": col});
-						paths_file.push(trips + "\t" + ptest3);
-						//paths_file.push(col + "\t" + ptest3);
+	ptest3 = ""
+	//console.log(ptest4.length)
+	var newp = simplify(ptest4, 3.5, true);
+	//var newp = simplify(ptest4, 1.5, true);
+	//console.log(newp)
+	if (newp != undefined) {
+		//console.log(ptest4.length - newp.length)
+		//newp = ptest4
+	}
+	for (var un in newp) {
+		ptest3 += newp[un].x + " " + newp[un].y + ","
+	}
+	paths_processing.push({"path":ptest2 , "color": col});
+	paths_file.push(trips + "\t" + ptest3);
+	//paths_file.push(col + "\t" + ptest3);
 
-						//paths_processing.push({"path": path.replace(/L/g,"").replace(/M/g,"").split(" "), "color": col});
-						//paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
-					}
+	//paths_processing.push({"path": path.replace(/L/g,"").replace(/M/g,"").split(" "), "color": col});
+	//paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
+	}
 				}
 			}
 
@@ -285,4 +279,68 @@ ptest3 = ""
 	//fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
 	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
 	//fs.writeFileSync("processing/test.processing", paths_processing.join('\n'), "utf8");
+}
+
+function createLineFile() {
+	for (var i in sequences) {
+		var A = undefined;
+		var B = undefined;
+
+		var path = "";
+		var last_px;
+		var last_shape;
+		var last_trips = 0;
+		for (var n in sequences[i]) {
+			var shape = sequences[i][n];
+			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
+			if (path == "") 
+				path = "M" + px.x + " " + (-1 * px.y);
+			else 
+				path += " L" + px.x + " " + (-1 * px.y);
+
+			if (last_shape != undefined) {
+				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
+				B = {"lat": last_shape.shape_pt_lat, "lng": last_shape.shape_pt_lon};
+				var foo = hash([A, B]);
+
+				if (segments[foo] != undefined) {
+					// sind die anzahl an trips unterschiedlich
+					// wie auf dem bisher ge-pathten teilstueck?
+					trips = segments[foo].trips;
+					if (trips != last_trips) {
+						var col = rainbow.colourAt(trips);
+						last_trips = trips;
+						var ptest = path.replace(/L/g,"").replace(/M/g,"").split(" ");
+						var ptest3 = ""
+						var ptest4 = [];
+						var ptest2 = [];
+						var x, y;
+						for (var u in ptest) {
+							if (x == undefined) {
+								x = ptest[u]
+							} else {
+								y = ptest[u]
+								ptest3 += x + " " + y + ","
+								ptest2.push([x, y])
+								ptest4.push({x: new Number(x), y: new Number(y)})
+								x = y = undefined;
+							}
+						}
+						ptest3 = ""
+						var newp = simplify(ptest4, 3.5, true);
+						for (var un in newp) {
+							ptest3 += newp[un].x + " " + newp[un].y + ","
+						}
+						paths_file.push(trips + "\t" + ptest3);
+					}
+				}
+			}
+
+			last_px = px;
+			last_shape = shape;
+		}
+		last_trips = trips;
+	}
+
+	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
 }
