@@ -277,12 +277,8 @@ function createLineFile() {
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-			if (path == "") 
-				path = "M" + px.x + " " + (-1 * px.y);
-			else 
-				path += " L" + px.x + " " + (-1 * px.y);
-			pts.push([px.x, -1 * px.y])
-			//console.log(path)
+			//pts.push([px.x, -1 * px.y])
+			pts.push({x: new Number(px.x), y: new Number(-1 * px.y)});
 
 			if (last_shape != undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
@@ -296,25 +292,13 @@ function createLineFile() {
 					if (trips != last_trips) {
 						var col = rainbow.colourAt(trips);
 						last_trips = trips;
-						var ptest = path.replace(/L/g,"").replace(/M/g,"").split(" ");
-						var ptest3 = ""
-						var ptest4 = [];
-						var ptest2 = [];
-						var x, y;
-						for (var u in pts) {
-							x = pts[u][0]
-							y = pts[u][1]
-							ptest3 += x + " " + y + ","
-							ptest2.push([x, y])
-							ptest4.push({x: new Number(x), y: new Number(y)})
-							x = y = undefined;
+
+						var coords = "";
+						var simplified_pts = simplify(pts, 3.5, true);
+						for (var un in simplified_pts) {
+							coords += simplified_pts[un].x + " " + simplified_pts[un].y + ","
 						}
-						ptest3 = ""
-						var newp = simplify(ptest4, 3.5, true);
-						for (var un in newp) {
-							ptest3 += newp[un].x + " " + newp[un].y + ","
-						}
-						paths_file.push(trips + "\t" + ptest3);
+						paths_file.push(trips + "\t" + coords);
 					}
 				}
 			}
