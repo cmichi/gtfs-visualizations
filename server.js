@@ -279,16 +279,21 @@ function createLineFile() {
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 			//pts.push([px.x, -1 * px.y])
 			pts.push({x: new Number(px.x), y: new Number(-1 * px.y)});
+			if (path == "") 
+				path = "M" + px.x + " " + (-1 * px.y);
+			else 
+				path += " L" + px.x + " " + (-1 * px.y);
+
 
 			if (last_shape != undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
 				B = {"lat": last_shape.shape_pt_lat, "lng": last_shape.shape_pt_lon};
-				var foo = hash([A, B]);
+				var segment_index = hash([A, B]);
 
-				if (segments[foo] != undefined) {
+				if (segments[segment_index] != undefined) {
 					// sind die anzahl an trips unterschiedlich
 					// wie auf dem bisher ge-pathten teilstueck?
-					trips = segments[foo].trips;
+					trips = segments[segment_index].trips;
 					if (trips != last_trips) {
 						var col = rainbow.colourAt(trips);
 						last_trips = trips;
@@ -299,6 +304,7 @@ function createLineFile() {
 							coords += simplified_pts[un].x + " " + simplified_pts[un].y + ","
 						}
 						paths_file.push(trips + "\t" + coords);
+						paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
 					}
 				}
 			}
@@ -310,6 +316,7 @@ function createLineFile() {
 	}
 
 	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
+	fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
 }
 
 function createLineFile2() {
