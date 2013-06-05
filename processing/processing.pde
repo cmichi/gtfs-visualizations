@@ -52,7 +52,7 @@ line(float(pre[0]) * f,h -  float(pre[1])*f,  float(coords[0])*f,h -  float(coor
 //System.out.println(pre[0] + " " + pre[1] + ", " + coords[0] + " " + coords[1]);
 strokeWeight(1);
 stroke(255, 0,0, (2093.0f/float(col)) * 255.0f);
-                       line(float(pre[0]) * f, h - float(pre[1]) * f,  float(coords[0]) * f, h - float(coords[1]) * f);
+line(float(pre[0]) * f, h - float(pre[1]) * f,  float(coords[0]) * f, h - float(coords[1]) * f);
                        //line(float(pre[0]) * f, float(pre[1]) * f,  float(coords[0]) * f, float(coords[1]) * f);
 //stroke(0, 255, 0, (2093.0f/float(col)) * 100.0f);
   //                     line(float(pre[0]) * f + 1, float(pre[1]) * f,  1+ float(coords[0]) * f, float(coords[1]) * f);

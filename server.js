@@ -4,6 +4,7 @@ var path = require('path');
 var crypto = require('crypto');
 var jquery = require('jquery');
 var fs = require('fs');
+var simplify = require('./simplify-js/simplify');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 
 var Rainbow = require(path.join(__dirname, "static", "js", "rainbowvis"));
@@ -166,8 +167,8 @@ function foobar() {
 	}
 	//console.log(segments_length + " segments");
 	//console.log("a: " + a);
-	console.log("max " + max);
-	console.log("min " + min);
+	//console.log("max " + max);
+	//console.log("min " + min);
 
 	// rainbow
 	rainbow.setNumberRange(min, max);
@@ -328,6 +329,7 @@ var tot = 0;
 	var ptest = path.replace(/L/g,"").replace(/M/g,"").split(" ");
 	var ptest2 = []
 	var ptest3 = ""
+	var ptest4 = []
 	var x, y;
 	for (var u in ptest) {
 		if (x == undefined) {
@@ -336,10 +338,23 @@ var tot = 0;
 			y = ptest[u]
 			ptest2.push([x, y])
 			ptest3 += x + " " + y + ","
+			ptest4.push({x: new Number(x), y: new Number(y)})
 			x = y= undefined;
 		}
 			
 	}
+ptest3 = ""
+						//console.log(ptest4.length)
+						var newp = simplify(ptest4, 3.5, true);
+						//var newp = simplify(ptest4, 1.5, true);
+						//console.log(newp)
+						if (newp != undefined) {
+							//console.log(ptest4.length - newp.length)
+							//newp = ptest4
+						}
+						for (var un in newp) {
+							ptest3 += newp[un].x + " " + newp[un].y + ","
+						}
 						paths_processing.push({"path":ptest2 , "color": col});
 						paths_file.push(trips + "\t" + ptest3);
 						//paths_file.push(col + "\t" + ptest3);
@@ -362,6 +377,9 @@ var tot = 0;
 	//console.log(paths.length + " paths available")
 
 	// output svg
+	//for (var p in paths_processing
+
+
 	//fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
 	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
 	//fs.writeFileSync("processing/test.processing", paths_processing.join('\n'), "utf8");
@@ -385,4 +403,3 @@ var tot = 0;
 	});
 	*/
 }
-
