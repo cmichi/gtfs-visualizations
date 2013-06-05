@@ -11,10 +11,16 @@ var shapes;
 var trips;
 var segments = []
 var sequences = []
+var sequences_length = 0
 var all_coords = [];
 var max;
 var min;
+var svg = false;
 
+var dir = "./gtfs/sf/";
+//var dir = "./gtfs/san-diego/";
+//var dir = "./gtfs/los-angeles/";
+//var dir = "./gtfs/berlin/";
 //var dir = "./gtfs/bart-sf/";
 var dir = "./gtfs/ulm/";
 var render_area = {width: 600, height: 600};
@@ -36,6 +42,7 @@ function foobar() {
 			trips_count[ trip.shape_id ] = 1;
 		else
 			trips_count[ trip.shape_id ]++;
+		//console.log(trip.shape_id)
 	}
 
 	/*
@@ -57,6 +64,9 @@ function foobar() {
 
 		sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 	}
+
+	for (var i in sequences) 
+		sequences_length++;
 
 	for (var i in sequences) {
 		var A = undefined;
@@ -102,6 +112,15 @@ function foobar() {
 					if (jquery.inArray(shape_id, segments[segment_index].shape_ids) === -1) 
 						segments[segment_index].shape_ids.push(shape_id)
 				}
+
+				if (trips_count[shape_id] == undefined) {
+					// maybe the shape exists, but
+					// there are no trips for it
+					//console.log("shit2")
+					trips_count[shape_id] = 0;
+					//console.log(shape_id)
+				}
+
 				segments[segment_index].trips += trips_count[shape_id];
 
 				/* check if {B, A} in arr */
@@ -120,6 +139,10 @@ function foobar() {
 			}
 		}
 	}
+
+	if (max == min && max > 0) min--;
+	if (max == min && max <= 0) max++;
+
 	console.log("max " + max);
 	console.log("min " + min);
 
@@ -196,6 +219,13 @@ function createFile() {
 
 	createBBox(all_coords);
 
+	var working = 0;
+	var one = 100 / sequences_length;
+
+	console.log(sequences_length + "!!")
+	console.log(sequences.length)
+	one = 1;
+
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
@@ -209,10 +239,12 @@ function createFile() {
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 			//return;
-			if (path == "") 
-				path = "M" + px.x + " " + (px.y);
-			else 
-				path += " L" + px.x + " " + (px.y);
+			if (svg) {
+				if (path == "") 
+					path = "M" + px.x + " " + (px.y);
+				else 
+					path += " L" + px.x + " " + (px.y);
+			}
 			pts.push({x: new Number(px.x), y: new Number(px.y)});
 
 			if (last_shape != undefined) {
@@ -234,7 +266,8 @@ function createFile() {
 							coords += simplified_pts[un].x + " " + simplified_pts[un].y + ","
 						}
 						paths_file.push(trips + "\t" + coords);
-						paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
+						if (svg) 
+							paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
 					}
 				}
 			}
@@ -243,21 +276,32 @@ function createFile() {
 			last_shape = shape;
 		}
 		last_trips = trips;
+
+		//if (working % 10 == 0)
+			//console.log((100 - working) + " percent done");
+		//if (sequences_length - working == sequences_length * 0)
+			//console.log((100 - working) + " percent done");
+		if ((sequences_length - working) % 5 == 0)
+			console.log((sequences_length - working) + " left")
+
+		working += one;
 	}
 
 	fs.writeFileSync("./processing/data.lines", paths_file.join('\n'), "utf8");
 	fs.writeFileSync("./processing/maxmin.lines", max + "\n" + min, "utf8");
 
-	var svgContent = '<?xml version="1.0" encoding="UTF-8"?>'
-	+ '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
-	+ '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> '
-	+ '<svg xmlns="http://www.w3.org/2000/svg" '
-	+ 'xmlns:xlink="http://www.w3.org/1999/xlink" '
-	+ 'xmlns:ev="http://www.w3.org/2001/xml-events" '
-	+ 'version="1.1" baseProfile="full" '
-	+ 'width="800" height="800">\n'
-	+ paths.join('\n') 
-	+ "\n</svg>";
+	if (svg) {
+		var svgContent = '<?xml version="1.0" encoding="UTF-8"?>'
+		+ '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
+		+ '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> '
+		+ '<svg xmlns="http://www.w3.org/2000/svg" '
+		+ 'xmlns:xlink="http://www.w3.org/1999/xlink" '
+		+ 'xmlns:ev="http://www.w3.org/2001/xml-events" '
+		+ 'version="1.1" baseProfile="full" '
+		+ 'width="800" height="800">\n'
+		+ paths.join('\n') 
+		+ "\n</svg>";
 
-	fs.writeFileSync("output.svg", svgContent, "utf8");
+		fs.writeFileSync("output.svg", svgContent, "utf8");
+	}
 }

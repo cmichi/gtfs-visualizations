@@ -8,13 +8,15 @@ void setup() {
   background(25);
   String lines[] = loadStrings("data.lines");
   String maxmin[] = loadStrings("maxmin.lines");
+  //String lines[] = loadStrings("sf-data.lines");
+  //String maxmin[] = loadStrings("sf-maxmin.lines");
   
   translate(50, 50);
   pushMatrix();
 
   for (int i = 0; i < lines.length; i++) {
     String[] line = lines[i].split("\t");
-    String col =   line[0];
+    String trips =   line[0];
     String[] points = line[1].split(",");
 
     String[] pre = new String[2];
@@ -32,12 +34,15 @@ void setup() {
       if (coords.length != 2 || pre.length != 2) continue;
 
       /* underlying stroke */
-      stroke(255, 0, 0, (float(maxmin[0])/float(col)) * 20.0f);
-      strokeWeight(float(col) * 0.002f);
+      // sf: 2
+      stroke(255, 0, 0, (float(maxmin[0]) / float(trips)) * 20.0f);
+      strokeWeight(float(trips) * 0.0021f);
       line(float(pre[0]),float(pre[1]),  float(coords[0]),float(coords[1]));
 
       strokeWeight(1);
-      stroke(255, 0,0, (float(maxmin[0])/float(col)) * 255.0f);
+      //sf : 5
+      //System.out.println((float(maxmin[0]) / float(trips)) * 5.0f);
+      stroke(255, 0,0, (float(maxmin[0]) / float(trips)) * 255.0f);
       line(float(pre[0]), float(pre[1]),  float(coords[0]), float(coords[1]) );
 
       pre = coords;
