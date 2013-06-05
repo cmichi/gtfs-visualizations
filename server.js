@@ -4,10 +4,10 @@ var path = require('path');
 var crypto = require('crypto');
 var jquery = require('jquery');
 var fs = require('fs');
-var simplify = require('./simplify-js/simplify');
+var simplify = require('./lib/simplify');
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 
-var Rainbow = require(path.join(__dirname, "static", "js", "rainbowvis"));
+var Rainbow = require(path.join(__dirname, "lib", "rainbowvis"));
 var rainbow = new Rainbow.Rainbow();
 var debug = false;
 
