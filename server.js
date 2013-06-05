@@ -181,6 +181,8 @@ function foobar() {
 	for (var i in segments) {
 		// draw a line for each segment
 		var px_from = coord2px(segments[i].from.lat, segments[i].from.lng);
+		//console.log(px_from);
+		//return;
 		var px_to = coord2px(segments[i].to.lat, segments[i].to.lng);
 		var obj = { "from": {"x": px_from.x, "y": px_from.y}
 			    , "to":   {"x": px_to.x, "y": px_to.y}
@@ -207,28 +209,73 @@ function foobar() {
 	drawShapes();
 }
 
-var imgWidth = 1400;
-var imgHeight = 1400;
-
+/*
+var imgWidth = 800;
+var imgHeight = 800;
 function coord2px(lat, lng) {
 	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
 	var coord2px_factor = 10000;
 
-	var offsetX = 0;
-	var offsetY = 0;
-	var offsetY = 200;
-	var offsetX = 50;
+	var offsetX = 500;
+	var offsetY = -1600;
+	offsetY = 100;
+	//var offsetY = 200;
+	//var offsetX = 50;
 
 	var _lat = (lat)*1
 	var _lng = (lng)*1
 
 	return {
-		  x: center_px.x + ((center_coord.lat - _lat) * coord2px_factor) + offsetX
-		, y: center_px.y + ((center_coord.lng - _lng) * coord2px_factor) + offsetY
+		  y: imgHeight -(center_px.x + ((center_coord.lat - _lat) * coord2px_factor) + offsetX)
+		, x: (center_px.y + ((center_coord.lng - _lng) * coord2px_factor) + offsetY)
 	};
 }
+*/
+var imgWidth = 100000;
+var imgHeight = 100000;
 
+
+function coord2px(lat, lng) {
+	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
+	var center_px = {x: imgWidth/2, y: imgHeight/2};
+	var coord2px_factor = 1000;
+
+	var offsetX = 0;
+	var offsetY = 0;
+
+	var _lat = (lat)*1
+	var _lng = (lng)*1
+
+		  //y: imgHeight - (center_px.x + ((center_coord.lat - _lat) * coord2px_factor) + offsetX)
+		//, x: (center_px.y + ((center_coord.lng - _lng) * coord2px_factor) + offsetY)
+
+	var obj = {
+		x: (_lng*imgWidth) / 360
+		, y: (_lat*imgHeight) / 180
+	}
+
+
+	obj.x *= 1.0;
+	obj.y *= 1.0;
+
+	obj.x -= 2000;
+	obj.y -= 26600;
+	//obj.y = 500 - obj.y;
+	obj.y = 1000 - obj.y;
+
+	var f = 5.0
+	obj.x *= f
+	obj.y *= f
+	obj.x -= 3600;
+	//obj.y -= 900;
+	obj.y -= 4000;
+
+	//var calculatedHeight=((lat*containerHeight)/180);
+	//return $(elem).offset().top+($(elem).height()-calculatedHeight);
+	//console.log(obj)
+	return obj;
+}
 function hash(foo) {
 	var md5 = crypto.createHash('sha1');
 	md5.update(JSON.stringify(foo), "ascii")
@@ -258,9 +305,9 @@ var tot = 0;
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 			if (path == "") 
-				path = "M" + px.x + " " + px.y;
+				path = "M" + px.x + " " + (-1 * px.y);
 			else 
-				path += " L" + px.x + " " + px.y;
+				path += " L" + px.x + " " + (-1 * px.y);
 
 
 			if (last_shape != undefined) {
