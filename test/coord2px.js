@@ -1,4 +1,4 @@
-var render_area = {width: 800, height: 800};
+var render_area = {width: 500, height: 500};
 var center = {lat: 48.40783887047417, lng: 9.987516403198242}
 
 function coord2px(lat, lng) {
@@ -11,6 +11,7 @@ function coord2px(lat, lng) {
 
 	obj.x += 55;
 	obj.y += 55;
+
 	//console.log(lat, lng)
 	console.log(obj)
 	return obj;
@@ -19,10 +20,10 @@ function coord2px(lat, lng) {
 var bbox;
 function createBBox(coords) {
 	bbox = {
-		left: center.lat
-		, right: center.lat
-		, top: center.lng
-		, bottom: center.lng
+		left: center.lng
+		, right: center.lng
+		, top: center.lat
+		, bottom: center.lat
 		, width: 0
 		, height: 0
 
@@ -46,11 +47,34 @@ function createBBox(coords) {
 
 	bbox.height = bbox.top - bbox.bottom;
 	bbox.width = bbox.right - bbox.left;
+
+	/* fuer den am weitest rechten punkt muss bbox.width_f auf die
+	rechte seite der render_area mappen */
+bbox.width_f = bbox.width / render_area.width;
+bbox.height_f = bbox.height / render_area.height;
+
+	bbox.width_f = render_area.width / bbox.width;
+
+	//bbox.width_f = 0.000001 / bbox.right;
+	//bbox.height_f = 0.000001 / bbox.top;
+
+
+		bbox.width_f = render_area.width;
+		bbox.height_f = render_area.height;
+//bbox.width_f = bbox.width / render_area.width;
+//bbox.height_f = bbox.height / render_area.height;
+
 	bbox.width_f = render_area.width / bbox.width;
 	bbox.height_f = render_area.height / bbox.height;
 
-	bbox.width_f += 350;
-	bbox.height_f += 350;
+console.log("width_f " +bbox.width_f)
+	//while ((bbox.right - bbox.left) * bbox.width_f < render_area.width)
+		//bbox.width_f += 1;
+console.log("width_f " +bbox.width_f)
+
+	//bbox.width_f += 350;
+	//bbox.height_f += 350;
+
 
 	/* how much do we need to shift for the points to be in the visible area? */
 	console.log("top_left")
@@ -85,7 +109,8 @@ function createBBox(coords) {
 $(function() {
 
 	var ra = 4;
-	var paper = Raphael("canvas", 1200, 900)
+	var paper = Raphael("canvas", render_area.width + 100, render_area.height
+	+ 100)
 	createBBox(coords);
 
 	console.log("center:")
