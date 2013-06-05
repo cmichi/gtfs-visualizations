@@ -1,87 +1,17 @@
-var imgWidth = 100000;
-var imgHeight = 100000;
-
-function _coord2px(lat, lng) {
-	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
-	var center_px = {x: imgWidth/2, y: imgHeight/2};
-	var coord2px_factor = 1000;
-
-	var offsetX = 0;
-	var offsetY = 0;
-
-	lat = new Number(lat)
-	lng = new Number(lng)
-
-	var obj = {
-		x: (lng * imgWidth) / 360
-		, y: (lat * imgHeight) / 180
-	}
-
-	/* shift so that coords are in place */
-	obj.x -= 2000;
-	obj.y -= 26600;
-
-	obj.y = 500 - obj.y;
-
-	var f = 5.0
-	obj.x *= f
-	obj.y *= f
-	obj.x -= 3600;
-	obj.y -= 900;
-
-	//var calculatedHeight=((lat*containerHeight)/180);
-	//return $(elem).offset().top+($(elem).height()-calculatedHeight);
-	console.log(obj)
-	return obj;
-}
-
-
-function coord2px(lat, lon, bbox) {
-	var bbHeight = bbox.top - bbox.bottom;
-	var bbWidth = bbox.right - bbox.left;
-
-	var shiftX = -1537;
-	var shiftY = -891;
-
-	shiftX = 0;
-	shiftY = 0;
-
-	var coordX = ((render_area.width / bbWidth) * (lon - bbox.left)) + shiftX;
-	var coordY = ((render_area.height / bbHeight) * (bbox.top - lat)) + shiftY;
-	coordY *= -1;
-
-	var obj = {x: coordX, y: coordY};
-	console.log(obj)
-	return obj;
-}
-
-
 var render_area = {width: 800, height: 800};
 var center = {lat: 48.40783887047417, lng: 9.987516403198242}
-$(function() {
-	var ra = 4;
-	var paper = Raphael("canvas", 1200, 900)
-	var bbox = createBBox(coords);
 
-	var cntr = coord2px(center.lat, center.lng, bbox);
-	var circle = paper.circle(cntr.x, cntr.y, ra);
-	circle.attr("fill", "#f00");
+function coord2px(lat, lng, bbox) {
+	console.log(bbox.width_f * (lng - bbox.left)) 
+	var coordX = (bbox.width_f * (lng - bbox.left)) + bbox.shift_x;
+	var coordY = (bbox.height_f * (bbox.top - lat)) + bbox.shift_y;
+	coordY *= -1; /* coordinate system */
 
-	var coords = [
-		[48.423533,9.955459]
-		, [48.383447, 10.006399] /* dietrich */
-		, [48.419233, 9.90675] /* blaustein */
-		, [48.321104, 9.890442] /* erbach */
-		, [48.437857, 10.093002] /* elchingen */
-	];
-
-	for (var i in coords) {
-		var pt = coord2px(coords[i][0], coords[i][1], bbox);
-		var circle = paper.circle(pt.x, pt.y, ra);
-		circle.attr("fill", "#0f0");
-	}
-});
-
+	var obj = {x: coordX, y: coordY};
+	//console.log(lat, lng)
+	console.log(obj)
+	return obj;
+}
 
 function createBBox(coords) {
 	var bbox = {
@@ -89,6 +19,11 @@ function createBBox(coords) {
 		, right: center.lat
 		, top: center.lng
 		, bottom: center.lng
+		, width: 0
+		, height: 0
+
+		, shift_x: 0
+		, shift_y: 0
 	};
 
 	for (var i in coords) {
@@ -105,6 +40,56 @@ function createBBox(coords) {
 			bbox.bottom = coords[i][1];
 	}
 
+	bbox.height = bbox.top - bbox.bottom;
+	bbox.width = bbox.right - bbox.left;
+	bbox.width_f = render_area.width / bbox.width;
+	bbox.height_f = render_area.height / bbox.height;
+
+	/* how much do we need to shift for the points to be in the visible area? */
+	var top_left = coord2px(bbox.left, bbox.top, bbox);
+	console.log("top_left")
+	console.log(JSON.stringify(top_left))
+	if (top_left.x < 0)
+		// so much, that the outermost point is on 0
+		bbox.shift_x = -1 * top_left.x;
+	else if (top_left.x > render_area.width)
+		bbox.shift_x = -1 * top_left.x// + (1*render_area.width);
+
+	if (top_left.y < 0)
+		bbox.shift_y = -1 * top_left.y;
+	else if (top_left.y > render_area.height)
+		bbox.shift_y = 1 * top_left.y// + (1*render_area.height);
+
+	var top_left = coord2px(bbox.left, bbox.top, bbox);
 	console.log(bbox);
+	console.log(JSON.stringify(bbox));
+	console.log(JSON.stringify(top_left))
+	console.log("")
 	return bbox;
 }
+
+$(function() {
+	var coords = [
+		[48.423533,9.955459]
+		, [48.383447, 10.006399] /* dietrich */
+		, [48.419233, 9.90675] /* blaustein */
+		, [48.321104, 9.890442] /* erbach */
+		, [48.437857, 10.093002] /* elchingen */
+	];
+
+	var ra = 4;
+	var paper = Raphael("canvas", 1200, 900)
+	var bbox = createBBox(coords);
+
+	var cntr = coord2px(center.lat, center.lng, bbox);
+	var circle = paper.circle(cntr.x, cntr.y, ra);
+	circle.attr("fill", "#f00");
+
+	for (var i in coords) {
+		var pt = coord2px(coords[i][0], coords[i][1], bbox);
+		var circle = paper.circle(pt.x, pt.y, ra);
+		circle.attr("fill", "#0f0");
+	}
+});
+
+
