@@ -5,35 +5,26 @@ var fs = require('fs');
 var simplify = require(path.join(__dirname, ".", "lib", "simplify"));
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 var Rainbow = require(path.join(__dirname, "lib", "rainbowvis"));
-var rainbow = new Rainbow.Rainbow();
-var debug = false;
 
-var dir = "./gtfs/ulm/";
-var stops;
+var rainbow = new Rainbow.Rainbow();
 var shapes;
 var trips;
 var segments = []
-var segments_length = 0;
-var max;
-var min;
 var sequences = []
-var paths = []
-var paths_processing = []
-var paths_file = []
 
-var imgWidth = 100000;
-var imgHeight = 100000;
+var dir = "./gtfs/ulm/";
 
 var gtfs = Gtfs(dir, function(data) {
-	stops = data.getStops();
 	shapes = data.getShapes();
 	trips = data.getTrips();
 
 	foobar();
 });
 
-
 function foobar() {
+	var max;
+	var min;
+
 	/* count the trips on a certain id */
 	var trips_count = []
 	for (var i in trips) {
@@ -102,7 +93,6 @@ function foobar() {
 						, "from": A
 						, "to": B
 					}
-					segments_length++;
 				} else {
 					if (jquery.inArray(shape_id, segments[segment_index].shape_ids) === -1) 
 						segments[segment_index].shape_ids.push(shape_id)
@@ -131,12 +121,13 @@ function foobar() {
 	rainbow.setNumberRange(min, max);
 	rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 
-	//createSVGfromLines();
-	createLineFile();
+	createFile();
 }
 
 
 function coord2px(lat, lng) {
+	var imgWidth = 100000;
+	var imgHeight = 100000;
 	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
 	var center_px = {x: imgWidth/2, y: imgHeight/2};
 	var coord2px_factor = 1000;
@@ -152,19 +143,14 @@ function coord2px(lat, lng) {
 		, y: (_lat*imgHeight) / 180
 	}
 
-	//obj.x *= 1.0;
-	//obj.y *= 1.0;
-
 	obj.x -= 2000;
 	obj.y -= 26600;
-	//obj.y = 500 - obj.y;
 	obj.y = 1000 - obj.y;
 
 	var f = 5.0
 	obj.x *= f
 	obj.y *= f
 	obj.x -= 3600;
-	//obj.y -= 900;
 	obj.y -= 4000;
 
 	//console.log(obj)
@@ -178,93 +164,10 @@ function hash(val) {
 	return md5.digest("hex")
 }
 
+function createFile() {
+	var paths_file = [];
+	var paths = []
 
-function createSVGfromLines() {
-	for (var i in sequences) {
-		var A = undefined;
-		var B = undefined;
-
-		var path = "";
-		var last_px;
-		var last_shape;
-		var last_trips = 0;
-		for (var n in sequences[i]) {
-			var shape = sequences[i][n];
-			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-			if (path == "") 
-				path = "M" + px.x + " " + (-1 * px.y);
-			else 
-				path += " L" + px.x + " " + (-1 * px.y);
-
-
-			if (last_shape != undefined) {
-				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
-				B = {"lat": last_shape.shape_pt_lat, "lng": last_shape.shape_pt_lon};
-				var foo = hash([A, B]);
-
-				if (segments[foo] != undefined) {
-					// sind die anzahl an trips unterschiedlich
-					// wie auf dem bisher ge-pathten teilstueck?
-					trips = segments[foo].trips;
-					//console.log(trips + " ..")
-					if (trips != last_trips) {
-						//var col = "#ff0000";
-						var col = rainbow.colourAt(trips);
-						paths.push({"path": path, "color": col, "trips": trips});
-						last_trips = trips;
-	var ptest = path.replace(/L/g,"").replace(/M/g,"").split(" ");
-	var ptest2 = []
-	var ptest3 = ""
-	var ptest4 = []
-	var x, y;
-	for (var u in ptest) {
-		if (x == undefined) {
-			x = ptest[u]
-		} else {
-			y = ptest[u]
-			ptest2.push([x, y])
-			ptest3 += x + " " + y + ","
-			ptest4.push({x: new Number(x), y: new Number(y)})
-			x = y= undefined;
-		}
-			
-	}
-	ptest3 = ""
-	//console.log(ptest4.length)
-	var newp = simplify(ptest4, 3.5, true);
-	//var newp = simplify(ptest4, 1.5, true);
-	//console.log(newp)
-	if (newp != undefined) {
-		//console.log(ptest4.length - newp.length)
-		//newp = ptest4
-	}
-	for (var un in newp) {
-		ptest3 += newp[un].x + " " + newp[un].y + ","
-	}
-	paths_processing.push({"path":ptest2 , "color": col});
-	paths_file.push(trips + "\t" + ptest3);
-	//paths_file.push(col + "\t" + ptest3);
-
-	//paths_processing.push({"path": path.replace(/L/g,"").replace(/M/g,"").split(" "), "color": col});
-	//paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
-	}
-				}
-			}
-
-			last_px = px;
-			last_shape = shape;
-		}
-		paths.push({"path": path, "color": col, "trips": trips});
-		last_trips = trips;
-	}
-	//console.log(paths.length + " paths available")
-
-	//fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
-	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
-	//fs.writeFileSync("processing/test.processing", paths_processing.join('\n'), "utf8");
-}
-
-function createLineFile() {
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
@@ -277,13 +180,12 @@ function createLineFile() {
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-			//pts.push([px.x, -1 * px.y])
-			pts.push({x: new Number(px.x), y: new Number(-1 * px.y)});
+			//return;
 			if (path == "") 
 				path = "M" + px.x + " " + (-1 * px.y);
 			else 
 				path += " L" + px.x + " " + (-1 * px.y);
-
+			pts.push({x: new Number(px.x), y: new Number(-1 * px.y)});
 
 			if (last_shape != undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
@@ -317,68 +219,4 @@ function createLineFile() {
 
 	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
 	fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
-}
-
-function createLineFile2() {
-	for (var i in sequences) {
-		var A = undefined;
-		var B = undefined;
-
-		var path = "";
-		var last_px;
-		var last_shape;
-		var last_trips = 0;
-		for (var n in sequences[i]) {
-			var shape = sequences[i][n];
-			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-			if (path == "") 
-				path = "M" + px.x + " " + (-1 * px.y);
-			else 
-				path += " L" + px.x + " " + (-1 * px.y);
-
-			if (last_shape != undefined) {
-				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
-				B = {"lat": last_shape.shape_pt_lat, "lng": last_shape.shape_pt_lon};
-				var foo = hash([A, B]);
-
-				if (segments[foo] != undefined) {
-					// sind die anzahl an trips unterschiedlich
-					// wie auf dem bisher ge-pathten teilstueck?
-					trips = segments[foo].trips;
-					if (trips != last_trips) {
-						var col = rainbow.colourAt(trips);
-						last_trips = trips;
-						var ptest = path.replace(/L/g,"").replace(/M/g,"").split(" ");
-						var ptest3 = ""
-						var ptest4 = [];
-						var ptest2 = [];
-						var x, y;
-						for (var u in ptest) {
-							if (x == undefined) {
-								x = ptest[u]
-							} else {
-								y = ptest[u]
-								ptest3 += x + " " + y + ","
-								ptest2.push([x, y])
-								ptest4.push({x: new Number(x), y: new Number(y)})
-								x = y = undefined;
-							}
-						}
-						ptest3 = ""
-						var newp = simplify(ptest4, 3.5, true);
-						for (var un in newp) {
-							ptest3 += newp[un].x + " " + newp[un].y + ","
-						}
-						paths_file.push(trips + "\t" + ptest3);
-					}
-				}
-			}
-
-			last_px = px;
-			last_shape = shape;
-		}
-		last_trips = trips;
-	}
-
-	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
 }
