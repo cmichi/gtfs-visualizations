@@ -1,12 +1,9 @@
-var express = require('express');
-var http = require('http');
 var path = require('path');
 var crypto = require('crypto');
 var jquery = require('jquery');
 var fs = require('fs');
-var simplify = require('./lib/simplify');
+var simplify = require(path.join(__dirname, ".", "lib", "simplify"));
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
-
 var Rainbow = require(path.join(__dirname, "lib", "rainbowvis"));
 var rainbow = new Rainbow.Rainbow();
 var debug = false;
@@ -17,6 +14,16 @@ var shapes;
 var trips;
 var segments = []
 var segments_length = 0;
+var lines = []
+var max;
+var min;
+var sequences = []
+var paths = []
+var paths_processing = []
+var paths_file = []
+
+var imgWidth = 100000;
+var imgHeight = 100000;
 
 var gtfs = Gtfs(dir, function(data) {
 	stops = data.getStops();
@@ -24,52 +31,9 @@ var gtfs = Gtfs(dir, function(data) {
 	trips = data.getTrips();
 
 	foobar();
-
-	/*
-	server.listen(process.env.PORT || 3000, function() {
-		console.log('Listening on port ' + server.address().port);
-	});
-	*/
 });
 
-var app = express();
-app.use(express.static(__dirname + '/static'));
-app.use(express.bodyParser());
 
-var server = require('http').createServer(app);
-
-
-var lines = []
-app.get('/lines/', function(req, res){
-	res.send(lines);
-});
-
-app.get('/stops/', function(req, res){
-	//console.log(stops);
-	res.send(stops);
-	//res.send("foo\n");
-});
-
-app.get('/shapes/', function(req, res){
-	res.send(shapes);
-});
-
-app.get('/paths/', function(req, res){
-	res.send(paths);
-});
-
-app.get('/paths_processing/', function(req, res){
-	res.send(paths_processing);
-});
-
-app.get('/trips/', function(req, res){
-	res.send(trips);
-});
-
-var max;
-var min;
-
-var sequences = []
 function foobar() {
 	var trips_count = []
 	for (var i in trips) {
@@ -123,7 +87,6 @@ function foobar() {
 			if (A == undefined) {
 				A = {"lat": shape.shape_pt_lat, "lng": shape.shape_pt_lon};
 					
-
 				last_undef = 1;
 				continue;
 			} else {
@@ -182,59 +145,17 @@ function foobar() {
 	for (var i in segments) {
 		// draw a line for each segment
 		var px_from = coord2px(segments[i].from.lat, segments[i].from.lng);
-		//console.log(px_from);
-		//return;
 		var px_to = coord2px(segments[i].to.lat, segments[i].to.lng);
 		var obj = { "from": {"x": px_from.x, "y": px_from.y}
 			    , "to":   {"x": px_to.x, "y": px_to.y}
 			    , "trips": segments[i].trips
 		};
-		//console.log(obj)
-		//console.log(typeof(parseInt(segments[i].to.lat)))
-		//break
 		lines.push(obj);
-
-		//console.log(i)
-		//console.log(obj)
-		//if (i == segments.length - 1)
-			//console.log(segments[i])
-
-		//console.log(segments[i])
-		//console.log(segments[i])
-		//console.log(segments[i].trips)
-		//if (++a == 10) break;
 	}
-	//console.log(lines)
-	//console.log(lines.length + " lines");
 
 	drawShapes();
 }
 
-/*
-var imgWidth = 800;
-var imgHeight = 800;
-function coord2px(lat, lng) {
-	var center_coord = {lat: 48.40783887047417, lng: 9.987516403198242};
-	var center_px = {x: imgWidth/2, y: imgHeight/2};
-	var coord2px_factor = 10000;
-
-	var offsetX = 500;
-	var offsetY = -1600;
-	offsetY = 100;
-	//var offsetY = 200;
-	//var offsetX = 50;
-
-	var _lat = (lat)*1
-	var _lng = (lng)*1
-
-	return {
-		  y: imgHeight -(center_px.x + ((center_coord.lat - _lat) * coord2px_factor) + offsetX)
-		, x: (center_px.y + ((center_coord.lng - _lng) * coord2px_factor) + offsetY)
-	};
-}
-*/
-var imgWidth = 100000;
-var imgHeight = 100000;
 
 
 function coord2px(lat, lng) {
@@ -248,17 +169,13 @@ function coord2px(lat, lng) {
 	var _lat = (lat)*1
 	var _lng = (lng)*1
 
-		  //y: imgHeight - (center_px.x + ((center_coord.lat - _lat) * coord2px_factor) + offsetX)
-		//, x: (center_px.y + ((center_coord.lng - _lng) * coord2px_factor) + offsetY)
-
 	var obj = {
 		x: (_lng*imgWidth) / 360
 		, y: (_lat*imgHeight) / 180
 	}
 
-
-	obj.x *= 1.0;
-	obj.y *= 1.0;
+	//obj.x *= 1.0;
+	//obj.y *= 1.0;
 
 	obj.x -= 2000;
 	obj.y -= 26600;
@@ -272,11 +189,10 @@ function coord2px(lat, lng) {
 	//obj.y -= 900;
 	obj.y -= 4000;
 
-	//var calculatedHeight=((lat*containerHeight)/180);
-	//return $(elem).offset().top+($(elem).height()-calculatedHeight);
 	//console.log(obj)
 	return obj;
 }
+
 function hash(foo) {
 	var md5 = crypto.createHash('sha1');
 	md5.update(JSON.stringify(foo), "ascii")
@@ -285,14 +201,7 @@ function hash(foo) {
 }
 
 // creates svg etc.
-var paths = []
-var paths_processing = []
-var paths_file = []
-//var rainbow = new Rainbow();
-//rainbow.setNumberRange(1, 2093);
-//rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 function drawShapes() {
-var tot = 0;
 	//sequences[shape.shape_id][shape.shape_pt_sequence] = shape;
 	for (var i in sequences) {
 		var A = undefined;
@@ -370,36 +279,10 @@ ptest3 = ""
 		}
 		paths.push({"path": path, "color": col, "trips": trips});
 		last_trips = trips;
-
-		//if (tot == 40) break;
-		tot++
 	}
 	//console.log(paths.length + " paths available")
-
-	// output svg
-	//for (var p in paths_processing
-
 
 	//fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
 	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
 	//fs.writeFileSync("processing/test.processing", paths_processing.join('\n'), "utf8");
-
-
-
-	// create svg
-	/*
-	var svg = raphael.generate(imgWidth, imgHeight, function draw(paper) {
-		var foo = [];
-		for (var i in paths) {
-			var path = paths[i];
-
-			var tada = paper.path(path.path);
-			//var color = rainbow.colourAt(path.trips);
-			var color = path.color;
-			//color = "ff0000"
-			tada.attr("stroke", "#" + color);
-			foo.push(tada)
-		}
-	});
-	*/
 }
