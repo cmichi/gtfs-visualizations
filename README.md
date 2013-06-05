@@ -4,7 +4,14 @@ The idea of this project is to generate fancy, nice looking heatmaps from
 publicly available GTFS datasets.
 
 
-__Project status:__ Just starting out. Nothing is done yet.
+__Project status:__ Displaying a -- very simple -- heatmap in Processing
+works:
+	
+	$ npm install
+	$ node render.js
+
+Download [Processing 2.0](https://processing.org/download/). Then  open 
+the sketch `./processing/processing.pde` within Processing.
 
 
 # License

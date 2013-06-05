@@ -132,19 +132,10 @@ function foobar() {
 }
 
 function coord2px(lat, lng) {
-	//console.log(bbox.width_f * (lng - bbox.left)) 
-	var coordX = (bbox.width_f * (lng - bbox.left))// + bbox.shift_x;
-	var coordY = (bbox.height_f * (bbox.top - lat))// + bbox.shift_y;
-	//coordY *= -1; /* coordinate system */
+	var coordX = bbox.width_f * (lng - bbox.left)
+	var coordY = bbox.height_f * (bbox.top - lat)
 
-	var obj = {x: coordX, y: coordY};
-
-	//obj.x += 55;
-	//obj.y += 55;
-
-	//console.log(lat, lng)
-	//console.log(obj)
-	return obj;
+	return {x: coordX, y: coordY};
 }
 
 function createBBox(coords) {
@@ -182,20 +173,16 @@ function createBBox(coords) {
 
 	/* how much do we need to shift for the points to be in the visible area? */
 	var top_left = coord2px(bbox.left, bbox.top);
-	console.log("top_left: " + JSON.stringify(top_left))
-	console.log( JSON.stringify(bbox))
 	if (top_left.x < 0)
 		// so much, that the outermost point is on 0
 		bbox.shift_x = -1 * top_left.x;
 	else if (top_left.x > render_area.width)
-		bbox.shift_x = -1 * top_left.x// + (1*render_area.width);
+		bbox.shift_x = -1 * top_left.x;
 
 	if (top_left.y < 0)
 		bbox.shift_y = -1 * top_left.y;
 	else if (top_left.y > render_area.height)
-		bbox.shift_y = -1 * top_left.y// + (1*render_area.height);
-
-	//return bbox;
+		bbox.shift_y = -1 * top_left.y;
 }
 
 function hash(val) {
@@ -207,10 +194,9 @@ function hash(val) {
 
 function createFile() {
 	var paths_file = [];
-	var paths = []
+	var paths = [];
 
-	console.log(all_coords.length)
-	createBBox(all_coords)
+	createBBox(all_coords);
 
 	for (var i in sequences) {
 		var A = undefined;
@@ -261,6 +247,6 @@ function createFile() {
 		last_trips = trips;
 	}
 
-	fs.writeFileSync("processing/test.processing", paths_file.join('\n'), "utf8");
-	fs.writeFileSync("test.svg", paths.join('\n'), "utf8");
+	fs.writeFileSync("./processing/data.asc", paths_file.join('\n'), "utf8");
+	fs.writeFileSync("output.svg", paths.join('\n'), "utf8");
 }
