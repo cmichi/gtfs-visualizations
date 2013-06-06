@@ -35,14 +35,17 @@ void setup() {
 
       /* underlying stroke */
       // sf: 2
-      stroke(255, 0, 0, (float(maxmin[0]) / float(trips)) * 20.0f);
+      stroke(255, 0, 0, (float(maxmin[0]) / float(trips)) * 2.0f);
+   //   stroke(255, 0, 0, (float(maxmin[0]) / float(trips)) * 20.0f);
       strokeWeight(float(trips) * 0.0021f);
+      //strokeWeight(2);
       line(float(pre[0]),float(pre[1]),  float(coords[0]),float(coords[1]));
 
       strokeWeight(1);
       //sf : 5
       //System.out.println((float(maxmin[0]) / float(trips)) * 5.0f);
-      stroke(255, 0,0, (float(maxmin[0]) / float(trips)) * 255.0f);
+     // stroke(255, 0,0, (float(maxmin[0]) / float(trips)) * 255.0f);
+      stroke(255, 0,0, (float(maxmin[0]) / float(trips)) * 5.0f);
       line(float(pre[0]), float(pre[1]),  float(coords[0]), float(coords[1]) );
 
       pre = coords;

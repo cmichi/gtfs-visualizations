@@ -30,10 +30,13 @@ var gtfs = Gtfs(dir, function(data) {
 	shapes = data.getShapes();
 	trips = data.getTrips();
 
-	foobar();
+	prepareData();
+	createFile();
 });
 
-function foobar() {
+function prepareData() {
+	debug("Starting to prepare data...");
+
 	/* count the trips on a certain id */
 	var trips_count = []
 	for (var i in trips) {
@@ -51,7 +54,6 @@ function foobar() {
 	[
 		{ {x:.., y:..}, {x:.., y:..} }: {
 			trips: 3 	// 3 trips along this segment
-			, shape_ids: []
 		}
 	]
 	*/
@@ -68,12 +70,13 @@ function foobar() {
 	for (var i in sequences) 
 		sequences_length++;
 
+	debug("Preparing data finished.");
+	debug("\nStarting to create shape segments array with trips per segment...");
+
 	for (var i in sequences) {
 		var A = undefined;
 		var B = undefined;
 		var last_undef = 0
-
-		// evtl. wurde ein segment uebersprugen
 
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
@@ -104,13 +107,9 @@ function foobar() {
 				if (segments[segment_index] == undefined) {
 					segments[segment_index] = {
 						"trips": 0
-						, "shape_ids": [shape_id]
 						, "from": A
 						, "to": B
 					}
-				} else {
-					if (jquery.inArray(shape_id, segments[segment_index].shape_ids) === -1) 
-						segments[segment_index].shape_ids.push(shape_id)
 				}
 
 				if (trips_count[shape_id] == undefined) {
@@ -126,7 +125,6 @@ function foobar() {
 				/* check if {B, A} in arr */
 				if (segment_index != segment_index2 && segments[segment_index2] != undefined) {
 					segments[segment_index].trips = segments[segment_index].trips
-					// ggf shape_ids.push(shape_id)
 				}
 
 				if (segments[segment_index].trips > max || max == undefined)
@@ -139,17 +137,17 @@ function foobar() {
 			}
 		}
 	}
+	debug("Segments created.");
 
 	if (max == min && max > 0) min--;
 	if (max == min && max <= 0) max++;
 
-	console.log("max " + max);
-	console.log("min " + min);
+	debug("max trips per segment: " + max);
+	debug("min trips per segment: " + min);
 
 	rainbow.setNumberRange(min, max);
 	rainbow.setSpectrum('blue', 'green', 'yellow', 'red');
 
-	createFile();
 }
 
 function coord2px(lat, lng) {
@@ -220,11 +218,8 @@ function createFile() {
 	createBBox(all_coords);
 
 	var working = 0;
-	var one = 100 / sequences_length;
-
-	console.log(sequences_length + "!!")
-	console.log(sequences.length)
-	one = 1;
+	var one = 1;
+	debug("\nStarting to create file...");
 
 	for (var i in sequences) {
 		var A = undefined;
@@ -238,7 +233,7 @@ function createFile() {
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
-			//return;
+			
 			if (svg) {
 				if (path == "") 
 					path = "M" + px.x + " " + (px.y);
@@ -253,8 +248,7 @@ function createFile() {
 				var segment_index = hash([A, B]);
 
 				if (segments[segment_index] != undefined) {
-					// sind die anzahl an trips unterschiedlich
-					// wie auf dem bisher ge-pathten teilstueck?
+					/* do the trips vary from the - so far - concatenated segments? */
 					trips = segments[segment_index].trips;
 					if (trips != last_trips) {
 						var col = rainbow.colourAt(trips);
@@ -277,10 +271,6 @@ function createFile() {
 		}
 		last_trips = trips;
 
-		//if (working % 10 == 0)
-			//console.log((100 - working) + " percent done");
-		//if (sequences_length - working == sequences_length * 0)
-			//console.log((100 - working) + " percent done");
 		if ((sequences_length - working) % 5 == 0)
 			console.log((sequences_length - working) + " left")
 
@@ -289,6 +279,8 @@ function createFile() {
 
 	fs.writeFileSync("./processing/data.lines", paths_file.join('\n'), "utf8");
 	fs.writeFileSync("./processing/maxmin.lines", max + "\n" + min, "utf8");
+
+	debug("Files written.");
 
 	if (svg) {
 		var svgContent = '<?xml version="1.0" encoding="UTF-8"?>'
@@ -304,4 +296,8 @@ function createFile() {
 
 		fs.writeFileSync("output.svg", svgContent, "utf8");
 	}
+}
+
+function debug(msg) {
+	console.log(msg);
 }
