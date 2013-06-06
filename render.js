@@ -1,6 +1,7 @@
 var path = require('path');
 var crypto = require('crypto');
 var jquery = require('jquery');
+var argv = require('optimist').argv;
 var fs = require('fs');
 var simplify = require(path.join(__dirname, ".", "lib", "simplify"));
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
@@ -15,18 +16,20 @@ var sequences_length = 0
 var all_coords = [];
 var max;
 var min;
-var svg = false;
+var svg = new Boolean(argv.svg);
 
-var dir = "./gtfs/sf/";
+//var dir = "./gtfs/sf/";
+//var dir = "san-diego";
 //var dir = "./gtfs/san-diego/";
 //var dir = "./gtfs/los-angeles/";
 //var dir = "./gtfs/berlin/";
 //var dir = "./gtfs/bart-sf/";
-var dir = "./gtfs/ulm/";
+//var dir = "./gtfs/ulm/";
+//var dir = "ulm";
 var render_area = {width: 600, height: 600};
 var bbox;
 
-var gtfs = Gtfs(dir, function(data) {
+var gtfs = Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
 	shapes = data.getShapes();
 	trips = data.getTrips();
 
@@ -277,8 +280,8 @@ function createFile() {
 		working += one;
 	}
 
-	fs.writeFileSync("./processing/data.lines", paths_file.join('\n'), "utf8");
-	fs.writeFileSync("./processing/maxmin.lines", max + "\n" + min, "utf8");
+	fs.writeFileSync("./output/" + argv.gtfs + "/data.lines", paths_file.join('\n'), "utf8");
+	fs.writeFileSync("./output/" + argv.gtfs + "/maxmin.lines", max + "\n" + min, "utf8");
 
 	debug("Files written.");
 
@@ -294,10 +297,10 @@ function createFile() {
 		+ paths.join('\n') 
 		+ "\n</svg>";
 
-		fs.writeFileSync("output.svg", svgContent, "utf8");
+		fs.writeFileSync("./output/" + argv.gtfs + "/output.svg", svgContent, "utf8");
 	}
 }
 
 function debug(msg) {
-	console.log(msg);
+	if (argv.verbose) console.log(msg);
 }
