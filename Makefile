@@ -1,7 +1,6 @@
 default: help
 
 render:
-	# would be better to check if the dir already exists
 	mkdir -p output/
 	mkdir -p output/$(gtfs)/
 	node render.js --verbose --gtfs=$(gtfs) --svg=$(svg)

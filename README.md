@@ -8,7 +8,7 @@ __Project status:__ Displaying a -- very simple -- heatmap in Processing
 works:
 	
 	$ npm install
-	$ node render.js
+	$ make render gtfs=ulm svg=false
 
 Download [Processing 2.0](https://processing.org/download/). Then  open 
 the sketch `./processing/processing.pde` within Processing.

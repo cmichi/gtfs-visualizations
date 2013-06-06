@@ -6,10 +6,11 @@ void setup() {
   stroke(255, 0, 0);
   strokeWeight(1);
   background(25);
-  String lines[] = loadStrings("../output/ulm/data.lines");
-  String maxmin[] = loadStrings("../output/ulm/maxmin.lines");
-  //String lines[] = loadStrings("sf-data.lines");
-  //String maxmin[] = loadStrings("sf-maxmin.lines");
+  String city = "san-diego";
+  city = "ulm";
+  city = "san-francisco";
+  String lines[] = loadStrings("../output/" + city + "/data.lines");
+  String maxmin[] = loadStrings("../output/" + city + "/maxmin.lines");
   
   translate(50, 50);
   pushMatrix();

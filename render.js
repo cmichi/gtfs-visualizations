@@ -16,19 +16,11 @@ var sequences_length = 0
 var all_coords = [];
 var max;
 var min;
-var svg = new Boolean(argv.svg);
-
-//var dir = "./gtfs/sf/";
-//var dir = "san-diego";
-//var dir = "./gtfs/san-diego/";
-//var dir = "./gtfs/los-angeles/";
-//var dir = "./gtfs/berlin/";
-//var dir = "./gtfs/bart-sf/";
-//var dir = "./gtfs/ulm/";
-//var dir = "ulm";
-var render_area = {width: 600, height: 600};
 var bbox;
+var svg = new Boolean(argv.svg);
+var render_area = {width: 600, height: 600};
 
+debug("Loading GTFS files...");
 var gtfs = Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
 	shapes = data.getShapes();
 	trips = data.getTrips();
