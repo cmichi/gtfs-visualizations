@@ -10,6 +10,7 @@ var Rainbow = require(path.join(__dirname, "lib", "rainbowvis"));
 var rainbow = new Rainbow.Rainbow();
 var shapes;
 var trips;
+var routes;
 var segments = []
 var sequences = []
 var sequences_length = 0
@@ -19,11 +20,16 @@ var min;
 var bbox;
 var svg = new Boolean(argv.svg);
 var render_area = {width: 600, height: 600};
+var gtfs;
 
 debug("Loading GTFS files...");
-var gtfs = Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
-	shapes = data.getShapes();
-	trips = data.getTrips();
+Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
+	gtfs = data;
+	shapes = gtfs.getShapes();
+	trips = gtfs.getTrips();
+	//routes = data.getRoutes();
+	
+	//console.log(data.getRouteById(87001))
 
 	prepareData();
 	createFile();
@@ -33,14 +39,17 @@ function prepareData() {
 	debug("Starting to prepare data...");
 
 	/* count the trips on a certain id */
-	var trips_count = []
+	var trips_count = [];
+	var route_types = [];
 	for (var i in trips) {
 		var trip = trips[i];
 		if (trips_count[ trip.shape_id ] == undefined)
 			trips_count[ trip.shape_id ] = 1;
 		else
 			trips_count[ trip.shape_id ]++;
-		//console.log(trip.shape_id)
+
+		var route_type = 1 * gtfs.getRouteById(trip.route_id).route_type;
+		route_types[trip.shape_id] = route_type;
 	}
 
 	/*
@@ -75,6 +84,7 @@ function prepareData() {
 
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
+			//console.log(shape)
 			var shape_id = shape.shape_id
 			all_coords.push([new Number(shape.shape_pt_lat), 
 					new Number(shape.shape_pt_lon)]);
@@ -104,6 +114,7 @@ function prepareData() {
 						"trips": 0
 						, "from": A
 						, "to": B
+						, "route_types": []
 					}
 				}
 
@@ -114,6 +125,11 @@ function prepareData() {
 					trips_count[shape_id] = 0;
 					//console.log(shape_id)
 				}
+
+				//console.log(shape.route_id)
+				if (route_types[shape_id] != undefined && 
+				    jquery.inArray(route_types[shape_id], segments[segment_index].route_types) === -1)
+					segments[segment_index].route_types.push(route_types[shape_id]);
 
 				segments[segment_index].trips += trips_count[shape_id];
 
@@ -254,7 +270,8 @@ function createFile() {
 						for (var un in simplified_pts) {
 							coords += simplified_pts[un].x + " " + simplified_pts[un].y + ","
 						}
-						paths_file.push(trips + "\t" + coords);
+						var route_type = segments[segment_index].route_types.join(",");
+						paths_file.push(trips + "\t" + route_type + "\t" + coords);
 						if (svg) 
 							paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
 					}
@@ -267,7 +284,7 @@ function createFile() {
 		last_trips = trips;
 
 		if ((sequences_length - working) % 5 == 0)
-			console.log((sequences_length - working) + " left")
+			debug((sequences_length - working) + " left")
 
 		working += one;
 	}
