@@ -24,6 +24,7 @@ var gtfs;
 
 debug("Loading GTFS files...");
 Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
+	debug("GTFS files loaded.\n");
 	gtfs = data;
 	shapes = gtfs.getShapes();
 	trips = gtfs.getTrips();
