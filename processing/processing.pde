@@ -8,9 +8,14 @@ void setup() {
   stroke(255, 0, 0);
   strokeWeight(1);
   background(25);
-  //  String city = "san-diego";
-  // String city = "ulm";
-  String city = "san-francisco";
+  String city = "san-diego";
+  //city = "manhattan";
+  //city = "southwest-ohio";
+  city = "washington";
+  city = "ulm";
+  city = "san-francisco";
+  city = "madrid";
+  
   String lines[] = loadStrings("../output/" + city + "/data.lines");
   String maxmin[] = loadStrings("../output/" + city + "/maxmin.lines");
   
@@ -24,15 +29,14 @@ void setup() {
     String[] route_types = line[1].split(",");
     String[] points = line[2].split(",");
 
-    String[] pre = new String[2];
     beginShape();
     for (int n = 0; n < points.length; n++) {
       if (points[n] == "" ) continue;
 
       String[] coords = new String[2];
+      coords = points[n].split(" ");
 
-      if (coords.length != 2 || pre.length != 2) continue;
-
+      if (coords.length != 2) continue;
     
       // strokeWeight(1);
       //System.out.println(float(trips) * 0.1f);
