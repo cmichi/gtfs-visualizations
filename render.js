@@ -28,9 +28,6 @@ Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
 	gtfs = data;
 	shapes = gtfs.getShapes();
 	trips = gtfs.getTrips();
-	//routes = data.getRoutes();
-	
-	//console.log(data.getRouteById(87001))
 
 	prepareData();
 	createFile();
@@ -312,5 +309,8 @@ function createFile() {
 }
 
 function debug(msg) {
-	if (argv.verbose) console.log(msg);
+	if (argv.verbose) {
+		var now = (new Date());
+		console.log(now.getHours() + "h" + now.getMinutes() + "m: " + msg);
+	}
 }
