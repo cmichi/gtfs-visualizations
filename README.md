@@ -10,18 +10,31 @@ works:
 	$ npm install
 	$ make render gtfs=ulm svg=false
 
+This will generate:
+
+	./output/ulm/
+
+	./output/ulm/data.lines
+
+	./output/ulm/maxmin.lines	
+	# containing the maximum and minimum of trips on a line
+
+	./output/ulm/output.svg
+
 Download [Processing 2.0](https://processing.org/download/). Then  open 
 the sketch `./processing/processing.pde` within Processing.
+Change the line `String city = "ulm";` to the city and execute the
+sketch. This will generate a file `./output/ulm/out.png`.
 
 
 # SVG Output
 
-Works. Shapes are not simplified. SVGs might get big.
+Works. Shapes are not simplified. SVGs might get (very) big.
 
 
 # License
 
-	Copyright (c) 2013
+	Copyright (c) 2013-2014
 
 		Michael Mueller <http://micha.elmueller.net/>
 
