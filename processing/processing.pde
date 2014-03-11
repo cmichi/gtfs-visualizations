@@ -20,13 +20,19 @@ void setup() {
   city = "amsterdam";
   city = "san-diego";
   city = "madrid";
-  city = "ulm";  
-  
+  city = "ulm";   
+  //city = "san-diego";
  
   translate(50, 50);
   pushMatrix();
-    drawRoute("3", #ff0000);
-    drawRoute("0", #0000ff);
+    drawRoute("7", #ffffff); // funicular
+    drawRoute("6", #ffffff); // gondola
+    drawRoute("5", #ffffff); // cable car
+    drawRoute("4", #ffffff); // ferry
+    drawRoute("3", #ff0000); // bus
+    drawRoute("2", #ffffff); // rail, inter-city
+    drawRoute("1", #ffffff); // subway, metro
+    drawRoute("0", #0000ff); // tram
   popMatrix();
   
   //save("../output/" + city + "/out.png"); 
@@ -45,21 +51,16 @@ void drawRoute(String type, color col) {
     String[] points = line[2].split(",");
 
     strokeWeight(log(float(trips)) * 0.2f);
-    strokeWeight(float(trips) * 0.0019f);
+    //strokeWeight(float(trips) * 0.002f);
       
     float alph = 1.0 + (float(maxmin[0]) / float(trips));
     alph = 3.0f + log(float(trips)) * 0.7f;
-    alph = 3.0f + float(trips) * 0.018f;
-    stroke(0,255,0, alph + 0.0f);
-      
-    if (Arrays.asList(route_types).contains("3"))       
-        stroke(col, alph);
-        
-    if (Arrays.asList(route_types).contains("0") && route_types.length == 1)
-        stroke(col, alph);
+    //alph = 3.0f + float(trips) * 0.018f;
+    
+    stroke(col, alph);    
              
-     if (!Arrays.asList(route_types).contains(type) || route_types.length > 1)     
-       continue;
+    if (!Arrays.asList(route_types).contains(type) || route_types.length > 1)     
+      continue;
   
     beginShape();
     for (int n = 0; n < points.length; n++) {
