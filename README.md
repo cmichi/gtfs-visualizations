@@ -51,10 +51,19 @@ Within `./processing/processing.pde` change
 
 # Gallery
 
-...about to follow! stay tuned :)
+## Ulm
+
+[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)
 
 
 # License
+
+## Gallery
+
+	The gallery photos are licensed under the Creative Commons Attribution
+	4.0 International license: http://creativecommons.org/licenses/by/4.0/.
+
+## Code
 
 	Copyright (c) 2013-2014
 
