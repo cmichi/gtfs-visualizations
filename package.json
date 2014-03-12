@@ -13,7 +13,6 @@
   "dependencies": {
 	"path": "0.4.x",
 	"jquery": "1.8.x",
-	"optimist": "0.5.x",
-	"express": "3.0.x"
+	"optimist": "0.5.x"
   }
 }

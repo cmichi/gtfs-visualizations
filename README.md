@@ -53,6 +53,9 @@ Within `./processing/processing.pde` change
 
 ## Ulm
 
+Rendering based on an inofficial GTFS feed. There is an official one
+available, though it does (not yet?) include shapes.
+
 [![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)
 
 
