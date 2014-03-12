@@ -3,7 +3,7 @@ default: help
 render:
 	mkdir -p output/
 	mkdir -p output/$(gtfs)/
-	time node render.js --verbose --gtfs=$(gtfs) --svg=$(svg)
+	time node render.js --verbose --gtfs=$(gtfs)
 
 clean:
 	rm -r ouptut/

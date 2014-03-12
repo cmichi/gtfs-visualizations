@@ -50,13 +50,8 @@ function prepareData() {
 			trips_on_a_shape[ trip.shape_id ]++;
 
 		var route_type = 1 * gtfs.getRouteById(trip.route_id).route_type;
-
-		if (route_types[trip.shape_id] != undefined && route_types[trip.shape_id] != route_type) {
-			console.log("foo");
-			return;
-		}
-		route_types[trip.shape_id] = route_type;
-
+		if (route_types[trip.shape_id] == undefined)
+			route_types[trip.shape_id] = route_type;
 	}
 
 	/*
@@ -91,7 +86,8 @@ function prepareData() {
 
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
-			//console.log(shape)
+			//console.log(JSON.stringify(shape));
+
 			var shape_id = shape.shape_id
 			all_coords.push([new Number(shape.shape_pt_lat), 
 					new Number(shape.shape_pt_lon)]);
@@ -137,7 +133,7 @@ function prepareData() {
 				if (route_type != undefined) {
 					segments[segment_index].route_type = route_type;
 				} else {
-					console.log("oh oh. undefined route_type for shape_id " + shape_id);
+					//console.log("oh oh. undefined route_type for shape_id " + shape_id);
 					//return;
 				}
 
@@ -179,6 +175,12 @@ function coord2px(lat, lng) {
 }
 
 function createBBox(coords) {
+	if (coords.length === 0) {
+		console.error("no coordinates could be parsed!");
+		console.error( JSON.stringify(coords) );
+		process.exit(1);
+	}
+
 	bbox = {
 		left: coords[0][1]
 		, right: coords[0][1]

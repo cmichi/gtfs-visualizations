@@ -9,19 +9,19 @@ void setup() {
   stroke(255, 0, 0);
   strokeWeight(1);
   background(25);
-  city = "san-diego";
   city = "manhattan";
   city = "southwest-ohio";
   city = "washington";
   city = "miami";
   city = "southern-nevada";
-  city = "san-francisco";
   city = "los-angeles";
-  city = "amsterdam";
-  city = "san-diego";
-  city = "madrid";
+  
+  
   city = "ulm";   
   //city = "san-diego";
+  //city = "san-francisco";
+  //city = "madrid";
+
  
   translate(50, 50);
   pushMatrix();
@@ -35,7 +35,7 @@ void setup() {
     drawRoute("0", #0000ff); // tram
   popMatrix();
   
-  //save("../output/" + city + "/out.png"); 
+  save("../output/" + city + "/out.png"); 
 }
 
 void drawRoute(String type, color col) {
