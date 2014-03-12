@@ -3,7 +3,6 @@ var crypto = require('crypto');
 var jquery = require('jquery');
 var argv = require('optimist').argv;
 var fs = require('fs');
-var simplify = require(path.join(__dirname, ".", "lib", "simplify"));
 var Gtfs = require(path.join(__dirname, ".", "parser", "loader"));
 var Rainbow = require(path.join(__dirname, "lib", "rainbowvis"));
 
@@ -18,7 +17,6 @@ var all_coords = [];
 var max;
 var min;
 var bbox;
-var svg = new Boolean(argv.svg);
 var render_area = {width: 600, height: 600};
 var gtfs;
 
@@ -47,6 +45,14 @@ function prepareData() {
 			trips_count[ trip.shape_id ]++;
 
 		var route_type = 1 * gtfs.getRouteById(trip.route_id).route_type;
+		//console.log(trip.route_id + ": " + route_type.join(", "));
+		//console.log(trip.route_id + ": " + JSON.stringify(route_type));
+		//if (i == 155) return;
+
+		if (route_types[trip.shape_id] != undefined && route_types[trip.shape_id] != route_type) {
+			console.log("foo");
+			return;
+		}
 		route_types[trip.shape_id] = route_type;
 	}
 
@@ -128,6 +134,9 @@ function prepareData() {
 				if (route_types[shape_id] != undefined && 
 				    jquery.inArray(route_types[shape_id], segments[segment_index].route_types) === -1)
 					segments[segment_index].route_types.push(route_types[shape_id]);
+
+				//if (route_types[shape_id] != undefined && route_types[shape_id] == "0")
+					//console.log(shape_id + ", " + route_types[shape_id]);
 
 				segments[segment_index].trips += trips_count[shape_id];
 
@@ -234,7 +243,6 @@ function createFile() {
 		var A = undefined;
 		var B = undefined;
 
-		var path = "";
 		var last_px;
 		var last_shape;
 		var last_trips = 0;
@@ -243,12 +251,6 @@ function createFile() {
 			var shape = sequences[i][n];
 			var px = coord2px(shape.shape_pt_lat, shape.shape_pt_lon);
 			
-			if (svg) {
-				if (path == "") 
-					path = "M" + px.x + " " + (px.y);
-				else 
-					path += " L" + px.x + " " + (px.y);
-			}
 			pts.push({x: new Number(px.x), y: new Number(px.y)});
 
 			if (last_shape != undefined) {
@@ -264,14 +266,16 @@ function createFile() {
 						last_trips = trips;
 
 						var coords = "";
-						var simplified_pts = simplify(pts, 3.5, true);
-						for (var un in simplified_pts) {
-							coords += simplified_pts[un].x + " " + simplified_pts[un].y + ","
+						for (var un in pts) {
+							coords += pts[un].x + " " + pts[un].y + ","
 						}
+
+						//var route_type = segments[segment_index].route_types.join(",");
+						//paths_file.push(trips + "\t" + route_type + "\t" + coords);
+
 						var route_type = segments[segment_index].route_types.join(",");
-						paths_file.push(trips + "\t" + route_type + "\t" + coords);
-						if (svg) 
-							paths.push('<path style="" fill="none" stroke="#'+col+'" d="'+path+'"/>')
+						if (segments[segment_index].route_types.length === 1)
+							paths_file.push(trips + "\t" + route_type + "\t" + coords);
 					}
 				}
 			}
@@ -291,21 +295,6 @@ function createFile() {
 	fs.writeFileSync("./output/" + argv.gtfs + "/maxmin.lines", max + "\n" + min, "utf8");
 
 	debug("Files written.");
-
-	if (svg) {
-		var svgContent = '<?xml version="1.0" encoding="UTF-8"?>'
-		+ '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
-		+ '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> '
-		+ '<svg xmlns="http://www.w3.org/2000/svg" '
-		+ 'xmlns:xlink="http://www.w3.org/1999/xlink" '
-		+ 'xmlns:ev="http://www.w3.org/2001/xml-events" '
-		+ 'version="1.1" baseProfile="full" '
-		+ 'width="800" height="800">\n'
-		+ paths.join('\n') 
-		+ "\n</svg>";
-
-		fs.writeFileSync("./output/" + argv.gtfs + "/output.svg", svgContent, "utf8");
-	}
 }
 
 function debug(msg) {
