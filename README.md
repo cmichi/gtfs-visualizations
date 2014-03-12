@@ -53,10 +53,31 @@ Within `./processing/processing.pde` change
 
 ## Ulm
 
+[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)
+
 Rendering based on an inofficial GTFS feed. There is an official one
 available, though it does (not yet?) include shapes.
 
-[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)
+## San Diego
+
+[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)
+
+Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
+by the Metropolitan Transit System (MTS). (March 12, 2014)
+
+## Madrid
+
+[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
+by the Empresa Municipal de Transportes. (March 12, 2014)
+
+
+# Nice to have ToDos
+
+ * For certain cities multiple separate GTFS feeds are available (e.g. bus, 
+   metro, etc.). It would be nice if the heatmap could be generated from
+   multiple GTFS feeds.
 
 
 # License
