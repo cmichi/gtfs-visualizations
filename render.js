@@ -31,29 +31,32 @@ Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
 	createFile();
 });
 
+/* possible bug: can there be more route types for one shape? */
+var route_types = [];
+function getRouteTypeForShapeId(shape_id) {
+	return route_types[shape_id];
+}
+
 function prepareData() {
 	debug("Starting to prepare data...");
 
 	/* count the trips on a certain id */
-	var trips_count = [];
-	var route_types = [];
+	var trips_on_a_shape = []; 
 	for (var i in trips) {
 		var trip = trips[i];
-		if (trips_count[ trip.shape_id ] == undefined)
-			trips_count[ trip.shape_id ] = 1;
+		if (trips_on_a_shape[ trip.shape_id ] == undefined)
+			trips_on_a_shape[ trip.shape_id ] = 1;
 		else
-			trips_count[ trip.shape_id ]++;
+			trips_on_a_shape[ trip.shape_id ]++;
 
 		var route_type = 1 * gtfs.getRouteById(trip.route_id).route_type;
-		//console.log(trip.route_id + ": " + route_type.join(", "));
-		//console.log(trip.route_id + ": " + JSON.stringify(route_type));
-		//if (i == 155) return;
 
 		if (route_types[trip.shape_id] != undefined && route_types[trip.shape_id] != route_type) {
 			console.log("foo");
 			return;
 		}
 		route_types[trip.shape_id] = route_type;
+
 	}
 
 	/*
@@ -118,27 +121,27 @@ function prepareData() {
 						"trips": 0
 						, "from": A
 						, "to": B
-						, "route_types": []
+						, "route_type": undefined 
 					}
 				}
 
-				if (trips_count[shape_id] == undefined) {
+				if (trips_on_a_shape[shape_id] == undefined) {
 					// maybe the shape exists, but
 					// there are no trips for it
 					//console.log("shit2")
-					trips_count[shape_id] = 0;
+					trips_on_a_shape[shape_id] = 0;
 					//console.log(shape_id)
 				}
 
-				//console.log(shape.route_id)
-				if (route_types[shape_id] != undefined && 
-				    jquery.inArray(route_types[shape_id], segments[segment_index].route_types) === -1)
-					segments[segment_index].route_types.push(route_types[shape_id]);
+				var route_type = getRouteTypeForShapeId(shape_id);
+				if (route_type != undefined) {
+					segments[segment_index].route_type = route_type;
+				} else {
+					console.log("oh oh. undefined route_type for shape_id " + shape_id);
+					//return;
+				}
 
-				//if (route_types[shape_id] != undefined && route_types[shape_id] == "0")
-					//console.log(shape_id + ", " + route_types[shape_id]);
-
-				segments[segment_index].trips += trips_count[shape_id];
+				segments[segment_index].trips += trips_on_a_shape[shape_id];
 
 				/* check if {B, A} in arr */
 				if (segment_index != segment_index2 && segments[segment_index2] != undefined) {
@@ -270,12 +273,8 @@ function createFile() {
 							coords += pts[un].x + " " + pts[un].y + ","
 						}
 
-						//var route_type = segments[segment_index].route_types.join(",");
-						//paths_file.push(trips + "\t" + route_type + "\t" + coords);
-
-						var route_type = segments[segment_index].route_types.join(",");
-						if (segments[segment_index].route_types.length === 1)
-							paths_file.push(trips + "\t" + route_type + "\t" + coords);
+						var route_type = segments[segment_index].route_type;
+						paths_file.push(trips + "\t" + route_type + "\t" + coords);
 					}
 				}
 			}
