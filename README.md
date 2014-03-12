@@ -1,14 +1,16 @@
 # GTFS Heatmap
 
-The idea of this project is to generate fancy, nice looking heatmaps from
-publicly available GTFS datasets.
+The idea of this project is to generate nice looking "heatmaps" from
+publicly available GTFS datasets. By this I mean the routes are drawn
+according to their shape. The thickness and color intensity of the 
+drawn lines is chosen using `log(trips_happening_on_this_shape_id)`.
+All trips in the GTFS feed are counted (not just days or a week).
 
 
-__Project status:__ Displaying a -- very simple -- heatmap in Processing
-works:
+__Project status:__ Works!
 	
 	$ npm install
-	$ make render gtfs=ulm svg=false
+	$ make render gtfs=ulm
 
 This will generate:
 
@@ -17,19 +19,34 @@ This will generate:
 	./output/ulm/data.lines
 
 	./output/ulm/maxmin.lines	
-	# containing the maximum and minimum of trips on a line
-
-	./output/ulm/output.svg
+	# containing the maximum and minimum count of trips on a shape
+	# in this GTFS feed
 
 Download [Processing 2.0](https://processing.org/download/). Then  open 
 the sketch `./processing/processing.pde` within Processing.
-Change the line `String city = "ulm";` to the city and execute the
-sketch. This will generate a file `./output/ulm/out.png`.
+Execute it and a file `./output/ulm/out.png` will be generated.
 
 
-# SVG Output
+## Adaption to your city
 
-Works. Shapes are not simplified. SVGs might get (very) big.
+Change the line `String city = "ulm";` within `./processing/processing.pde` 
+to the city you want to display, e.g. `String city = "san-diego";`. 
+Make sure `./gtfs/san-diego/` exists. Also make sure there is a shape file
+(`./gtfs/san-diego/shapes.txt`) available! 
+
+If you the execute the Processing sketch a file `./output/san-diego/out.png`
+will be generated.
+
+
+## Generating another image resolution
+
+Within `./render.js` change
+
+	var render_area = {width: 600, height: 600};
+
+Within `./processing/processing.pde` change
+
+	size(700, 700);
 
 
 # License
