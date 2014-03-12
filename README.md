@@ -49,6 +49,11 @@ Within `./processing/processing.pde` change
 	size(700, 700);
 
 
+# Gallery
+
+...about to follow! stay tuned :)
+
+
 # License
 
 	Copyright (c) 2013-2014
