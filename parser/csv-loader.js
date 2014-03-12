@@ -7,6 +7,11 @@ module.exports = (function(){
 		fs.readFile(filename, "utf8", function(err, data) {			
 			//console.log(filename);
 			//console.log(data);
+
+			if (err || !data) {
+				cb(undefined);
+				return;
+			}
 			
 			data = data.replace(/\"+/g, ""); 
 			data = data.replace(/\r|\t/g, "");
