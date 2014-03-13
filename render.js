@@ -13,7 +13,6 @@ var routes;
 var segments = []
 var sequences = []
 var sequences_length = 0
-var all_coords = [];
 var max;
 var min;
 var bbox;
@@ -90,7 +89,7 @@ function prepareData() {
 			//console.log(JSON.stringify(shape));
 
 			var shape_id = shape.shape_id
-			all_coords.push([new Number(shape.shape_pt_lat), 
+			adjustBBox([new Number(shape.shape_pt_lat), 
 					new Number(shape.shape_pt_lon)]);
 
 			if(last_undef == 1 && A == undefined)
@@ -175,37 +174,37 @@ function coord2px(lat, lng) {
 	return {x: coordX, y: coordY};
 }
 
-function createBBox(coords) {
+function adjustBBox(coords) {
 	if (coords.length === 0) {
 		console.error("no coordinates could be parsed!");
 		console.error( JSON.stringify(coords) );
 		process.exit(1);
 	}
+	
+	if (!bbox) {
+		bbox = {
+			left: coords[0][1]
+			, right: coords[0][1]
+			, top:  coords[0][0]
+			, bottom:  coords[0][0]
+			, width: 0
+			, height: 0
 
-	bbox = {
-		left: coords[0][1]
-		, right: coords[0][1]
-		, top:  coords[0][0]
-		, bottom:  coords[0][0]
-		, width: 0
-		, height: 0
+			, shift_x: 0
+			, shift_y: 0
+		};
+	} else {
+		if (coords[0][1] < bbox.left)
+			bbox.left = coords[0][1];
 
-		, shift_x: 0
-		, shift_y: 0
-	};
+		if (coords[0][1] > bbox.right)
+			bbox.right = coords[0][1];
 
-	for (var i in coords) {
-		if (coords[i][1] < bbox.left)
-			bbox.left = coords[i][1];
+		if (coords[0][0] > bbox.top)
+			bbox.top = coords[0][0];
 
-		if (coords[i][1] > bbox.right)
-			bbox.right = coords[i][1];
-
-		if (coords[i][0] > bbox.top)
-			bbox.top = coords[i][0];
-
-		if (coords[i][0] < bbox.bottom)
-			bbox.bottom = coords[i][0];
+		if (coords[0][0] < bbox.bottom)
+			bbox.bottom = coords[0][0];
 	}
 
 	bbox.height = bbox.top - bbox.bottom;
@@ -238,7 +237,6 @@ function hash(val) {
 function createFile() {
 	fs.truncateSync("./output/" + argv.gtfs + "/data.lines", 0, "utf8");
 
-	createBBox(all_coords);
 
 	var working = 0;
 	var one = 1;
@@ -276,8 +274,8 @@ function createFile() {
 						}
 
 						var route_type = segments[segment_index].route_type;
-						var line = trips + "\t" + route_type + "\t" + coords;
-						fs.appendFile("./output/" + argv.gtfs + "/data.lines", line, "utf8", function(err) {
+						var line = trips + "\t" + route_type + "\t" + coords + "\n";
+						fs.appendFileSync("./output/" + argv.gtfs + "/data.lines", line, "utf8", function(err) {
 							if (err) throw err;
 						});
 					}
