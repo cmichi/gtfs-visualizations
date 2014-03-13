@@ -20,19 +20,19 @@ a visualization for a custom GTFS feed below the gallery:
 Rendering based on an inofficial GTFS feed. There is an official one
 available, though it does (not yet?) include shapes.
 
-### San Diego
-
-[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)
-
-Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
-by the Metropolitan Transit System (MTS). (March 12, 2014)
-
 ### Madrid
 
 [![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
 by the Empresa Municipal de Transportes. (March 12, 2014)
+
+### San Diego
+
+[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)
+
+Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
+by the Metropolitan Transit System (MTS). (March 12, 2014)
 
 ### San Francisco
 
@@ -76,7 +76,7 @@ Processing sketch `./processing/processing.pde`. You will then find your
 visualization generated in `./output/san-diego/out.png`.
 
 
-### Generating another image resolution
+### Generating other image resolutions
 
 Within `./render.js` change
 
