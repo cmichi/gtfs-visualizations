@@ -34,8 +34,9 @@ to the city you want to display, e.g. `String city = "san-diego";`.
 Make sure `./gtfs/san-diego/` exists. Also make sure there is a shape file
 (`./gtfs/san-diego/shapes.txt`) available! 
 
-If you the execute the Processing sketch a file `./output/san-diego/out.png`
-will be generated.
+Execute `$ make render gtfs=san-diego` and after this is finished the 
+Processing sketch `./processing/processing.pde`. You will then find your
+visualization generated in `./output/san-diego/out.png`.
 
 
 ## Generating another image resolution
