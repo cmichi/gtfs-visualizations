@@ -12,7 +12,7 @@ __Project status:__ Works!
 	$ npm install
 	$ make render gtfs=ulm
 
-This will generate:
+Based on the GTFS files in `./gtfs/ulm/` this will generate:
 
 	./output/ulm/
 
@@ -49,6 +49,22 @@ Within `./processing/processing.pde` change
 	size(700, 700);
 
 
+## Colors
+
+See the sketch `./processing/processing.pde` and search this block:
+
+	drawRoute("7", #ffffff); // funicular
+	drawRoute("6", #ffffff); // gondola
+	drawRoute("5", #ffffff); // cable car
+	drawRoute("4", #ffffff); // ferry
+	drawRoute("3", #ff0000); // bus
+	drawRoute("2", #ffffff); // rail, inter-city
+	drawRoute("1", #ffffff); // subway, metro
+	drawRoute("0", #0000ff); // tram
+
+These are the default colors used. You are free to adapt them.
+
+
 # Gallery
 
 ## Ulm
@@ -72,12 +88,22 @@ by the Metropolitan Transit System (MTS). (March 12, 2014)
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
 by the Empresa Municipal de Transportes. (March 12, 2014)
 
+## San Francisco
+
+[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
+by the San Francisco Municipal Transportation Agency. (March 12, 2014)
+
 
 # Nice to have ToDos
 
- * For certain cities multiple separate GTFS feeds are available (e.g. bus, 
-   metro, etc.). It would be nice if the heatmap could be generated from
-   multiple GTFS feeds.
+ * For certain cities (e.g. Los Angeles) multiple separate GTFS feeds 
+   are available (e.g. bus, metro, etc.). It would be nice if the 
+   heatmap could be generated from multiple GTFS feeds.
+
+ * GTFS provides a field `route_color`. Supporting this would be nice.
+   Colors right now are hardcoded.
 
 
 # License
