@@ -86,9 +86,8 @@ function prepareData() {
 
 		for (var n in sequences[i]) {
 			var shape = sequences[i][n];
-			//console.log(JSON.stringify(shape));
-
 			var shape_id = shape.shape_id
+
 			adjustBBox([new Number(shape.shape_pt_lat), 
 					new Number(shape.shape_pt_lon)]);
 
@@ -180,32 +179,32 @@ function adjustBBox(coords) {
 		console.error( JSON.stringify(coords) );
 		process.exit(1);
 	}
-	
+
 	if (!bbox) {
 		bbox = {
-			left: coords[0][1]
-			, right: coords[0][1]
-			, top:  coords[0][0]
-			, bottom:  coords[0][0]
+			left: coords[1]
+			, right: coords[1]
+			, top:  coords[0]
+			, bottom:  coords[0]
 			, width: 0
 			, height: 0
 
 			, shift_x: 0
 			, shift_y: 0
 		};
-	} else {
-		if (coords[0][1] < bbox.left)
-			bbox.left = coords[0][1];
-
-		if (coords[0][1] > bbox.right)
-			bbox.right = coords[0][1];
-
-		if (coords[0][0] > bbox.top)
-			bbox.top = coords[0][0];
-
-		if (coords[0][0] < bbox.bottom)
-			bbox.bottom = coords[0][0];
 	}
+
+	if (coords[1] < bbox.left)
+		bbox.left = coords[1];
+
+	if (coords[1] > bbox.right)
+		bbox.right = coords[1];
+
+	if (coords[0] > bbox.top)
+		bbox.top = coords[0];
+
+	if (coords[0] < bbox.bottom)
+		bbox.bottom = coords[0];
 
 	bbox.height = bbox.top - bbox.bottom;
 	bbox.width = bbox.right - bbox.left;
