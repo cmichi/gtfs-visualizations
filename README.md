@@ -6,9 +6,46 @@ according to their shape. The thickness and color intensity of the
 drawn lines is chosen using `log(trips_happening_on_this_shape_id)`.
 All trips in the GTFS feed are counted (not just days or a week).
 
+__Project status:__ Works! You will find information on how to generate
+a visualization for a custom GTFS feed below the gallery: 
+[How to generate a visualization](#how-to-generate-a-visualization).
 
-__Project status:__ Works!
 	
+## Gallery
+
+### Ulm
+
+[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)
+
+Rendering based on an inofficial GTFS feed. There is an official one
+available, though it does (not yet?) include shapes.
+
+### San Diego
+
+[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)
+
+Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
+by the Metropolitan Transit System (MTS). (March 12, 2014)
+
+### Madrid
+
+[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
+by the Empresa Municipal de Transportes. (March 12, 2014)
+
+### San Francisco
+
+[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
+by the San Francisco Municipal Transportation Agency. (March 12, 2014)
+
+
+## How to generate a visualization
+
+	$ git clone https://github.com/cmichi/gtfs-heatmap.git
+	$ cd gtfs-heatmap/
 	$ npm install
 	$ make render gtfs=ulm
 
@@ -22,12 +59,12 @@ Based on the GTFS files in `./gtfs/ulm/` this will generate:
 	# containing the maximum and minimum count of trips on a shape
 	# in this GTFS feed
 
-Download [Processing 2.0](https://processing.org/download/). Then  open 
+Download [Processing 2.0](https://processing.org/download/). Then open 
 the sketch `./processing/processing.pde` within Processing.
 Execute it and a file `./output/ulm/out.png` will be generated.
 
 
-## Adaption to your city
+### Adaption to your city
 
 Change the line `String city = "ulm";` within `./processing/processing.pde` 
 to the city you want to display, e.g. `String city = "san-diego";`. 
@@ -39,7 +76,7 @@ Processing sketch `./processing/processing.pde`. You will then find your
 visualization generated in `./output/san-diego/out.png`.
 
 
-## Generating another image resolution
+### Generating another image resolution
 
 Within `./render.js` change
 
@@ -50,7 +87,7 @@ Within `./processing/processing.pde` change
 	size(700, 700);
 
 
-## Colors
+### Colors
 
 See the sketch `./processing/processing.pde` and search this block:
 
@@ -66,38 +103,8 @@ See the sketch `./processing/processing.pde` and search this block:
 These are the default colors used. You are free to adapt them.
 
 
-# Gallery
 
-## Ulm
-
-[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)
-
-Rendering based on an inofficial GTFS feed. There is an official one
-available, though it does (not yet?) include shapes.
-
-## San Diego
-
-[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)
-
-Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
-by the Metropolitan Transit System (MTS). (March 12, 2014)
-
-## Madrid
-
-[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)
-
-Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
-by the Empresa Municipal de Transportes. (March 12, 2014)
-
-## San Francisco
-
-[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)
-
-Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
-by the San Francisco Municipal Transportation Agency. (March 12, 2014)
-
-
-# Nice to have ToDos
+## Nice to have ToDos
 
  * For certain cities (e.g. Los Angeles) multiple separate GTFS feeds 
    are available (e.g. bus, metro, etc.). It would be nice if the 
@@ -107,14 +114,14 @@ by the San Francisco Municipal Transportation Agency. (March 12, 2014)
    Colors right now are hardcoded.
 
 
-# License
+## License
 
-## Gallery
+### Gallery
 
 	The gallery photos are licensed under the Creative Commons Attribution
 	4.0 International license: http://creativecommons.org/licenses/by/4.0/.
 
-## Code
+### Code
 
 	Copyright (c) 2013-2014
 
