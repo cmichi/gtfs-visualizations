@@ -17,6 +17,7 @@ var all_coords = [];
 var max;
 var min;
 var bbox;
+//var render_area = {width: 3400, height: 3400};
 var render_area = {width: 600, height: 600};
 var gtfs;
 
@@ -235,8 +236,7 @@ function hash(val) {
 }
 
 function createFile() {
-	var paths_file = [];
-	var paths = [];
+	fs.truncateSync("./output/" + argv.gtfs + "/data.lines", 0, "utf8");
 
 	createBBox(all_coords);
 
@@ -276,7 +276,10 @@ function createFile() {
 						}
 
 						var route_type = segments[segment_index].route_type;
-						paths_file.push(trips + "\t" + route_type + "\t" + coords);
+						var line = trips + "\t" + route_type + "\t" + coords;
+						fs.appendFile("./output/" + argv.gtfs + "/data.lines", line, "utf8", function(err) {
+							if (err) throw err;
+						});
 					}
 				}
 			}
@@ -292,7 +295,6 @@ function createFile() {
 		working += one;
 	}
 
-	fs.writeFileSync("./output/" + argv.gtfs + "/data.lines", paths_file.join('\n'), "utf8");
 	fs.writeFileSync("./output/" + argv.gtfs + "/maxmin.lines", max + "\n" + min, "utf8");
 
 	debug("Files written.");
