@@ -10,6 +10,10 @@ __Project status:__ Works! You will find information on how to generate
 a visualization for a custom GTFS feed below the gallery: 
 [How to generate a visualization](#how-to-generate-a-visualization).
 
+__Known problems:__ The GTFS parser currently loads the GTFS in memory.
+This means large GTFS feeds will cause problems, if your machine does
+not provide sufficient RAM.
+
 	
 ## Gallery
 
@@ -40,6 +44,26 @@ by the Metropolitan Transit System (MTS). (March 12, 2014)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
 by the San Francisco Municipal Transportation Agency. (March 12, 2014)
+
+### Washington DC
+
+[![Washington GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/washington-dc.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/washington-dc.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/dc-circulator/) 
+by DC Circulator. (March 13, 2014)
+
+### Miami
+
+[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/miami-dade-transit/) 
+by the Miami Dade Transit. (March 13, 2014)
+
+
+## Posters
+
+I have started to compile a series of some posters. They are rendered
+in A0. Click on the preview image below to download the PDF.
 
 
 ## How to generate a visualization
@@ -101,7 +125,6 @@ See the sketch `./processing/processing.pde` and search this block:
 	drawRoute("0", #0000ff); // tram
 
 These are the default colors used. You are free to adapt them.
-
 
 
 ## Nice to have ToDos
