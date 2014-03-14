@@ -20,6 +20,12 @@ var bbox;
 var render_area = {width: 600, height: 600};
 var gtfs;
 
+var requiredFile = "./gtfs/" + argv.gtfs + "/shapes.txt";
+if (!fs.existsSync(requiredFile)) {
+	console.error("\nERROR: " + requiredFile + " DOES NOT EXIST!\nEXITING.\n");
+	process.exit(1);
+}
+
 debug("Loading GTFS files...");
 Gtfs("./gtfs/" + argv.gtfs + "/", function(data) {
 	debug("GTFS files loaded.\n");
