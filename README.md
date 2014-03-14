@@ -67,14 +67,6 @@ Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/
 by the Miami Dade Transit. (March 13, 2014)
 
 
-### Miami
-
-[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)
-
-Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/miami-dade-transit/) 
-by the Miami Dade Transit. (March 13, 2014)
-
-
 ## How to generate a visualization
 
 	$ git clone https://github.com/cmichi/gtfs-heatmap.git
