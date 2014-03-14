@@ -1,4 +1,4 @@
-# GTFS Heatmap
+# GTFS Visualizations
 
 The idea of this project is to generate nice looking "heatmaps" from
 publicly available GTFS datasets. By this I mean the routes are drawn
@@ -30,49 +30,49 @@ The colors currenltly used are:
 
 ### Ulm
 
-[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/ulm.png)
+[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/ulm.png)
 
 Rendering based on an inofficial GTFS feed. There is an official one
 available, though it does (not yet?) include shapes.
 
 ### Madrid
 
-[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/madrid.png)
+[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/madrid.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/madrid.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
 by the Empresa Municipal de Transportes. (March 12, 2014)
 
 ### San Diego
 
-[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-diego.png)
+[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-diego.png)
 
 Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
 by the Metropolitan Transit System (MTS). (March 12, 2014)
 
 ### Los-Angeles
 
-[![Los Angeles GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/los-angeles.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/los-angeles.png)
+[![Los Angeles GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/los-angeles.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/los-angeles.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/la-metro/) 
 by the Los Angeles County Metropolitan Transportation Authority. (March 14, 2014)
 
 ### San Francisco
 
-[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)
+[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-francisco.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-francisco.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
 by the San Francisco Municipal Transportation Agency. (March 12, 2014)
 
 ### Washington DC
 
-[![Washington GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/washington-dc.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/washington-dc.png)
+[![Washington GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/washington-dc.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/washington-dc.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/dc-circulator/) 
 by DC Circulator. (March 13, 2014)
 
 ### Miami
 
-[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)
+[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/miami.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/miami.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/miami-dade-transit/) 
 by the Miami Dade Transit. (March 13, 2014)
@@ -143,7 +143,7 @@ These are the default colors used. You are free to adapt them.
 
 ## Nice to have ToDos
 
- * The green and red color combination should be done better (personw with 
+ * The green and red color combination should be done better (persons with 
    red/green disabilities might have problems). Use other color scheme.
 
  * For certain cities (e.g. Los Angeles) multiple separate GTFS feeds 
