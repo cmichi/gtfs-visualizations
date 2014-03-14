@@ -17,7 +17,7 @@ not provide sufficient RAM.
 	
 ## Gallery
 
-The colors currenltly used are
+The colors currenltly used are:
 
 	tram                    #0000ff	blue
 	rail, inter-city        #ff0000	red
@@ -26,6 +26,9 @@ The colors currenltly used are
 	gondola                 #ffffff	white
 	funicular               #ffffff	white
 	ferry                   #ffffff	white
+
+I'll update the renders with different colors shortly. The four whites 
+don't make sense, and have just been there to test the rendering.
 
 
 ### Ulm
