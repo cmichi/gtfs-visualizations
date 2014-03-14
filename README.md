@@ -19,13 +19,13 @@ not provide sufficient RAM.
 
 The colors currenltly used are
 
-	tram			#0000ff	blue
-	rail, inter-city	#ff0000	red
-	subway, metro		#00ff00	green
-	cable car		#ffffff	white
-	gondola			#ffffff	white
-	funicular		#ffffff	white
-	ferry			#ffffff	white
+	tram                    #0000ff	blue
+	rail, inter-city        #ff0000	red
+	subway, metro           #00ff00	green
+	cable car               #ffffff	white
+	gondola                 #ffffff	white
+	funicular               #ffffff	white
+	ferry                   #ffffff	white
 
 
 ### Ulm
