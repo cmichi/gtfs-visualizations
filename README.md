@@ -143,6 +143,9 @@ These are the default colors used. You are free to adapt them.
 
 ## Nice to have ToDos
 
+ * The green and red color combination should be done better (personw with 
+   red/green disabilities might have problems). Use other color scheme.
+
  * For certain cities (e.g. Los Angeles) multiple separate GTFS feeds 
    are available (e.g. bus, metro, etc.). It would be nice if the 
    heatmap could be generated from multiple GTFS feeds.
