@@ -38,6 +38,13 @@ by the Empresa Municipal de Transportes. (March 12, 2014)
 Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
 by the Metropolitan Transit System (MTS). (March 12, 2014)
 
+### Los-Angeles
+
+[![Los Angeles GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/los-angeles.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/los-angeles.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/la-metro/) 
+by the Los Angeles County Metropolitan Transportation Authority. (March 14, 2014)
+
 ### San Francisco
 
 [![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/san-francisco.png)
@@ -60,10 +67,12 @@ Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/
 by the Miami Dade Transit. (March 13, 2014)
 
 
-## Posters
+### Miami
 
-I have started to compile a series of some posters. They are rendered
-in A0. Click on the preview image below to download the PDF.
+[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/miami.png)
+
+Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/miami-dade-transit/) 
+by the Miami Dade Transit. (March 13, 2014)
 
 
 ## How to generate a visualization
