@@ -69,6 +69,8 @@ by the Miami Dade Transit. (March 13, 2014)
 
 ## How to generate a visualization
 
+Download and install [node.js and npm](http://nodejs.org/).
+
 	$ git clone https://github.com/cmichi/gtfs-heatmap.git
 	$ cd gtfs-heatmap/
 	$ npm install
