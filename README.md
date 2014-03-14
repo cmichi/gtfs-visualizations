@@ -20,16 +20,13 @@ not provide sufficient RAM.
 The colors currenltly used are:
 
 	tram                    #0000ff	blue
-	rail, inter-city        #ff0000	red
 	subway, metro           #00ff00	green
-	cable car               #ffffff	white
-	gondola                 #ffffff	white
-	funicular               #ffffff	white
-	ferry                   #ffffff	white
-
-I'll update the renders with different colors shortly. The four whites 
-don't make sense, and have just been there to test the rendering.
-
+	rail, inter-city        #ffff00 yellow
+	bus                     #ff0000 red
+	ferry                   #00ffff cyan
+	cable car               #fee0d2 ocker
+	gondola                 #ff00ff purple
+	funicular               #ffffff white
 
 ### Ulm
 
