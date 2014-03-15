@@ -379,28 +379,28 @@
        style="display:inline"
        width="1300"
        height="1300"
-       xlink:href="file:///home/michi/projects/gtfs-heatmap/output/ulm/out.png"
+       xlink:href="file:///home/michi/projects/gtfs-heatmap/gallery/large/ulm.png"
        id="image10-72"
        x="141.95996"
        y="-2791.0039" />
     <image
        width="1300"
        height="1300"
-       xlink:href="file:///home/michi/projects/gtfs-heatmap/gallery/washington-dc.png"
+       xlink:href="file:///home/michi/projects/gtfs-heatmap/gallery/large/washington-dc.png"
        id="image10-0"
        x="1537.96"
        y="-1105.2615" />
     <image
        width="1300"
        height="1300"
-       xlink:href="file:///home/michi/projects/gtfs-heatmap/gallery/los-angeles.png"
+       xlink:href="file:///home/michi/projects/gtfs-heatmap/gallery/large/los-angeles.png"
        id="image10-4"
        x="1537.96"
        y="-2791.0039" />
     <image
        width="1300"
        height="1300"
-       xlink:href="file:///home/michi/projects/gtfs-heatmap/gallery/madrid.png"
+       xlink:href="file:///home/michi/projects/gtfs-heatmap/gallery/large/madrid.png"
        id="image10-6"
        x="141.95996"
        y="-1105.2615" />
