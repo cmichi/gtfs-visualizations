@@ -1,10 +1,11 @@
 # GTFS Visualizations
 
-The idea of this project is to generate nice looking "heatmaps" from
-publicly available GTFS datasets. By this I mean the routes are drawn
-according to their shape. The thickness and color intensity of the 
-drawn lines is chosen using `log(trips_happening_on_this_shape_id)`.
-All trips in the GTFS feed are counted (not just days or a week).
+The idea of this project is to generate beautiful and informative
+visualizations from publicly available GTFS datasets. By this I 
+mean the routes are drawn according to their shape. The thickness 
+and color intensity of the drawn lines is chosen using 
+`log(trips_happening_on_this_shape_id)`. All trips in the GTFS 
+feed are counted (not just days or a week).
 
 __Project status:__ Works! You will find information on how to generate
 a visualization for a custom GTFS feed below the gallery: 
@@ -30,60 +31,71 @@ The colors currenltly used are:
 
 ### Ulm
 
-[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/ulm.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/ulm.png)
+[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/ulm.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/ulm.png)
 
 Rendering based on an inofficial GTFS feed. There is an official one
 available, though it does (not yet?) include shapes.
 
 ### Madrid
 
-[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/madrid.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/madrid.png)
+[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/madrid.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/madrid.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
 by the Empresa Municipal de Transportes. (March 12, 2014)
 
 ### San Diego
 
-[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-diego.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-diego.png)
+[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-diego.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-diego.png)
 
 Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
 by the Metropolitan Transit System (MTS). (March 12, 2014)
 
 ### Los-Angeles
 
-[![Los Angeles GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/los-angeles.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/los-angeles.png)
+[![Los Angeles GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/los-angeles.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/los-angeles.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/la-metro/) 
 by the Los Angeles County Metropolitan Transportation Authority. (March 14, 2014)
 
 ### San Francisco
 
-[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-francisco.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/san-francisco.png)
+[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-francisco.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-francisco.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
 by the San Francisco Municipal Transportation Agency. (March 12, 2014)
 
 ### Washington DC
 
-[![Washington GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/washington-dc.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/washington-dc.png)
+[![Washington GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/washington-dc.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/washington-dc.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/dc-circulator/) 
 by DC Circulator. (March 13, 2014)
 
 ### Miami
 
-[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/miami.png)](https://github.com/cmichi/gtfs-heatmap/raw/master/gallery/small/miami.png)
+[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/miami.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/miami.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/miami-dade-transit/) 
 by the Miami Dade Transit. (March 13, 2014)
+
+
+## Posters
+
+I think the visualizations look quite beautiful and have started to 
+compile a series of A0 posters. Click on the preview image to open
+the PDF. The templates can be found in `./posters/`.
+
+[![Multiple Feeds](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/multiple.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/multiple.pdf)
+
+[![One Feed, Fullscreen](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/one.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/one.pdf)
 
 
 ## How to generate a visualization
 
 Download and install [node.js and npm](http://nodejs.org/).
 
-	$ git clone https://github.com/cmichi/gtfs-heatmap.git
-	$ cd gtfs-heatmap/
+	$ git clone https://github.com/cmichi/gtfs-visualizations.git
+	$ cd gtfs-visualizations/
 	$ npm install
 	$ make render gtfs=ulm
 
@@ -99,7 +111,7 @@ Based on the GTFS files in `./gtfs/ulm/` this will generate:
 
 Download [Processing 2.0](https://processing.org/download/). Then open 
 the sketch `./processing/processing.pde` within Processing.
-Execute it and a file `./output/ulm/out.png` will be generated.
+Execute it and a file `./output/ulm.png` will be generated.
 
 
 ### Adaption to your city
@@ -115,7 +127,7 @@ Make sure `./gtfs/san-diego/` exists. Also make sure there is a shape file
 
 Execute `$ make render gtfs=san-diego` and after this is finished the 
 Processing sketch `./processing/processing.pde`. You will then find your
-visualization generated in `./output/san-diego/out.png`.
+visualization generated in `./output/san-diego.png`.
 
 For certain cities (e.g. Los Angeles) multiple separate GTFS feeds 
 are available (e.g. bus, metro, etc.). To render multiple GTFS feeds into
