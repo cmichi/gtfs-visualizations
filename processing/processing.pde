@@ -1,23 +1,38 @@
 import java.util.Arrays;
 
 String city; 
-int fixedMax = 4974; // madrid
-boolean useFixedMax = true;
 boolean large = true;
 String pathSuffix;
+String[] cities;
   
 void setup() {
+  /*
+  cities =  new String[2];
+  cities[0] = "los-angeles";
+  cities[1] = "los-angeles-metro";
+ 
+  //"los-angeles";
+  //"washington-dc";
+  //"san-diego";
+  //"manhattan";
+  //"miami";
+  //"san-francisco";
+  //"madrid";
+  */
+  
+  cities =  new String[1];
+  cities[0] = "ulm";
+  
   int w;  
   
   if (large) {
-    w = 3400;
+    w = 3500;
     pathSuffix = "large";
   } else {
     w = 700;
     pathSuffix = "small"; 
   }
   int h = w;
-
   
   size(w, h);
   smooth();
@@ -27,29 +42,9 @@ void setup() {
   strokeWeight(1);
   background(#191919);
   
-  city = "los-angeles";
-  
-  //city = "washington-dc";
-  //city = "san-diego";
-  //city = "manhattan";
-  //city = "miami";
-  //city = "san-francisco";
-  //city = "madrid";
-  city = "ulm";
- 
   translate(50, 50);
-  pushMatrix();
-    /*
-    drawRoute("7", #ffffff); // funicular
-    drawRoute("6", #ff00ff); // gondola
-    drawRoute("5", #fee0d2); // cable car
-    drawRoute("4", #00ffff); // ferry
-    drawRoute("3", #ff0000); // bus
-    drawRoute("2", #ffff00); // rail, inter-city
-    drawRoute("1", #00ff00); // subway, metro
-    drawRoute("0", #0000ff); // tram
-    
-    */
+  pushMatrix();   
+    loadLines();
     drawRoute("7", #f781bf); // funicular
     drawRoute("6", #a65628); // gondola
     drawRoute("5", #ffff33); // cable car
@@ -57,21 +52,40 @@ void setup() {
     drawRoute("3", #e41a1c); // bus
     drawRoute("2", #984ea3); // rail, inter-city
     drawRoute("1", #4daf4a); // subway, metro
-    //drawRoute("0", #377eb8); // tram
     drawRoute("0", #0000ff); // tram
   popMatrix();
+   
+  save("../output/" + join(cities, "-") + "_" + pathSuffix + ".png");
+}
+
+String lines[];
+float[] maxmin = new float[2];
+void loadLines() { 
+  maxmin[0] = 0.0f;
+  int total = 0;
   
-  save("../output/" + city + "/" + city + "_" + pathSuffix + ".png"); 
+  for (int i = 0; i < cities.length; i++) {
+    String lines_i[] = loadStrings("../output/" + cities[i] + "/data_" + pathSuffix + ".lines");
+    total += lines_i.length;
+  }
+  
+  lines = new String[total];
+  int cnt = 0;
+    
+  for (int i = 0; i < cities.length; i++) {
+    String lines_i[] = loadStrings("../output/" + cities[i] + "/data_" + pathSuffix + ".lines");
+    for (int a = 0; a < lines_i.length; a++) {
+      lines[cnt] = lines_i[a];
+      cnt++;
+    }
+    
+    String[] maxmin_i = loadStrings("../output/" + cities[i] + "/maxmin_" + pathSuffix + ".lines");
+    if (float(maxmin_i[0]) > maxmin[0])
+      maxmin[0] = float(maxmin_i[0]);
+  } 
 }
 
 void drawRoute(String type, color col) {
-  String lines[] = loadStrings("../output/" + city + "/data_" + pathSuffix + ".lines");
-  String maxmin[] = loadStrings("../output/" + city + "/maxmin_" + pathSuffix + ".lines");
-  
- // if (useFixedMax) {
-   // maxmin[0] = "" + fixedMax; 
-  //}
- 
   for (int i = 0; i < lines.length; i++) {
     String[] line = lines[i].split("\t");
     String trips =   line[0];
@@ -84,14 +98,11 @@ void drawRoute(String type, color col) {
     if (large) f = 0.7f;
     
     strokeWeight(log(float(trips)) * f);
-    //strokeWeight(float(trips) * 0.002f);
       
-    float alph = 1.0 + (float(maxmin[0]) / float(trips));
+    float alph = 1.0 + (maxmin[0] / float(trips));
     alph = 3.0f + log(float(trips)) * 0.7f;
-    //alph = 3.0f + float(trips) * 0.018f;
     
     stroke(col, alph);
-    //stroke(255, 255, 255, 255);
     
     if (!Arrays.asList(route_types).contains(type) || route_types.length > 1)     
       continue;
