@@ -104,14 +104,26 @@ Execute it and a file `./output/ulm/out.png` will be generated.
 
 ### Adaption to your city
 
-Change the line `String city = "ulm";` within `./processing/processing.pde` 
-to the city you want to display, e.g. `String city = "san-diego";`. 
+Change those lines within `./processing/processing.pde` :
+
+	cities =  new String[1];
+	cities[0] = "ulm";
+
+to the city you want to display, e.g. `cities[1] = "san-diego";`. 
 Make sure `./gtfs/san-diego/` exists. Also make sure there is a shape file
 (`./gtfs/san-diego/shapes.txt`) available! 
 
 Execute `$ make render gtfs=san-diego` and after this is finished the 
 Processing sketch `./processing/processing.pde`. You will then find your
 visualization generated in `./output/san-diego/out.png`.
+
+For certain cities (e.g. Los Angeles) multiple separate GTFS feeds 
+are available (e.g. bus, metro, etc.). To render multiple GTFS feeds into
+the visualization you can adapt the cities array:
+
+	cities =  new String[2];
+	cities[0] = "los-angeles";
+	cities[1] = "los-angeles-metro";
 
 
 ### Generating other image resolutions
@@ -145,10 +157,6 @@ These are the default colors used. You are free to adapt them.
 
  * The green and red color combination should be done better (persons with 
    red/green disabilities might have problems). Use other color scheme.
-
- * For certain cities (e.g. Los Angeles) multiple separate GTFS feeds 
-   are available (e.g. bus, metro, etc.). It would be nice if the 
-   heatmap could be generated from multiple GTFS feeds.
 
  * GTFS provides a field `route_color`. Supporting this would be nice.
    Colors right now are hardcoded.
