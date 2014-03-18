@@ -85,9 +85,7 @@ I think the visualizations look quite beautiful and have started to
 compile a series of A0 posters. Click on the preview image to open
 the PDF. The templates can be found in `./posters/`.
 
-[![Multiple Feeds](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/multiple.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/multiple.pdf)
-
-[![One Feed, Fullscreen](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/one.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/one.pdf)
+[![Multiple Feeds](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/multiple.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/multiple.pdf) [![One Feed, Fullscreen](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/one.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/one.pdf)
 
 
 ## How to generate a visualization
