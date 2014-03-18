@@ -17,8 +17,8 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="one.svg"
    inkscape:export-filename="/home/michi/projects/gtfs-heatmap/posters/one.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-xdpi="10.57"
+   inkscape:export-ydpi="10.57">
   <defs
      id="defs4042">
     <clipPath
@@ -42,7 +42,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.21034701"
      inkscape:cx="1899.3069"
-     inkscape:cy="457.21351"
+     inkscape:cy="2233.3629"
      inkscape:document-units="px"
      inkscape:current-layer="g3280"
      showgrid="false"
@@ -390,11 +390,11 @@
     <image
        sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/madrid.png"
        xlink:href="../gallery/large/madrid.png"
-       width="2778.5093"
-       height="2778.5093"
+       y="-2517.2141"
+       x="17.983643"
        id="image3408"
-       x="65.983643"
-       y="-2517.2141" />
+       height="2778.5093"
+       width="2778.5093" />
     <text
        xml:space="preserve"
        style="font-size:37px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:LMSans10;-inkscape-font-specification:LMSans10"

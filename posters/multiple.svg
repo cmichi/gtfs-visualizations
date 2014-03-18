@@ -15,7 +15,10 @@
    id="svg4040"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="compare-poster.svg">
+   sodipodi:docname="multiple.svg"
+   inkscape:export-filename="/home/michi/projects/gtfs-heatmap/posters/multiple.png"
+   inkscape:export-xdpi="10.57"
+   inkscape:export-ydpi="10.57">
   <defs
      id="defs4042">
     <clipPath
@@ -37,9 +40,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.42069402"
+     inkscape:zoom="0.10517351"
      inkscape:cx="1080.0714"
-     inkscape:cy="517.36987"
+     inkscape:cy="1805.186"
      inkscape:document-units="px"
      inkscape:current-layer="g3280"
      showgrid="false"
@@ -427,7 +430,7 @@
          y="888.01056"
          x="56.992001"
          sodipodi:role="line"
-         id="tspan3206"> </tspan><tspan
+         id="tspan3206" /><tspan
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans"
          y="928.01056"
          x="56.992001"
@@ -444,34 +447,38 @@
          sodipodi:role="line"
          id="tspan3225" /></text>
     <image
-       style="display:inline"
-       width="1300"
-       height="1300"
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/ulm.png"
        xlink:href="../gallery/large/ulm.png"
+       y="-2791.0039"
+       x="141.95996"
        id="image10-72"
-       x="141.95996"
-       y="-2791.0039" />
-    <image
-       width="1300"
        height="1300"
+       width="1300"
+       style="display:inline" />
+    <image
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/washington-dc.png"
        xlink:href="../gallery/large/washington-dc.png"
+       y="-1105.2615"
+       x="1537.96"
        id="image10-0"
-       x="1537.96"
-       y="-1105.2615" />
-    <image
-       width="1300"
        height="1300"
+       width="1300" />
+    <image
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/los-angeles.png"
        xlink:href="../gallery/large/los-angeles.png"
-       id="image10-4"
+       y="-2791.0039"
        x="1537.96"
-       y="-2791.0039" />
-    <image
-       width="1300"
+       id="image10-4"
        height="1300"
+       width="1300" />
+    <image
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/madrid.png"
        xlink:href="../gallery/large/madrid.png"
-       id="image10-6"
+       y="-1105.2615"
        x="141.95996"
-       y="-1105.2615" />
+       id="image10-6"
+       height="1300"
+       width="1300" />
     <text
        sodipodi:linespacing="125%"
        id="text3265-2-0"
@@ -854,7 +861,7 @@
          sodipodi:role="line"
          x="70.992004"
          y="892.01056"
-         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans"> </tspan><tspan
+         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans" /><tspan
          id="tspan3396"
          sodipodi:role="line"
          x="70.992004"
@@ -871,110 +878,114 @@
          y="1012.0106"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans" /></text>
     <image
-       y="-2791.0039"
-       x="141.95996"
-       id="image3402"
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/ulm.png"
        xlink:href="../gallery/large/ulm.png"
-       height="1300"
+       style="display:inline"
        width="1300"
-       style="display:inline" />
-    <image
-       y="-1105.2615"
-       x="1537.96"
-       id="image3404"
-       xlink:href="../gallery/large/washington-dc.png"
        height="1300"
-       width="1300" />
-    <image
-       y="-2791.0039"
-       x="1537.96"
-       id="image3406"
-       xlink:href="../gallery/large/los-angeles.png"
-       height="1300"
-       width="1300" />
-    <image
-       y="-1105.2615"
+       id="image3402"
        x="141.95996"
-       id="image3408"
-       xlink:href="../gallery/large/madrid.png"
+       y="-2889.0039" />
+    <image
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/washington-dc.png"
+       xlink:href="../gallery/large/washington-dc.png"
+       width="1300"
        height="1300"
-       width="1300" />
+       id="image3404"
+       x="1537.96"
+       y="-1203.2615" />
+    <image
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/los-angeles.png"
+       xlink:href="../gallery/large/los-angeles.png"
+       width="1300"
+       height="1300"
+       id="image3406"
+       x="1537.96"
+       y="-2889.0039" />
+    <image
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/madrid.png"
+       xlink:href="../gallery/large/madrid.png"
+       width="1300"
+       height="1300"
+       id="image3408"
+       x="141.95996"
+       y="-1203.2615" />
     <text
        xml:space="preserve"
        style="font-size:37px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:LMSans10;-inkscape-font-specification:LMSans10"
        x="747.86102"
-       y="268.33154"
+       y="170.33154"
        id="text3410"
        sodipodi:linespacing="125%"><tspan
          id="tspan3412"
          sodipodi:role="line"
          x="747.86102"
-         y="268.33154"
+         y="170.33154"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans">Madrid</tspan><tspan
          sodipodi:role="line"
          x="747.86102"
-         y="308.33154"
+         y="210.33154"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans"
          id="tspan3438">Empresa Municipal de Transportes</tspan><tspan
          id="tspan3414"
          sodipodi:role="line"
          x="747.86102"
-         y="348.33154"
+         y="250.33154"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans" /></text>
     <text
        xml:space="preserve"
        style="font-size:37px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:LMSans10;-inkscape-font-specification:LMSans10"
        x="749.60675"
-       y="-1419.8179"
+       y="-1517.8179"
        id="text3416"
        sodipodi:linespacing="125%"><tspan
          id="tspan3418"
          sodipodi:role="line"
          x="749.60675"
-         y="-1419.8179"
+         y="-1517.8179"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans">Ulm</tspan><tspan
          sodipodi:role="line"
          x="749.60675"
-         y="-1379.8179"
+         y="-1477.8179"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans"
          id="tspan3444">Stadtwerke Ulm</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:37px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:LMSans10;-inkscape-font-specification:LMSans10"
        x="2233.7351"
-       y="-1426.6259"
+       y="-1524.6259"
        id="text3420"
        sodipodi:linespacing="125%"><tspan
          id="tspan3422"
          sodipodi:role="line"
          x="2233.7351"
-         y="-1426.6259"
+         y="-1524.6259"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans">Los Angeles</tspan><tspan
          sodipodi:role="line"
          x="2233.7351"
-         y="-1386.6259"
+         y="-1484.6259"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans"
          id="tspan3440">L.A. County Metropolitan Transportation Authority</tspan><tspan
          id="tspan3424"
          sodipodi:role="line"
          x="2233.7351"
-         y="-1346.6259"
+         y="-1444.6259"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans" /></text>
     <text
        xml:space="preserve"
        style="font-size:37px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:LMSans10;-inkscape-font-specification:LMSans10"
        x="2236.3335"
-       y="261.11652"
+       y="163.11652"
        id="text3426"
        sodipodi:linespacing="125%"><tspan
          id="tspan3428"
          sodipodi:role="line"
          x="2236.3335"
-         y="261.11652"
+         y="163.11652"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans">Washington D.C.</tspan><tspan
          sodipodi:role="line"
          x="2236.3335"
-         y="301.11652"
+         y="203.11652"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Latin Modern Sans;-inkscape-font-specification:Latin Modern Sans"
          id="tspan3442">DC Circulator</tspan></text>
     <text
@@ -1067,11 +1078,12 @@
      inkscape:label="san-diego"
      style="display:none">
     <image
-       width="2850.8386"
-       height="2850.8386"
+       sodipodi:absref="/home/michi/projects/gtfs-heatmap/posters/../gallery/large/san-diego.png"
        xlink:href="../gallery/large/san-diego.png"
-       id="image10"
+       y="578.88208"
        x="78.557343"
-       y="578.88208" />
+       id="image10"
+       height="2850.8386"
+       width="2850.8386" />
   </g>
 </svg>

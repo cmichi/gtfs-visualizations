@@ -38,42 +38,42 @@ available, though it does (not yet?) include shapes.
 
 ### Madrid
 
-[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/madrid.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/madrid.png)
+[![Madrid GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/madrid.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/madrid.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
 by the Empresa Municipal de Transportes. (March 12, 2014)
 
 ### San Diego
 
-[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-diego.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-diego.png)
+[![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-diego.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/san-diego.png)
 
 Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
 by the Metropolitan Transit System (MTS). (March 12, 2014)
 
 ### Los-Angeles
 
-[![Los Angeles GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/los-angeles.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/los-angeles.png)
+[![Los Angeles GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/los-angeles.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/los-angeles.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/la-metro/) 
 by the Los Angeles County Metropolitan Transportation Authority. (March 14, 2014)
 
 ### San Francisco
 
-[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-francisco.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-francisco.png)
+[![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-francisco.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/san-francisco.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
 by the San Francisco Municipal Transportation Agency. (March 12, 2014)
 
 ### Washington DC
 
-[![Washington GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/washington-dc.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/washington-dc.png)
+[![Washington GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/washington-dc.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/washington-dc.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/dc-circulator/) 
 by DC Circulator. (March 13, 2014)
 
 ### Miami
 
-[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/miami.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/miami.png)
+[![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/miami.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/miami.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/miami-dade-transit/) 
 by the Miami Dade Transit. (March 13, 2014)
