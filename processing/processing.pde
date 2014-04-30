@@ -1,7 +1,8 @@
 import java.util.Arrays;
+import processing.pdf.*;
 
 String city; 
-boolean large = true;
+boolean large = false;
 String pathSuffix;
 String[] cities;
   
@@ -16,12 +17,17 @@ void setup() {
   //"san-diego";
   //"manhattan";
   //"miami";
-  //"san-francisco";
+  //"san-francisco";                  
   //"madrid";
+  
+  
+
+  cities[0] = "madrid";
+  cities[0] = "washington-dc";
   */
   
   cities =  new String[1];
-  cities[0] = "ulm";
+  cities[0] = "kolumbus";
   
   int w;  
   
@@ -34,7 +40,10 @@ void setup() {
   }
   int h = w;
   
+  //size(w, h, PDF, "render.pdf");
   size(w, h);
+  
+  beginRecord (PDF, "../output/" + join(cities, "-") + "_" + pathSuffix + ".pdf");
   smooth();
   noFill();
  
@@ -51,11 +60,14 @@ void setup() {
     drawRoute("4", #ff7f00); // ferry
     drawRoute("3", #e41a1c); // bus
     drawRoute("2", #984ea3); // rail, inter-city
+    //drawRoute("1", #4daf4a); // subway, metro
     drawRoute("1", #4daf4a); // subway, metro
     drawRoute("0", #0000ff); // tram
   popMatrix();
+  endRecord();
    
-  save("../output/" + join(cities, "-") + "_" + pathSuffix + ".png");
+  //save("../output/" + join(cities, "-") + "_" + pathSuffix + ".png");
+ // exit();
 }
 
 String lines[];
@@ -94,13 +106,17 @@ void drawRoute(String type, color col) {
     
     String[] points = line[2].split(",");
 
-    float f = 0.2f;
+    float f = 0.01f;
+    if (large) f = 1.3f;
     if (large) f = 0.7f;
     
-    strokeWeight(log(float(trips)) * f);
+    float strkWeight = log(float(trips )  * f );
+    if (strkWeight < 0) strkWeight = 1.0f * f;
+    strokeWeight(strkWeight);
       
     float alph = 1.0 + (maxmin[0] / float(trips));
-    alph = 3.0f + log(float(trips)) * 0.7f;
+    alph = 15.0f + (log(float(trips)) * 4.0f);
+    alph = 3.0f + (log(float(trips)) * 0.7f);
     
     stroke(col, alph);
     
@@ -122,4 +138,4 @@ void drawRoute(String type, color col) {
   } 
 }
 
-void draw() { }
+void draw() {}

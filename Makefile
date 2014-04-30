@@ -13,3 +13,9 @@ route-types:
 
 help:
 	echo "Use `$ make render gtfs=ulm` to start the process."
+
+compare:
+	cat output/ulm/maxmin.lines 
+	cat output/madrid/maxmin.lines 
+	cat output/los-angeles/maxmin.lines
+	cat output/washington-dc/maxmin.lines
