@@ -18,7 +18,7 @@ var min;
 var bbox;
 var gtfs;
 
-var large = false;
+var large = true;
 if (large) {
 	var render_area = {width: 3400, height: 3400};
 	var pathSuffix = "large";

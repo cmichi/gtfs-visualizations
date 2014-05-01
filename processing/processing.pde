@@ -2,7 +2,7 @@ import java.util.Arrays;
 import processing.pdf.*;
 
 String city; 
-boolean large = false;
+boolean large = true;
 String pathSuffix;
 String[] cities;
   
@@ -27,7 +27,7 @@ void setup() {
   */
   
   cities =  new String[1];
-  cities[0] = "kolumbus";
+  cities[0] = "washington-dc";
   
   int w;  
   
