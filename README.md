@@ -31,10 +31,14 @@ The colors currenltly used are:
 
 ### Ulm
 
-[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/ulm.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/ulm.png)
+[![Ulm GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/ulm.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/ulm.png)
 
 Rendering based on an inofficial GTFS feed. There is an official one
 available, though it does (not yet?) include shapes.
+
+Download: 
+[PNG (0.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/ulm.png)
+[PDF (0.12 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/ulm.pdf)
 
 ### Madrid
 
@@ -43,12 +47,20 @@ available, though it does (not yet?) include shapes.
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/madrid/) 
 by the Empresa Municipal de Transportes. (March 12, 2014)
 
+Download: 
+[PNG (1.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/madrid.png)
+[PDF (0.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/madrid.pdf)
+
 ### San Diego
 
 [![San Diego GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-diego.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/san-diego.png)
 
 Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.asp) 
 by the Metropolitan Transit System (MTS). (March 12, 2014)
+
+Download: 
+[PNG (0.5 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/san-diego.png)
+[PDF (0.6 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/san-diego.pdf)
 
 ### Los-Angeles
 
@@ -57,12 +69,19 @@ by the Metropolitan Transit System (MTS). (March 12, 2014)
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/la-metro/) 
 by the Los Angeles County Metropolitan Transportation Authority. (March 14, 2014)
 
+Download: 
+[PNG (0.9 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/los-angeles.png)
+
 ### San Francisco
 
 [![San Francisco GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/san-francisco.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/san-francisco.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/san-francisco-municipal-transportation-agency/) 
 by the San Francisco Municipal Transportation Agency. (March 12, 2014)
+
+Download: 
+[PNG (1 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/san-francisco.png)
+[PDF (1.1 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/san-francisco.pdf)
 
 ### Washington DC
 
@@ -71,12 +90,19 @@ by the San Francisco Municipal Transportation Agency. (March 12, 2014)
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/dc-circulator/) 
 by DC Circulator. (March 13, 2014)
 
+Download: 
+[PNG (1.2 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/washington-dc.png)
+
 ### Miami
 
 [![Miami GTFS Heatmap](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/small/miami.png)](https://github.com/cmichi/gtfs-visualizations/raw/master/gallery/large/miami.png)
 
 Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/miami-dade-transit/) 
 by the Miami Dade Transit. (March 13, 2014)
+
+Download: 
+[PNG (0.3 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/miami.png)
+[PDF (0.12 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/miami.pdf)
 
 
 ## Posters
