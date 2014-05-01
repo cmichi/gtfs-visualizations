@@ -37,7 +37,7 @@ Rendering based on an inofficial GTFS feed. There is an official one
 available, though it does (not yet?) include shapes.
 
 Download: 
-[PNG (0.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/ulm.png)
+[PNG (0.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/ulm.png),
 [PDF (0.12 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/ulm.pdf)
 
 ### Madrid
@@ -48,7 +48,7 @@ Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/
 by the Empresa Municipal de Transportes. (March 12, 2014)
 
 Download: 
-[PNG (1.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/madrid.png)
+[PNG (1.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/madrid.png),
 [PDF (0.4 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/madrid.pdf)
 
 ### San Diego
@@ -59,7 +59,7 @@ Rendering based on the [official feed](http://www.sdmts.com/Planning/Developers.
 by the Metropolitan Transit System (MTS). (March 12, 2014)
 
 Download: 
-[PNG (0.5 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/san-diego.png)
+[PNG (0.5 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/san-diego.png),
 [PDF (0.6 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/san-diego.pdf)
 
 ### Los-Angeles
@@ -70,7 +70,7 @@ Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/
 by the Los Angeles County Metropolitan Transportation Authority. (March 14, 2014)
 
 Download: 
-[PNG (0.9 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/los-angeles.png)
+[PNG (0.9 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/los-angeles.png),
 
 ### San Francisco
 
@@ -80,7 +80,7 @@ Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/
 by the San Francisco Municipal Transportation Agency. (March 12, 2014)
 
 Download: 
-[PNG (1 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/san-francisco.png)
+[PNG (1 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/san-francisco.png),
 [PDF (1.1 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/san-francisco.pdf)
 
 ### Washington DC
@@ -101,7 +101,7 @@ Rendering based on the [official feed](http://www.gtfs-data-exchange.com/agency/
 by the Miami Dade Transit. (March 13, 2014)
 
 Download: 
-[PNG (0.3 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/miami.png)
+[PNG (0.3 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/large/miami.png),
 [PDF (0.12 MB)](https://raw.githubusercontent.com/cmichi/gtfs-visualizations/master/gallery/pdf/miami.pdf)
 
 
@@ -111,7 +111,7 @@ I think the visualizations look quite beautiful and have started to
 compile a series of A0 posters. Click on the preview image to open
 the PDF. The templates can be found in `./posters/`.
 
-[![Multiple Feeds](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/4up-poster-thumb.jpg)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/4up-poster.jpg) [![One Feed, Fullscreen](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/madrid-poster-thumb.jpg)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/madrid-poster.jpg)
+[![One Feed, Fullscreen](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/madrid-poster-thumb.jpg)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/madrid-poster.jpg) [![Multiple Feeds](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/4up-poster-thumb.jpg)](https://github.com/cmichi/gtfs-visualizations/raw/master/posters/4up-poster.jpg) 
 
 Click on the images to get a larger preview.
 
