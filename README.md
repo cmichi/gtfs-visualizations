@@ -142,7 +142,7 @@ Based on the GTFS files in `./gtfs/ulm/` this will generate:
 
 Download [Processing 2.0](https://processing.org/download/). Then open 
 the sketch `./processing/processing.pde` within Processing.
-Execute it and a file `./output/ulm.png` will be generated.
+Execute it and a file `./output/ulm_large.pdf` will be generated.
 
 
 ### Adaption to your city

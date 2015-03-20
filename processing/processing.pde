@@ -27,7 +27,7 @@ void setup() {
   */
   
   cities =  new String[1];
-  cities[0] = "washington-dc";
+  cities[0] = "ulm";
   
   int w;  
   
