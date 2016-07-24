@@ -1,11 +1,18 @@
 # GTFS Visualizations
 
+GTFS is an abbreviation for General Transit Feed Specification, a 
+standard which “defines a common format for public transportation 
+schedules and associated geographic information” ([source](https://developers.google.com/transit/gtfs/)).
+
 The idea of this project is to generate beautiful and informative
-visualizations from publicly available GTFS datasets. By this I 
-mean the routes are drawn according to their shape. The thickness 
-and color intensity of the drawn lines is chosen using 
-`log(trips_happening_on_this_shape_id)`. All trips in the GTFS 
-feed are counted (not just days or a week).
+visualizations from publicly available GTFS datasets.
+The program draws the routes which transportation entities take and 
+emphasizes the ones which are frequented more often by painting them 
+thicker and in a stronger opacity.
+
+The thickness and color intensity of the drawn lines is chosen using 
+`log(trips_happening_on_this_shape_id)`. All trips in the GTFS feed 
+are counted (not just days or a week).
 
 __Project status:__ Works! You will find information on how to generate
 a visualization for a custom GTFS feed below the gallery: 
