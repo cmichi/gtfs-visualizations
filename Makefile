@@ -1,9 +1,9 @@
 default: help
 
 render:
-	touch output/$(gtfs)/data_large.lines
 	mkdir -p output/
 	mkdir -p output/$(gtfs)/
+	touch output/$(gtfs)/data_large.lines
 	time node render.js --verbose --gtfs=$(gtfs);
 
 clean:
