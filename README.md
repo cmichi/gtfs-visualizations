@@ -14,13 +14,15 @@ The thickness and color intensity of the drawn lines is chosen using
 `log(trips_happening_on_this_shape_id)`. All trips in the GTFS feed 
 are counted (not just days or a week).
 
-__Project status:__ Works! You will find information on how to generate
+__Project status:__ The project works with Processing 2.2.1, but is no
+longer actively maintained. You will find information on how to generate
 a visualization for a custom GTFS feed below the gallery: 
 [How to generate a visualization](#how-to-generate-a-visualization).
 
 __Known problems:__ The GTFS parser currently loads the GTFS in memory.
 This means large GTFS feeds will cause problems, if your machine does
-not provide sufficient RAM.
+not provide sufficient RAM.  
+There are issues when running the sketch in Processing 3.x.
 
 	
 ## Gallery
