@@ -214,6 +214,11 @@ These are the default colors used. You are free to adapt them.
    Colors right now are hardcoded.
 
 
+## Contributors
+
+ * Roman Prokofyev improved the parser. Beforehand an entire file was
+   loaded and then parsed, he switched to line-by-line parsing.
+
 ## License
 
 ### Gallery
